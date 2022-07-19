@@ -1289,7 +1289,7 @@ contract BlankHoodie is ERC721A, Ownable, ReentrancyGuard {
 
     string  public baseURI;
 
-    uint256 public          cost      = 0.125 ether; // edit
+    uint256 public          cost      = 1 ether; // edit
     uint256 public constant maxSupply = 7777; // edit
 
     bool public paused = true;
