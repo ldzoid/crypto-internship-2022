@@ -1287,9 +1287,9 @@ contract ERC721A is Context, ERC165, IERC721, IERC721Metadata {
 contract BlankHoodie is ERC721A, Ownable, ReentrancyGuard {
     using Strings for uint256;
 
-    string  public baseURI;
+    string  public baseURI = 'ipfs://QmVqodXFfpUU13GJDetcE2UtPLWMBsZubX6ZnhU3XDWhmJ';
 
-    uint256 public          cost      = 1 ether; // edit
+    uint256 public          cost      = 0.1 ether; // edit
     uint256 public constant maxSupply = 7777; // edit
 
     bool public paused = true;
@@ -1318,7 +1318,7 @@ contract BlankHoodie is ERC721A, Ownable, ReentrancyGuard {
 
         string memory currentBaseURI = _baseURI();
         return bytes(currentBaseURI).length > 0
-            ? string(abi.encodePacked(currentBaseURI, _tokenId.toString(), ".json")) // edit
+            ? string(abi.encodePacked(currentBaseURI))
             : "";
     }
 
