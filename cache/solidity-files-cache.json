@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/ldzoid/Code/blank/LucijanDrnasin/contracts/BlankHoodie.sol": {
-      "lastModificationDate": 1658303576472,
-      "contentHash": "614bdf3d805ed6deeb31a464865948b3",
+      "lastModificationDate": 1658334847083,
+      "contentHash": "c699c1f77747234c8fcb6906886bfe68",
       "sourceName": "contracts/BlankHoodie.sol",
       "solcConfig": {
         "version": "0.8.9",

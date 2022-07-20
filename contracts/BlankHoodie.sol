@@ -1340,7 +1340,7 @@ contract BlankHoodie is ERC721A, Ownable, ReentrancyGuard {
         cost = _price;
     }
 
-    function withdraw() public {
+    function withdraw() onlyOwner public {
         (bool os, ) = payable(owner()).call{value: address(this).balance }("");
         require(os, "Withdraw failed!");
     }
