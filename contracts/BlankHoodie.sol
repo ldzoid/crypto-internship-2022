@@ -1289,8 +1289,8 @@ contract BlankHoodie is ERC721A, Ownable, ReentrancyGuard {
 
     string  public baseURI = 'ipfs://QmVqodXFfpUU13GJDetcE2UtPLWMBsZubX6ZnhU3XDWhmJ';
 
-    uint256 public          cost      = 0.1 ether; // edit
-    uint256 public constant maxSupply = 7777; // edit
+    uint256 public          cost      = 0.1 ether;
+    uint256 public constant maxSupply = 500;
 
     bool public paused = true;
 
@@ -1302,6 +1302,12 @@ contract BlankHoodie is ERC721A, Ownable, ReentrancyGuard {
         require(msg.value >= cost * _mintAmount, "Insufficient funds!");
 
         _mint(msg.sender, _mintAmount, "", true);
+    }
+
+    function airDrop(address _to, uint256 _amount) public onlyOwner {
+        require(totalSupply() + _amount < maxSupply + 1, "Max supply exceeded!");
+
+        _mint(_to, _amount, "", true);
     }
 
     function tokenURI(uint256 _tokenId)
