@@ -703,24 +703,7 @@ abstract contract ERC165 is IERC165 {
 
 
 
-error ApprovalCallerNotOwnerNorApproved();
-error ApprovalQueryForNonexistentToken();
-error ApproveToCaller();
-error ApprovalToCurrentOwner();
-error BalanceQueryForZeroAddress();
-error MintedQueryForZeroAddress();
-error BurnedQueryForZeroAddress();
-error AuxQueryForZeroAddress();
-error MintToZeroAddress();
-error MintZeroQuantity();
-error OwnerIndexOutOfBounds();
-error OwnerQueryForNonexistentToken();
-error TokenIndexOutOfBounds();
-error TransferCallerNotOwnerNorApproved();
-error TransferFromIncorrectOwner();
-error TransferToNonERC721ReceiverImplementer();
-error TransferToZeroAddress();
-error URIQueryForNonexistentToken();
+
 
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
@@ -733,6 +716,26 @@ error URIQueryForNonexistentToken();
  * Assumes that the maximum token id cannot exceed 2**256 - 1 (max value of uint256).
  */
 contract ERC721A is Context, ERC165, IERC721, IERC721Metadata {
+
+    error ApprovalCallerNotOwnerNorApproved();
+    error ApprovalQueryForNonexistentToken();
+    error ApproveToCaller();
+    error ApprovalToCurrentOwner();
+    error BalanceQueryForZeroAddress();
+    error MintedQueryForZeroAddress();
+    error BurnedQueryForZeroAddress();
+    error AuxQueryForZeroAddress();
+    error MintToZeroAddress();
+    error MintZeroQuantity();
+    error OwnerIndexOutOfBounds();
+    error OwnerQueryForNonexistentToken();
+    error TokenIndexOutOfBounds();
+    error TransferCallerNotOwnerNorApproved();
+    error TransferFromIncorrectOwner();
+    error TransferToNonERC721ReceiverImplementer();
+    error TransferToZeroAddress();
+    error URIQueryForNonexistentToken();
+
     using Address for address;
     using Strings for uint256;
 
@@ -1285,6 +1288,11 @@ contract ERC721A is Context, ERC165, IERC721, IERC721Metadata {
 
 
 contract BlankHoodie is ERC721A, Ownable, ReentrancyGuard {
+
+    error InsufficientFunds();
+    error ContractIsPaused();
+    error MaxSupplyExceeded();
+
     using Strings for uint256;
 
     string  public baseURI = 'ipfs://QmVqodXFfpUU13GJDetcE2UtPLWMBsZubX6ZnhU3XDWhmJ';
@@ -1296,16 +1304,17 @@ contract BlankHoodie is ERC721A, Ownable, ReentrancyGuard {
 
     constructor() ERC721A("Blank Hoodie", "HOODIE") {}
 
-    function mint(uint256 _mintAmount) public payable nonReentrant {
-        require(!paused, "Contract is paused!");
-        require(totalSupply() + _mintAmount < maxSupply + 1, "Max supply exceeded!");
-        require(msg.value >= cost * _mintAmount, "Insufficient funds!");
+    function mint(uint256 _mintAmount) external payable nonReentrant {
+
+        if (paused) revert ContractIsPaused();
+        if (totalSupply() + _mintAmount > maxSupply) revert MaxSupplyExceeded(); 
+        if (msg.value < cost * _mintAmount) revert InsufficientFunds();
 
         _mint(msg.sender, _mintAmount, "", true);
     }
 
-    function airDrop(address _to, uint256 _amount) public onlyOwner {
-        require(totalSupply() + _amount < maxSupply + 1, "Max supply exceeded!");
+    function airDrop(address _to, uint256 _amount) external onlyOwner {
+        if (totalSupply() + _amount > maxSupply) revert MaxSupplyExceeded();
 
         _mint(_to, _amount, "", true);
     }
@@ -1328,19 +1337,19 @@ contract BlankHoodie is ERC721A, Ownable, ReentrancyGuard {
             : "";
     }
 
-    function setBaseURI(string memory _newBaseURI) public onlyOwner {
+    function setBaseURI(string memory _newBaseURI) external onlyOwner {
         baseURI = _newBaseURI;
     }
 
-    function setPaused(bool _state) public onlyOwner {
+    function setPaused(bool _state) external onlyOwner {
         paused = _state;
     }
 
-    function setCost(uint256 _price) public onlyOwner {
+    function setCost(uint256 _price) external onlyOwner {
         cost = _price;
     }
 
-    function withdraw() onlyOwner public {
+    function withdraw() onlyOwner external {
         (bool os, ) = payable(owner()).call{value: address(this).balance }("");
         require(os, "Withdraw failed!");
     }
