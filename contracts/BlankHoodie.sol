@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-
 import "./ERC721A.sol";
 import "./Ownable.sol";
-
+import "./Strings.sol";
 
 contract BlankHoodie is ERC721A, Ownable {
 
@@ -31,13 +30,13 @@ contract BlankHoodie is ERC721A, Ownable {
         if (totalSupply() + _mintAmount > maxSupply) revert MaxSupplyExceeded(); 
         if (msg.value < cost * _mintAmount) revert InsufficientFunds();
 
-        _mint(msg.sender, _mintAmount, "", true);
+        _mint(msg.sender, _mintAmount);
     }
 
     function airDrop(address _to, uint256 _amount) external onlyOwner {
         if (totalSupply() + _amount > maxSupply) revert MaxSupplyExceeded();
 
-        _mint(_to, _amount, "", true);
+        _mint(_to, _amount);
     }
 
     function tokenURI(uint256 _tokenId)
