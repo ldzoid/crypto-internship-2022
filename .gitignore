@@ -2,3 +2,4 @@ node_modules/
 todo.txt
 cache/
 artifacts/
+coverage.json
