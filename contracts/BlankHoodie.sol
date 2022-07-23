@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "./ERC721A.sol";
+import "./ERC721AQueryable.sol";
 import "./Ownable.sol";
 import "./Strings.sol";
 
-contract BlankHoodie is ERC721A, Ownable {
+contract BlankHoodie is ERC721AQueryable, Ownable {
 
     error InsufficientFunds();
     error ContractIsPaused();
