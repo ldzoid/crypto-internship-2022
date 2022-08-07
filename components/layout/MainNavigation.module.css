@@ -1,0 +1,26 @@
+.container {
+    height: 100px;
+    width: 100vw;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.imgLogoContainer {
+    margin-left: 55px;
+}
+
+.linksContainer {
+    margin-right: 55px;
+    width: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btnConnect {
+    height: 50px;
+    width: 200px;
+}
+

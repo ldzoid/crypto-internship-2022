@@ -1,0 +1,14 @@
+.headerMain {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 96px;
+  line-height: 100%;
+  border: 1.5px solid #FFFFFF;
+}
+
+.btnMain {
+  background: linear-gradient(96.8deg, #DFB676 0%, #D1837F 32.81%, #8EC4AA 67.19%, #80ABD8 100%);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+}
