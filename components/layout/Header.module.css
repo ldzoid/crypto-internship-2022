@@ -15,9 +15,9 @@
     font-size: 96px;
     line-height: 100%;
     text-align: center;
-    width: 500px;
     height: 200px;
     display: flex;
     align-items: center;
+    white-space: pre-wrap;
     -webkit-text-stroke: 1px #fff
   }

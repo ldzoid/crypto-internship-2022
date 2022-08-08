@@ -1,6 +1,28 @@
 .btnMain {
-  background: linear-gradient(96.8deg, #DFB676 0%, #D1837F 32.81%, #8EC4AA 67.19%, #80ABD8 100%);
+  background: linear-gradient(
+    96.8deg,
+    #dfb676 0%,
+    #d1837f 32.81%,
+    #8ec4aa 67.19%,
+    #80abd8 100%
+  );
   font-weight: 700;
   font-size: 16px;
   line-height: 18px;
+}
+
+.headerSecondary {
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 56px;
+}
+
+.paragraph {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.highlight {
+  color: #d89e79;
 }

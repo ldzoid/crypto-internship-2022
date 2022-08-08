@@ -3,11 +3,14 @@ import Header from './Header'
 import styles from './Layout.module.css'
 
 const Layout = (props) => {
+
+    let title = 'Blank\nCrypto\nInternship'
+
     return (
         <>
         <div className={styles.container}>
         <MainNavigation />
-        <Header title='Blank Crypto Internship' />
+        <Header title={title}/>
         </div>
         <main className={styles.main}>
         
