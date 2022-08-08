@@ -5,6 +5,10 @@
     font-family: "DM Sans", sans-serif;
 }
 
+body {
+    background-color: #000;
+}
+
 a {
     text-decoration: none;
     color: #fff;

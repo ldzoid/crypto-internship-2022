@@ -1,0 +1,23 @@
+.container {
+    height: 500px;
+    width: 100vw;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+}
+
+.header {
+    color: transparent;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 100%;
+    text-align: center;
+    width: 500px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    -webkit-text-stroke: 1px #fff
+  }

@@ -1,3 +1,10 @@
+.container {
+    background-image: url('../../public/images/Layout\ Background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
 .main {
     width: 100vw;
     background-color: yellow;

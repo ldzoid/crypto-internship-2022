@@ -1,7 +1,7 @@
 .container {
     height: 100px;
     width: 100vw;
-    background-color: #000;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;

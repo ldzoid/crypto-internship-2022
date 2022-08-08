@@ -1,13 +1,19 @@
 import MainNavigation from './MainNavigation'
-import classes from './Layout.module.css'
+import Header from './Header'
+import styles from './Layout.module.css'
 
 const Layout = (props) => {
     return (
         <>
+        <div className={styles.container}>
         <MainNavigation />
-        <main className={classes.main}>
+        <Header title='Blank Crypto Internship' />
+        </div>
+        <main className={styles.main}>
+        
             {props.children}
         </main>
+        
         </>
     )
 }
