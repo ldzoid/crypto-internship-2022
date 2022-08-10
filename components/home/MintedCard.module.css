@@ -1,0 +1,13 @@
+.container {
+  width: 240px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+.cardImage {
+  width: 240px;
+  height: 270px;
+}

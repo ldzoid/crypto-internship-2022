@@ -1,0 +1,132 @@
+.container {
+  color: #fff;
+  width: 1136px;
+  height: 733px;
+  display: flex;
+  justify-content: space-between;
+  margin: 100px 0;
+  position: relative;
+}
+
+.mintContainer {
+  width: 448px;
+  height: 148px;
+  backdrop-filter: blur(200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(132.99deg, #1e1e1e 0%, #000000 100%);
+}
+
+.mintContainerParagraph {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  width: 95%;
+  text-align: start;
+}
+
+.mintInfoContainer {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mintPrice {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 32px;
+}
+
+.mintedAmount {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.mintBtnsContainer {
+  width: 95%;
+  height: 48px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.selectAmount {
+  height: 100%;
+  width: 65px;
+  border: none;
+  color: #fff;
+  background-color: #292929;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 0px 10px;
+}
+
+.selectAmount::after {
+  width: 10px;
+  height: 10px;
+}
+
+.btnMint {
+  height: 100%;
+  width: 335px;
+}
+
+.imgHoodieContainer {
+  width: 636px;
+  height: 636px;
+  box-shadow: 0px 0px 10px 10px #0f0f0f;
+}
+
+.infoContainer {
+  width: 756px;
+  height: 272px;
+  background-color: yellow;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+}
+
+.infoCard {
+  width: 252px;
+  height: 272px;
+  background: linear-gradient(132.99deg, #000000 0%, #1e1e1e 100%);
+  padding: 24px;
+}
+
+.cardImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+  height: 64px;
+  width: 64px;
+  border-radius: 50%;
+}
+
+.cardImageBox {
+  background-color: #d1837f;
+  box-shadow: 0px 0px 20px 20px #392726;
+}
+
+.cardImageBlank {
+  background-color: #8ec4aa;
+  box-shadow: 0px 0px 20px 20px #374d42;
+}
+
+.cardImageStars {
+  background-color: #80abd8;
+  box-shadow: 0px 0px 20px 20px #3a4f64;
+}
+
+.cardHeading {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  margin: 20px 0 10px 0;
+}

@@ -1,0 +1,17 @@
+.container {
+  width: 1136px;
+  height: 394px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  color: #fff;
+  justify-content: space-between;
+  margin: 100px 0;
+}
+
+.mintedListContainer {
+  width: 1136px;
+  height: 300px;
+  display: flex;
+  justify-content: space-between;
+}
