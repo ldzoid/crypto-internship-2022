@@ -8,6 +8,14 @@
   position: relative;
 }
 
+.mintMainContainer {
+  width: 448px;
+  height: 396px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .mintContainer {
   width: 448px;
   height: 148px;
@@ -64,11 +72,6 @@
   font-size: 14px;
   line-height: 18px;
   padding: 0px 10px;
-}
-
-.selectAmount::after {
-  width: 10px;
-  height: 10px;
 }
 
 .btnMint {

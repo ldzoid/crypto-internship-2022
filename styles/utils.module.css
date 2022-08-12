@@ -11,6 +11,16 @@
   line-height: 18px;
 }
 
+.headerMain {
+  color: transparent;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 96px;
+  line-height: 100%;
+  white-space: pre-wrap;
+  -webkit-text-stroke: 1px #fff
+}
+
 .headerSecondary {
   font-weight: 700;
   font-size: 64px;

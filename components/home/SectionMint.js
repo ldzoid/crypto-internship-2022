@@ -9,7 +9,7 @@ import IconBlank from "../../public/images/Icon Blank.png";
 const SectionMint = () => {
   return (
     <section className={styles.container}>
-      <div>
+      <div className={styles.mintMainContainer}>
         <h2 className={utils.headerSecondary}>
           Blank’s
           <br />
