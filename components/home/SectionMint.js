@@ -10,16 +10,11 @@ const SectionMint = () => {
   return (
     <section className={styles.container}>
       <div className={styles.mintMainContainer}>
-        <h2 className={utils.headerSecondary}>
-          Blank’s
-          <br />
-          <span className={utils.highlight}>Meta-builder</span>
-          <br />
-          Hoodie
+        <h2 className={styles.headerSecondary}>
+          Blank’s <span className={utils.highlight}>Meta-builder</span> Hoodie
         </h2>
-        <p className={utils.paragraph}>
-          Become a part of our trip to the Metaverse by owning <br /> Blank’s
-          “Meta-builder” Hoodie NFT.
+        <p className={styles.paragraph}>
+          Become a part of our trip to the Metaverse by owning Blank’s “Meta-builder” Hoodie NFT.
         </p>
         <div className={styles.mintContainer}>
           <p className={styles.mintContainerParagraph}>Price</p>
@@ -46,6 +41,10 @@ const SectionMint = () => {
             <button className={`${styles.btnMint} ${utils.btnMain}`}>
               Mint
             </button>
+          </div>
+          <div className={styles.mintAdditionalContainer}>
+            <p className={styles.mintAdditionalInfo}>Already have your Blank Metabuilder Hoodie NFT?</p>
+            <p className={styles.mintAdditionalInfoLink}>Redeem your real hoodie here!</p>
           </div>
         </div>
       </div>

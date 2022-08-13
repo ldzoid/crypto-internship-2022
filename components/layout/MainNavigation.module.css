@@ -9,6 +9,7 @@
 
 .imgLogoContainer {
     margin-left: 55px;
+    height: 16px;
 }
 
 .linksContainer {
@@ -17,10 +18,47 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: transform 250ms;
 }
 
 .btnConnect {
     height: 50px;
     width: 200px;
+}
+
+.btnBurger {
+    width: 32px;
+    height: 16px;
+    display: none;
+    background-color: transparent;
+}
+
+@media all and (max-width: 450px) {
+    .linksContainer {
+        position: absolute;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: space-evenly;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .hidden {
+        transform: translateY(-100%);
+    }
+
+    .expanded {
+        transform: translateY(45%);
+    }
+
+    .imgLogoContainer {
+        margin-left: 40px;
+    }
+
+    .btnBurger {
+        display: inline;
+        margin-right: 40px;
+    }
 }
 

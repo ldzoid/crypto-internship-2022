@@ -1,23 +1,32 @@
 .container {
-    height: 500px;
-    width: 100vw;
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
+  height: 500px;
+  width: 100vw;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
 }
 
 .header {
-    color: transparent;
-    font-style: normal;
+  color: transparent;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 96px;
+  line-height: 100%;
+  text-align: center;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  white-space: pre-wrap;
+  -webkit-text-stroke: 1px #fff;
+}
+
+@media all and (max-width: 450px) {
+  .header {
     font-weight: 700;
-    font-size: 96px;
+    font-size: 46px;
     line-height: 100%;
-    text-align: center;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    white-space: pre-wrap;
-    -webkit-text-stroke: 1px #fff
+    margin-top: -30px;
   }
+}

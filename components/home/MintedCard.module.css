@@ -11,3 +11,14 @@
   width: 240px;
   height: 270px;
 }
+
+@media all and (max-width: 450px) {
+  .container {
+    width: 90%;
+  }
+
+  .cardImage {
+    width: 100%;
+    height: auto;
+  }
+}
