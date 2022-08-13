@@ -5,7 +5,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* filter: drop-shadow(10px 10px 30px orange); */
     background-color: #3c311c;
     box-shadow: inset 0px 0px 60px #000;
 }
