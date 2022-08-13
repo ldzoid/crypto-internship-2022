@@ -94,6 +94,7 @@
 .mintAdditionalContainer {
   width: 95%;
   margin-top: 10px;
+  display: none;
 }
 
 .mintAdditionalInfo {
@@ -184,6 +185,10 @@
     font-weight: 400;
     font-size: 14px;
     text-align: center;
+  }
+
+  .mintAdditionalContainer {
+    display: block;
   }
 
   .mintContainer {
