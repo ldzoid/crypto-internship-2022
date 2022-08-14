@@ -1,10 +1,15 @@
-import Head from 'next/head'
+import Head from "next/head";
 import MainNavigation from "./MainNavigation";
 import Header from "./Header";
 import { useRouter } from "next/router";
 import styles from "./Layout.module.css";
+import { AddressContext } from "./AddressContext";
+import { useState } from "react";
 
 const Layout = (props) => {
+
+  const [address, setAddress] = useState(null)
+
   // get url
   const router = useRouter();
   const path = router.asPath;
@@ -35,12 +40,14 @@ const Layout = (props) => {
             rel="stylesheet"
           />
         </Head>
-        <div className={styles.container}>
-          <MainNavigation />
-          <main className={`${styles.main} ${styles.connectMain}`}>
-            {props.children}
-          </main>
-        </div>
+        <AddressContext.Provider value={{address, setAddress}}>
+          <div className={styles.container}>
+            <MainNavigation />
+            <main className={`${styles.main} ${styles.connectMain}`}>
+              {props.children}
+            </main>
+          </div>
+        </AddressContext.Provider>
       </>
     );
   }
@@ -54,11 +61,13 @@ const Layout = (props) => {
           rel="stylesheet"
         />
       </Head>
-      <div className={styles.container}>
-        <MainNavigation />
-        <Header title={title} />
-      </div>
-      <main className={styles.main}>{props.children}</main>
+      <AddressContext.Provider value={{address, setAddress}}>
+        <div className={styles.container}>
+          <MainNavigation />
+          <Header title={title} />
+        </div>
+        <main className={styles.main}>{props.children}</main>
+      </AddressContext.Provider>
     </>
   );
 };

@@ -13,7 +13,11 @@ const Connector = (() => {
     }
   };
 
-  return { signer, connectMetamask };
+  const getAddress = async () => {
+    return await signer.getAddress()
+  }
+
+  return { connectMetamask, getAddress };
 })();
 
 export default Connector;
