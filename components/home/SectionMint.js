@@ -5,8 +5,38 @@ import Hoodie from "../../public/images/Hoodie.png";
 import IconBox from "../../public/images/Icon Box.png";
 import IconStars from "../../public/images/Icon Stars.png";
 import IconBlank from "../../public/images/Icon Blank.png";
+import { useState } from "react";
+import Connector from "../../modules/connector";
 
 const SectionMint = () => {
+  const [amount, setAmount] = useState("1");
+  const [supply, setSupply] = useState('?');
+
+  // updates total minted supply every 10 seconds
+  const updateSupply = async () => {
+    if (Connector.getSigner() != undefined) {
+      const newSupply = await Connector.getSupply();
+      if (newSupply !== supply) {
+        setSupply(newSupply);
+      }
+    }
+    setTimeout(updateSupply, 5000);
+  };
+  updateSupply();
+
+  // changes price based on selected mint amount
+  const handleChange = (e) => {
+    setAmount(e.target.value);
+  };
+
+  // mints nft
+  const handleClickMint = async (_amount) => {
+    await Connector.mint(_amount)
+    // update minted list
+  };
+
+  // updating minted amount live
+
   return (
     <section className={styles.container}>
       <div className={styles.mintMainContainer}>
@@ -14,19 +44,29 @@ const SectionMint = () => {
           Blank’s <span className={utils.highlight}>Meta-builder</span> Hoodie
         </h2>
         <p className={styles.paragraph}>
-          Become a part of our trip to the Metaverse by owning Blank’s “Meta-builder” Hoodie NFT.
+          Become a part of our trip to the Metaverse by owning Blank’s
+          “Meta-builder” Hoodie NFT.
         </p>
+
         <div className={styles.mintContainer}>
           <p className={styles.mintContainerParagraph}>Price</p>
           <div className={styles.mintInfoContainer}>
-            <h3 className={styles.mintPrice}>0.1 ETH</h3>
+            <h3 className={styles.mintPrice}>
+              {Math.round(0.1 * amount * 100) / 100 + " ETH"}
+            </h3>
             <div className={styles.mintedAmountContainer}>
               <p className={styles.mintContainerParagraph}>Minted</p>
-              <h5 className={styles.mintedAmount}>63 / 500</h5>
+              <h5 className={styles.mintedAmount}>
+                {supply + " / 500"}
+              </h5>
             </div>
           </div>
           <div className={styles.mintBtnsContainer}>
-            <select className={styles.selectAmount} name="amount">
+            <select
+              className={styles.selectAmount}
+              name="amount"
+              onChange={handleChange}
+            >
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -38,13 +78,20 @@ const SectionMint = () => {
               <option value="9">9</option>
               <option value="10">10</option>
             </select>
-            <button className={`${styles.btnMint} ${utils.btnMain}`}>
+            <button
+              className={`${styles.btnMint} ${utils.btnMain}`}
+              onClick={() => handleClickMint(amount)}
+            >
               Mint
             </button>
           </div>
           <div className={styles.mintAdditionalContainer}>
-            <p className={styles.mintAdditionalInfo}>Already have your Blank Metabuilder Hoodie NFT?</p>
-            <p className={styles.mintAdditionalInfoLink}>Redeem your real hoodie here!</p>
+            <p className={styles.mintAdditionalInfo}>
+              Already have your Blank Metabuilder Hoodie NFT?
+            </p>
+            <p className={styles.mintAdditionalInfoLink}>
+              Redeem your real hoodie here!
+            </p>
           </div>
         </div>
       </div>
