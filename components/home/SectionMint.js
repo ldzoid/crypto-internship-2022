@@ -32,7 +32,6 @@ const SectionMint = () => {
   // mints nft
   const handleClickMint = async (_amount) => {
     await Connector.mint(_amount)
-    // update minted list
   };
 
   // updating minted amount live

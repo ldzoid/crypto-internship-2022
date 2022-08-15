@@ -20,6 +20,7 @@
   height: 300px;
   display: flex;
   justify-content: space-between;
+  overflow: auto;
 }
 
 @media all and (max-width: 450px) {

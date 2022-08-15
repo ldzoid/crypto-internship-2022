@@ -60,10 +60,15 @@ const Connector = (() => {
     const txObject = {
       value: ethers.utils.parseEther(`${0.1*amount}`),
     }
-    const tx = await contract.mint(amount, txObject)
+    await contract.mint(amount, txObject)
   }
 
-  return { connectMetamask, getSigner, getAddress, getSupply, mint };
+  const getTokensOfSigner = async () => {
+    const address = await signer.getAddress()
+    return (await contract.tokensOfOwner(address)).map(object => parseInt(object['_hex']), 16)
+  }
+
+  return { connectMetamask, getSigner, getAddress, getSupply, mint, getTokensOfSigner };
 })();
 
 export default Connector;
