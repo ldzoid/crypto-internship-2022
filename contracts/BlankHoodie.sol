@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "./ERC721AQueryable.sol";
-import "./Ownable.sol";
-import "./Strings.sol";
+import "./BlankHoodieDependencies/ERC721AQueryable.sol";
+import "./BlankHoodieDependencies/Ownable.sol";
+import "./BlankHoodieDependencies/Strings.sol";
 
 contract BlankHoodie is ERC721AQueryable, Ownable {
 
