@@ -29,12 +29,13 @@ const Connector = (() => {
     },
   ];
 
+  let provider;
   let signer;
   let contract;
 
   const connectMetamask = async () => {
     if (window.ethereum !== undefined) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send('eth_requestAccounts', []);
       signer = await provider.getSigner();
       contract = new ethers.Contract(contractAddress, contractABI, signer)
@@ -50,6 +51,11 @@ const Connector = (() => {
   const getAddress = async () => {
     return await signer.getAddress();
   };
+
+  const getBalance = async () => {
+    const balance = await provider.getBalance(getAddress())
+    return ethers.utils.formatEther(balance)
+  }
 
   // contract operations
   const getSupply = async () => {
@@ -68,7 +74,7 @@ const Connector = (() => {
     return (await contract.tokensOfOwner(address)).map(object => parseInt(object['_hex']), 16)
   }
 
-  return { connectMetamask, getSigner, getAddress, getSupply, mint, getTokensOfSigner };
+  return { connectMetamask, getSigner, getAddress, getBalance, getSupply, mint, getTokensOfSigner };
 })();
 
 export default Connector;

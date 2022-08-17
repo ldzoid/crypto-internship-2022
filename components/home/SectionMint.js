@@ -12,7 +12,7 @@ const SectionMint = () => {
   const [amount, setAmount] = useState('1');
   const [supply, setSupply] = useState('?');
 
-  const { setMessage } = useContext(MessageContext)
+  const { setMessage } = useContext(MessageContext);
 
   // updates total minted supply every 10 seconds
   const updateSupply = async () => {
@@ -26,22 +26,15 @@ const SectionMint = () => {
   };
   updateSupply();
 
-  // changes price based on selected mint amount
-  const handleChange = (e) => {
-    setAmount(e.target.value);
-  };
-
   // mints nft
   const handleClickMint = async (_amount) => {
     if (Connector.getSigner() == undefined) {
-      setMessage([-1, 'Connect wallet to complete the action'])
-      return
+      setMessage([-1, 'Connect wallet to complete the action']);
+    } else {
+      await Connector.mint(_amount);
+      setMessage([1, 'Minted succesfully']);
     }
-    await Connector.mint(_amount)
-    setMessage([1, 'Minted succesfully'])
   };
-
-  // updating minted amount live
 
   return (
     <section className={styles.container}>
@@ -62,16 +55,16 @@ const SectionMint = () => {
             </h3>
             <div className={styles.mintedAmountContainer}>
               <p className={styles.mintContainerParagraph}>Minted</p>
-              <h5 className={styles.mintedAmount}>
-                {supply + ' / 500'}
-              </h5>
+              <h5 className={styles.mintedAmount}>{supply + ' / 500'}</h5>
             </div>
           </div>
           <div className={styles.mintBtnsContainer}>
             <select
               className={styles.selectAmount}
               name='amount'
-              onChange={handleChange}
+              onChange={(e) => {
+                setAmount(e.target.value);
+              }}
             >
               <option value='1'>1</option>
               <option value='2'>2</option>

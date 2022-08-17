@@ -7,19 +7,9 @@ import Success from '../../public/images/Success.png';
 import Warning from '../../public/images/Warning.png';
 
 const Message = () => {
-  const router = useRouter();
   const { message, setMessage } = useContext(MessageContext);
   const messageState = message[0];
   const messageText = message[1];
-
-  const handleClickOkay = () => {
-    setMessage([0, '']);
-  };
-
-  const handleClickConnect = () => {
-    setMessage([0, '']);
-    router.push('/connect');
-  };
 
   if (messageState == 0) {
     return;
@@ -34,9 +24,9 @@ const Message = () => {
         <h1 className={styles.message}>{messageText}</h1>
         <button
           className={`${styles.btn} btnMain`}
-          onClick={messageState == 1 ? handleClickOkay : handleClickConnect}
+          onClick={() => {setMessage([0, ''])}}
         >
-          {messageState == 1 ? 'Okay' : 'Connect wallet'}
+          Okay
         </button>
       </div>
     );
