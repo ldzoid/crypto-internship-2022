@@ -22,6 +22,10 @@ button:hover {
   cursor: pointer;
 }
 
+.hidden {
+  display: none;
+}
+
 .btnMain {
   background: linear-gradient(
     96.8deg,

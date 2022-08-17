@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import CompanyLogo from '../../public/images/Company Logo.png'
-import Burger from '../../public/images/Burger.png'
-import styles from "./MainNavigation.module.css";
 import { useContext, useState } from 'react';
 import { AddressContext } from './AddressContext';
+import styles from "./MainNavigation.module.css";
+import CompanyLogo from '../../public/images/Company Logo.png'
+import Burger from '../../public/images/Burger.png'
 
 const MainNavigation = () => {
 

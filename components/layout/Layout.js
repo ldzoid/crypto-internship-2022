@@ -1,10 +1,10 @@
 import Head from "next/head";
-import MainNavigation from "./MainNavigation";
-import Header from "./Header";
 import { useRouter } from "next/router";
-import styles from "./Layout.module.css";
-import { AddressContext } from "./AddressContext";
 import { useState } from "react";
+import Header from "./Header";
+import MainNavigation from "./MainNavigation";
+import { AddressContext } from "./AddressContext";
+import styles from "./Layout.module.css";
 
 const Layout = (props) => {
 
@@ -14,15 +14,19 @@ const Layout = (props) => {
   const router = useRouter();
   const path = router.asPath;
   let title = "";
+  let homePage = true;
   let connectLayout = false;
 
   // based on url change website header
   switch (path) {
     case "/":
       title = "Blank\nCrypto\nInternship";
+      homePage = true;
+      connectLayout = false
       break;
     case "/connect":
       title = "";
+      homePage = false;
       connectLayout = true;
       break;
   }
@@ -64,7 +68,7 @@ const Layout = (props) => {
       <AddressContext.Provider value={{address, setAddress}}>
         <div className={styles.container}>
           <MainNavigation />
-          <Header title={title} />
+          <Header title={title} home={homePage} />
         </div>
         <main className={styles.main}>{props.children}</main>
       </AddressContext.Provider>

@@ -1,9 +1,9 @@
 import Image from "next/image";
-import styles from './ConnectButton.module.css'
-import Connector from "../../modules/connector";
-import Metamask from '../../public/images/Metamask.png'
 import { useContext } from "react";
 import { AddressContext } from "../layout/AddressContext";
+import Connector from "../../modules/connector";
+import styles from './ConnectButton.module.css'
+import Metamask from '../../public/images/Metamask.png'
 
 const ConnectButton = () => {
 

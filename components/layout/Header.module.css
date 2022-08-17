@@ -22,6 +22,24 @@
   -webkit-text-stroke: 1px #fff;
 }
 
+.header2022 {
+  position: absolute;
+  width: 100vw;
+  height: 500px;
+  color: rgba(64, 64, 64, 0.2);
+  text-align: center;
+  font-size: 650px;
+  line-height: 100%;
+  z-index: -1;
+  top: 0;
+}
+
+@media all and (max-width: 1560px) {
+  .header2022 {
+    display: none;
+  }
+}
+
 @media all and (max-width: 450px) {
   .header {
     font-weight: 700;
