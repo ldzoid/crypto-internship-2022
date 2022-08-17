@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { MessageContext } from "../layout/MessageContext";
 import Connector from "../../modules/connector";
 import styles from "./SectionMint.module.css";
 import Hoodie from "../../public/images/Hoodie.png";
@@ -10,6 +11,8 @@ import IconBlank from "../../public/images/Icon Blank.png";
 const SectionMint = () => {
   const [amount, setAmount] = useState("1");
   const [supply, setSupply] = useState('?');
+
+  const { setMessage } = useContext(MessageContext)
 
   // updates total minted supply every 10 seconds
   const updateSupply = async () => {
@@ -30,7 +33,12 @@ const SectionMint = () => {
 
   // mints nft
   const handleClickMint = async (_amount) => {
+    if (Connector.getSigner() == undefined) {
+      setMessage([-1, 'Connect wallet to complete the action'])
+      return
+    }
     await Connector.mint(_amount)
+    setMessage([1, 'Minted succesfully'])
   };
 
   // updating minted amount live

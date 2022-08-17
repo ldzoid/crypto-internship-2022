@@ -21,6 +21,11 @@
     transition: transform 250ms;
 }
 
+.btnLink {
+    background-color: transparent;
+    color: #fff;
+}
+
 .btnConnect {
     height: 50px;
     width: 200px;

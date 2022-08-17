@@ -1,0 +1,41 @@
+.container {
+  position: fixed;
+  width: 375px;
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  z-index: 2;
+  background-color: yellow;
+  top: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0px 0px 5px 5px #fff;
+  background-color: #000;
+  color: #fff;
+}
+
+.message {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.btn {
+  width: 300px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ @media all and (max-width: 450px) {
+  .container {
+    width: 90%;
+    top: 200px;
+  }
+
+  .btn {
+    width: 90%;
+  }
+ }
