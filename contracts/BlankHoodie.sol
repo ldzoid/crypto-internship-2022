@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "./BlankHoodieDependencies/ERC721AQueryable.sol";
-import "./BlankHoodieDependencies/Ownable.sol";
-import "./BlankHoodieDependencies/Strings.sol";
+import './BlankHoodieDependencies/ERC721AQueryable.sol';
+import './BlankHoodieDependencies/Ownable.sol';
+import './BlankHoodieDependencies/Strings.sol';
 
 contract BlankHoodie is ERC721AQueryable, Ownable {
 
@@ -21,7 +21,7 @@ contract BlankHoodie is ERC721AQueryable, Ownable {
 
     bool public paused = true;
 
-    constructor() ERC721A("Blank Hoodie", "HOODIE") {}
+    constructor() ERC721A('Blank Hoodie', 'HOODIE') {}
 
     function mint(uint256 _mintAmount) external payable {
 
@@ -48,13 +48,13 @@ contract BlankHoodie is ERC721AQueryable, Ownable {
     {
         require(
             _exists(_tokenId),
-            "ERC721Metadata: URI query for nonexistent token"
+            'ERC721Metadata: URI query for nonexistent token'
         );
 
         string memory currentBaseURI = _baseURI();
         return bytes(currentBaseURI).length > 0
             ? string(abi.encodePacked(currentBaseURI))
-            : "";
+            : '';
     }
 
     function setBaseURI(string memory _newBaseURI) external onlyOwner {
@@ -70,8 +70,8 @@ contract BlankHoodie is ERC721AQueryable, Ownable {
     }
 
     function withdraw() onlyOwner external {
-        (bool os, ) = payable(owner()).call{value: address(this).balance }("");
-        require(os, "Withdraw failed!");
+        (bool os, ) = payable(owner()).call{value: address(this).balance }('');
+        require(os, 'Withdraw failed!');
     }
 
     function _baseURI() internal view virtual override returns (string memory) {

@@ -1,7 +1,7 @@
-import { useState } from "react";
-import MintedCard from "./MintedCard";
-import Connector from "../../modules/connector";
-import styles from "./SectionMinted.module.css";
+import { useState } from 'react';
+import MintedCard from './MintedCard';
+import Connector from '../../modules/connector';
+import styles from './SectionMinted.module.css';
 
 const SectionMinted = () => {
   const [walletList, setWalletList] = useState([]);

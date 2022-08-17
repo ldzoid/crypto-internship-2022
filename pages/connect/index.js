@@ -1,5 +1,5 @@
-import ConnectButton from "../../components/connect/ConnectButton";
-import styles from "../../styles/connect.module.css";
+import ConnectButton from '../../components/connect/ConnectButton';
+import styles from '../../styles/connect.module.css';
 
 const Connect = (props) => {
   return (

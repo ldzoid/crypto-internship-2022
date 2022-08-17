@@ -1,15 +1,15 @@
-import Image from "next/image";
-import { useContext, useState } from "react";
-import { MessageContext } from "../layout/MessageContext";
-import Connector from "../../modules/connector";
-import styles from "./SectionMint.module.css";
-import Hoodie from "../../public/images/Hoodie.png";
-import IconBox from "../../public/images/Icon Box.png";
-import IconStars from "../../public/images/Icon Stars.png";
-import IconBlank from "../../public/images/Icon Blank.png";
+import Image from 'next/image';
+import { useContext, useState } from 'react';
+import { MessageContext } from '../layout/MessageContext';
+import Connector from '../../modules/connector';
+import styles from './SectionMint.module.css';
+import Hoodie from '../../public/images/Hoodie.png';
+import IconBox from '../../public/images/Icon Box.png';
+import IconStars from '../../public/images/Icon Stars.png';
+import IconBlank from '../../public/images/Icon Blank.png';
 
 const SectionMint = () => {
-  const [amount, setAmount] = useState("1");
+  const [amount, setAmount] = useState('1');
   const [supply, setSupply] = useState('?');
 
   const { setMessage } = useContext(MessageContext)
@@ -58,31 +58,31 @@ const SectionMint = () => {
           <p className={styles.mintContainerParagraph}>Price</p>
           <div className={styles.mintInfoContainer}>
             <h3 className={styles.mintPrice}>
-              {Math.round(0.1 * amount * 100) / 100 + " ETH"}
+              {Math.round(0.1 * amount * 100) / 100 + ' ETH'}
             </h3>
             <div className={styles.mintedAmountContainer}>
               <p className={styles.mintContainerParagraph}>Minted</p>
               <h5 className={styles.mintedAmount}>
-                {supply + " / 500"}
+                {supply + ' / 500'}
               </h5>
             </div>
           </div>
           <div className={styles.mintBtnsContainer}>
             <select
               className={styles.selectAmount}
-              name="amount"
+              name='amount'
               onChange={handleChange}
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
+              <option value='6'>6</option>
+              <option value='7'>7</option>
+              <option value='8'>8</option>
+              <option value='9'>9</option>
+              <option value='10'>10</option>
             </select>
             <button
               className={`${styles.btnMint} btnMain`}
@@ -114,7 +114,7 @@ const SectionMint = () => {
           <h3 className={styles.cardHeading}>Random NFT airdrops</h3>
           <p>
             Gives you a chance to receive random NFT airdrops of the projects we
-            work on to your holder’s wallet.{" "}
+            work on to your holder’s wallet.{' '}
           </p>
         </div>
         <div className={styles.infoCard}>

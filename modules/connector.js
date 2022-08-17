@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers } from 'ethers';
 
 const Connector = (() => {
 
@@ -6,26 +6,26 @@ const Connector = (() => {
   const contractABI = [
     {
       inputs: [
-        { internalType: "uint256", name: "_mintAmount", type: "uint256" },
+        { internalType: 'uint256', name: '_mintAmount', type: 'uint256' },
       ],
-      name: "mint",
+      name: 'mint',
       outputs: [],
-      stateMutability: "payable",
-      type: "function",
+      stateMutability: 'payable',
+      type: 'function',
     },
     {
-      inputs: [{ internalType: "address", name: "owner", type: "address" }],
-      name: "tokensOfOwner",
-      outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
-      stateMutability: "view",
-      type: "function",
+      inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
+      name: 'tokensOfOwner',
+      outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
+      stateMutability: 'view',
+      type: 'function',
     },
     {
       inputs: [],
-      name: "totalSupply",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
+      name: 'totalSupply',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
     },
   ];
 
@@ -35,11 +35,11 @@ const Connector = (() => {
   const connectMetamask = async () => {
     if (window.ethereum !== undefined) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
+      await provider.send('eth_requestAccounts', []);
       signer = await provider.getSigner();
       contract = new ethers.Contract(contractAddress, contractABI, signer)
     } else {
-      console.log("You have to install MetaMask");
+      console.log('You have to install MetaMask');
     }
   };
 

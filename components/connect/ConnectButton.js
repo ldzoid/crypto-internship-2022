@@ -1,8 +1,8 @@
-import Image from "next/image";
-import { useContext } from "react";
-import { AddressContext } from "../layout/AddressContext";
+import Image from 'next/image';
+import { useContext } from 'react';
+import { AddressContext } from '../layout/AddressContext';
 import { MessageContext } from '../layout/MessageContext'
-import Connector from "../../modules/connector";
+import Connector from '../../modules/connector';
 import styles from './ConnectButton.module.css'
 import Metamask from '../../public/images/Metamask.png'
 
