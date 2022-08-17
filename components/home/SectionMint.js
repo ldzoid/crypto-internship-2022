@@ -1,5 +1,4 @@
 import Image from "next/image";
-import utils from "../../styles/utils.module.css";
 import styles from "./SectionMint.module.css";
 import Hoodie from "../../public/images/Hoodie.png";
 import IconBox from "../../public/images/Icon Box.png";
@@ -40,7 +39,7 @@ const SectionMint = () => {
     <section className={styles.container}>
       <div className={styles.mintMainContainer}>
         <h2 className={styles.headerSecondary}>
-          Blank’s <span className={utils.highlight}>Meta-builder</span> Hoodie
+          Blank’s <span className='highlight'>Meta-builder</span> Hoodie
         </h2>
         <p className={styles.paragraph}>
           Become a part of our trip to the Metaverse by owning Blank’s
@@ -78,7 +77,7 @@ const SectionMint = () => {
               <option value="10">10</option>
             </select>
             <button
-              className={`${styles.btnMint} ${utils.btnMain}`}
+              className={`${styles.btnMint} btnMain`}
               onClick={() => handleClickMint(amount)}
             >
               Mint
