@@ -1,0 +1,68 @@
+.container {
+  width: 720px;
+  height: 450px;
+  background: linear-gradient(
+      126.18deg,
+      rgba(185, 185, 185, 0.2) 0%,
+      rgba(0, 0, 0, 0) 71.12%
+    ),
+    linear-gradient(132.99deg, #000000 0%, #1e1e1e 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.erc20InfoContainer {
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.erc20InfoTitle {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.erc20InfoBalance {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 100%;
+  color: #ffffff;
+}
+
+.lineBreak {
+  width: 96px;
+  height: 1px;
+  background-color: gray;
+}
+
+.sendTokensInputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.inputLabel {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #fff;
+  margin-bottom: 3px;
+}
+
+.input {
+  width: 600px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: none;
+  padding: 0px 15px;
+}
+
+.btnSend {
+  width: 600px;
+  height: 48px;
+}

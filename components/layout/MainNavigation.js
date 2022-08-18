@@ -22,7 +22,7 @@ const MainNavigation = () => {
     <div className={`${styles.linksContainer} ${expanded ? styles.expanded : styles.hidden}`}>
       <Link href='/'><button className={styles.btnLink} onClick={handleClick}>Home</button></Link>
       <Link href=''><button className={styles.btnLink} onClick={handleClick}>Stake</button></Link>
-      <Link href=''><button className={styles.btnLink} onClick={handleClick}>ERC20 Manager</button></Link>
+      <Link href='/erc20-manager'><button className={styles.btnLink} onClick={handleClick}>ERC20 Manager</button></Link>
       <Link href='/connect'><button className={`btnMain ${styles.btnConnect}`} onClick={handleClick}>{address !== null ? address.slice(0,7) + '...' + address.slice(-4) : 'Connect wallet'}</button></Link>
     </div>
     <button className={styles.btnBurger} onClick={() => {setExpanded(!expanded)}}><Image src={Burger} width={32} height={16} /></button>
