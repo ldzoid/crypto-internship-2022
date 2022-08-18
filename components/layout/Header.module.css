@@ -29,6 +29,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
+  text-align: center;
 }
 
 .header2022 {
@@ -55,5 +56,13 @@
     font-size: 46px;
     line-height: 100%;
     margin-top: -30px;
+    height: auto;
+  }
+
+  .subtitle {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    width: 80%;
   }
 }
