@@ -5,7 +5,7 @@ async function main() {
   
     console.log('Account balance:', (await deployer.getBalance()).toString());
   
-    const BlankHoodie = await ethers.getContractFactory('BlankHoodie');
+    const BlankHoodie = await ethers.getContractFactory('Blank');
     const hhBlankHoodie = await BlankHoodie.deploy();
   
     console.log('Contract address:', hhBlankHoodie.address);
