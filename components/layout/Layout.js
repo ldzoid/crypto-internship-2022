@@ -40,6 +40,11 @@ const Layout = (props) => {
       homePage = false;
       connectLayout = false;
       break;
+    case '/stake':
+      title = 'Stake';
+      subtitle = 'Stake your NFTs so you can later unstake them here as well';
+      homePage = false;
+      connectLayout = false;
   }
 
   // if it's connect website, all content is inside layout header,
