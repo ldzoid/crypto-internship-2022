@@ -6,7 +6,7 @@ const MintedCard = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.cardImage}>
-        <Image src={Hoodie} width={240} height={270} className='missing'/>
+        <Image src={Hoodie} width={240} height={270}/>
       </div>
       <p className={styles.cardParagraph}>Hoodie #{props.id}</p>
     </div>

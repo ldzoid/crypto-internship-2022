@@ -27,6 +27,6 @@ describe('Blank contract', async () => {
   });
 
   it('should mint initial tokens to deployer address', async () => {
-    expect(await hhBlank.balanceOf(owner.address)).to.equal(1000);
+    expect(await hhBlank.balanceOf(owner.address)).to.equal(1000000);
   });
 });

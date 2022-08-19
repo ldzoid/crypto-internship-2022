@@ -36,7 +36,7 @@ const Layout = (props) => {
       break;
     case '/erc20-manager':
       title = 'ERC20';
-      subtitle = 'Stake your NFTs so you can later unstake them here as well';
+      subtitle = 'Manage your BLANK tokens, you can get more tokens for staking your NFT';
       homePage = false;
       connectLayout = false;
       break;

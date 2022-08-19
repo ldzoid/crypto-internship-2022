@@ -1,0 +1,23 @@
+.container {
+  width: 1136px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  color: #fff;
+  justify-content: space-between;
+  margin: 100px 0;
+}
+
+.headerSecondary {
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 56px;
+}
+
+.stakedListContainer {
+    width: 1136px;
+    display: flex;
+    justify-content: space-between;
+    overflow: auto;
+}
