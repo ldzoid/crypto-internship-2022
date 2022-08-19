@@ -15,19 +15,23 @@ const Message = () => {
     return;
   } else {
     return (
-      <div className={styles.container}>
-        <Image
-          src={messageState == 1 ? Success : Warning}
-          width={48}
-          height={48}
-        ></Image>
-        <h1 className={styles.message}>{messageText}</h1>
-        <button
-          className={`${styles.btn} btnMain`}
-          onClick={() => {setMessage([0, ''])}}
-        >
-          Okay
-        </button>
+      <div className={styles.blurContainer}>
+        <div className={styles.container}>
+          <Image
+            src={messageState == 1 ? Success : Warning}
+            width={48}
+            height={48}
+          ></Image>
+          <h1 className={styles.message}>{messageText}</h1>
+          <button
+            className={`${styles.btn} btnMain`}
+            onClick={() => {
+              setMessage([0, '']);
+            }}
+          >
+            Okay
+          </button>
+        </div>
       </div>
     );
   }
