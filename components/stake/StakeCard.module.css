@@ -29,3 +29,16 @@
     #80ABD8
   );
 }
+
+@media all and (max-width: 450px) {
+  .container {
+    margin: 20px 0;
+    height: auto;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 254px;
+    margin: 10px 0;
+  }
+}

@@ -62,3 +62,39 @@
   width: 90%;
   height: 48px;
 }
+
+@media all and (max-width: 450px) {
+  .container {
+    width: 90%;
+    height: 400px;
+  }
+
+  .infoContainer {
+    flex-direction: column;
+    height: 120px;
+  }
+
+  .infoStakeContainer {
+    height: 48px;
+  }
+
+  .infoStakeTitle {
+    font-size: 16px;
+  }
+
+  .infoStakeValue {
+    font-size: 24px;
+  }
+
+  .dataTitle {
+    font-size: 15px;
+  }
+
+  .dataValue {
+    font-size: 15px;
+  }
+
+  .btnClaim {
+    height: 42px;
+  }
+}

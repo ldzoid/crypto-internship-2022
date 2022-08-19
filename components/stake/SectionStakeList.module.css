@@ -21,3 +21,19 @@
     justify-content: space-between;
     overflow: auto;
 }
+
+@media all and (max-width: 450px) {
+  .container {
+    height: auto;
+    width: 90%;
+  }
+
+  .headerSecondary {
+    font-size: 40px;
+  }
+
+  .stakedListContainer {
+    flex-direction: column;
+    width: 100%;
+  }
+}
