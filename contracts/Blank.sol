@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.9;
 
-import './BlankDependencies/ERC20Capped.sol';
+import '@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol';
 
 contract Blank is ERC20Capped {
 

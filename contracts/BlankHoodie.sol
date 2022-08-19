@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import './BlankHoodieDependencies/ERC721AQueryable.sol';
-import './BlankHoodieDependencies/Ownable.sol';
-import './BlankHoodieDependencies/Strings.sol';
+import 'erc721a/contracts/extensions/ERC721AQueryable.sol';
+import '@openzeppelin/contracts/access/Ownable.sol';
 
 contract BlankHoodie is ERC721AQueryable, Ownable {
 
@@ -11,8 +10,6 @@ contract BlankHoodie is ERC721AQueryable, Ownable {
     error ContractIsPaused();
     error MaxSupplyExceeded();
     error OnlyEOA();
-
-    using Strings for uint256;
 
     string  public baseURI = 'ipfs://QmVqodXFfpUU13GJDetcE2UtPLWMBsZubX6ZnhU3XDWhmJ';
 
