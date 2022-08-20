@@ -18,9 +18,12 @@ const ConnectButton = () => {
         setAddress(await signer.getAddress());
         setMessage([1, 'Connected successfully']);
         // init events for changing address in future
-        ethereum.on('accountsChanged', (accounts) => setAddress(accounts[0]))
+        ethereum.on('accountsChanged', (accounts) => setAddress(accounts[0]));
+        ethereum.on('chainChanged', (chainId) => {
+          window.location.reload();
+        });
       } catch {
-        setMessage([-1, 'Error occurred, please try again']);
+        setMessage([-1, 'Error occurred']);
       }
     } else {
       console.log('Please install ethereum');

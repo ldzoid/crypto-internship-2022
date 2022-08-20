@@ -1,7 +1,7 @@
 import ConnectButton from '../../components/connect/ConnectButton';
 import styles from '../../styles/connect.module.css';
 
-const Connect = (props) => {
+const Connect = () => {
   return (
     <>
       <div className={styles.container}>

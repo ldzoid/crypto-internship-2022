@@ -28,10 +28,17 @@ const Layout = (props) => {
         return;
       }
       console.log(address);
-      // update minted list and supply
+      // connect wallet
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send('eth_requestAccounts', []);
       const signer = await provider.getSigner();
+      // check if correct network
+      const { chainId } = await provider.getNetwork()
+      if (chainId != 5) {
+        setMessage([-1, 'Please switch network to Goerli testnet'])
+        return
+      }
+      // initialize contracts
       const blankHoodieContract = new ethers.Contract(
         Connector.BlankHoodieAddress,
         Connector.BlankHoodieABI,

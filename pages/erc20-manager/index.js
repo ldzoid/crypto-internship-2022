@@ -5,7 +5,7 @@ import Connector from '../../modules/connector';
 import Utils from '../../modules/utils';
 import styles from '../../styles/erc20-manager.module.css';
 
-const Erc20Manger = (props) => {
+const Erc20Manger = () => {
   const { address, setMessage, tokenBalance, setTokenBalance } =
     useContext(LayoutContext);
 
@@ -17,6 +17,15 @@ const Erc20Manger = (props) => {
     if (!address) {
       setMessage([-1, 'Connect wallet to complete the action']);
       return;
+    }
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = await provider.getSigner();
+    // check if chain is correct
+    const { chainId } = await provider.getNetwork()
+    if (chainId != 5) {
+      setMessage([-1, 'Please switch network to Goerli testnet'])
+      return
     }
     // check if amount is valid
     if (!Utils.isPositiveInteger(amountToSend)) {
@@ -34,9 +43,6 @@ const Erc20Manger = (props) => {
       return;
     }
     // initialize contract
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send('eth_requestAccounts', []);
-    const signer = await provider.getSigner();
     const blankContract = new ethers.Contract(
       Connector.BlankAddress,
       Connector.BlankABI,

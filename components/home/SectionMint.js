@@ -20,10 +20,17 @@ const SectionMint = () => {
       setMessage([-1, 'Connect wallet to complete the action']);
       return;
     }
-    // initialize blankHoodieContract
+    // get provider and signer
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send('eth_requestAccounts', []);
     const signer = await provider.getSigner();
+    // check if chain is correct
+    const { chainId } = await provider.getNetwork()
+    if (chainId != 5) {
+      setMessage([-1, 'Please switch network to Goerli testnet'])
+      return
+    }
+    // initialize blankHoodieContract
     const blankHoodieContract = new ethers.Contract(
       Connector.BlankHoodieAddress,
       Connector.BlankHoodieABI,
@@ -59,7 +66,7 @@ const SectionMint = () => {
       const _supply = await blankHoodieContract.totalSupply();
       setSupply(_supply);
     } catch {
-      setMessage([-1, 'Error occurred, please try again']);
+      setMessage([-1, 'Error occurred']);
     }
   };
 

@@ -2,20 +2,20 @@ import { ethers } from 'ethers';
 
 const Utils = (() => {
 
-  const isValidAddress = (address) => {
+  const isValidAddress = (_address) => {
     try {
-      ethers.utils.getAddress(address);
+      ethers.utils.getAddress(_address);
       return true;
     } catch {
       return false;
     }
   };
 
-  const isPositiveInteger = (str) => {
-    if (typeof str !== 'string') {
+  const isPositiveInteger = (_str) => {
+    if (typeof _str !== 'string') {
       return false;
     }
-    const num = Number(str);
+    const num = Number(_str);
     if (Number.isInteger(num) && num > 0) {
       return true;
     }
