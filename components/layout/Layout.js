@@ -14,35 +14,43 @@ const Layout = (props) => {
   const [message, setMessage] = useState([0, '']); // 0 - defaut, 1 - success, -1 - error
   const [supply, setSupply] = useState('?');
   const [mintedList, setMintedList] = useState([]);
+  const [tokenBalance, setTokenBalance] = useState('?');
 
   useEffect(() => {
     (async () => {
       // if address is connected
       if (address) {
-        console.log(address)
+        console.log(address);
         // update minted list and supply
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         await provider.send('eth_requestAccounts', []);
         const signer = await provider.getSigner();
-        const contract = new ethers.Contract(
+        const blankHoodieContract = new ethers.Contract(
           Connector.BlankHoodieAddress,
           Connector.BlankHoodieABI,
           signer
         );
-        // get supply and minted list
-        const _address = await signer.getAddress();
-        const _supply = await contract.totalSupply();
-        const _mintedList = (await contract.tokensOfOwner(_address)).map(
-          (object) => parseInt(object['_hex']),
-          16
+        const blankContract = new ethers.Contract(
+          Connector.BlankAddress,
+          Connector.BlankABI,
+          signer
         );
+        // get supply, minted list, token balance
+        const _address = await signer.getAddress();
+        const _supply = await blankHoodieContract.totalSupply();
+        const _mintedList = (
+          await blankHoodieContract.tokensOfOwner(_address)
+        ).map((object) => parseInt(object['_hex']), 16);
+        const _tokenBalance = parseInt((await blankContract.balanceOf(_address))['_hex'], 16)
         setSupply(_supply);
         setMintedList(_mintedList);
+        setTokenBalance(_tokenBalance)
         console.log('updated both');
       } else {
         console.log('user disconnected');
         setSupply('?');
         setMintedList([]);
+        setTokenBalance('?')
       }
     })();
   }, [address]);
@@ -106,6 +114,8 @@ const Layout = (props) => {
             setAddress,
             message,
             setMessage,
+            tokenBalance,
+            setTokenBalance
           }}
         >
           <div className={styles.container}>
@@ -139,6 +149,8 @@ const Layout = (props) => {
           setAddress,
           message,
           setMessage,
+          tokenBalance,
+          setTokenBalance
         }}
       >
         <div className={styles.container}>

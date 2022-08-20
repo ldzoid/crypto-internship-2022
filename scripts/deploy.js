@@ -5,10 +5,10 @@ async function main() {
   
     console.log('Account balance:', (await deployer.getBalance()).toString());
   
-    const BlankHoodie = await ethers.getContractFactory('Blank');
-    const hhBlankHoodie = await BlankHoodie.deploy();
+    const contract = await ethers.getContractFactory('Blank');
+    const hhContract = await contract.deploy();
   
-    console.log('Contract address:', hhBlankHoodie.address);
+    console.log('Contract address:', hhContract.address);
   }
   
   main()
