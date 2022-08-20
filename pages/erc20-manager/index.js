@@ -9,21 +9,19 @@ const Erc20Manger = (props) => {
       </div>
       <div className={styles.lineBreak}></div>
       <div className={styles.sendTokensInputContainer}>
-        <label for="text" className={styles.inputLabel}>Amount</label>
+        <label className={styles.inputLabel}>Amount</label>
         <input
         className={styles.input}
           type="text"
-          id="text"
           name="amount"
           placeholder="Tokens to send"
         ></input>
       </div>
       <div className={styles.sendTokensInputContainer}>
-        <label for="text" className={styles.inputLabel}>Recipient</label>
+        <label className={styles.inputLabel}>Recipient</label>
         <input
         className={styles.input}
           type="text"
-          id="text"
           name="amount"
           placeholder="Insert recipient address"
         ></input>

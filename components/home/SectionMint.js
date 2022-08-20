@@ -1,38 +1,45 @@
+import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useContext, useState } from 'react';
-import { MessageContext } from '../layout/MessageContext';
 import Connector from '../../modules/connector';
 import styles from './SectionMint.module.css';
 import Hoodie from '../../public/images/Hoodie.png';
 import IconBox from '../../public/images/Icon Box.png';
 import IconStars from '../../public/images/Icon Stars.png';
 import IconBlank from '../../public/images/Icon Blank.png';
-
+import { LayoutContext } from '../layout/LayoutContext';
 const SectionMint = () => {
   const [amount, setAmount] = useState('1');
-  const [supply, setSupply] = useState('?');
 
-  const { setMessage } = useContext(MessageContext);
-
-  // updates total minted supply every 10 seconds
-  const updateSupply = async () => {
-    if (Connector.getSigner() != undefined) {
-      const newSupply = await Connector.getSupply();
-      if (newSupply !== supply) {
-        setSupply(newSupply);
-      }
-    }
-    setTimeout(updateSupply, 5000);
-  };
-  updateSupply();
+  const { supply, setSupply, address, setMessage } = useContext(LayoutContext)
 
   // mints nft
   const handleClickMint = async (_amount) => {
-    if (Connector.getSigner() == undefined) {
-      setMessage([-1, 'Connect wallet to complete the action']);
+    if (address) {
+      // initialize contract
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send('eth_requestAccounts', []);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(
+        Connector.BlankHoodieAddress,
+        Connector.BlankHoodieABI,
+        signer
+      );
+      // mint
+      try {
+        const txObject = {
+          value: ethers.utils.parseEther(`${0.1 * _amount}`),
+        };
+        await contract.mint(_amount, txObject);
+        setMessage([1, 'Minted succesfully']);
+        // update supply
+        const _supply = await contract.totalSupply();
+        setSupply(_supply)
+      } catch {
+        setMessage([-1, 'Error occurred, please try again']);
+      }
     } else {
-      await Connector.mint(_amount);
-      setMessage([1, 'Minted succesfully']);
+      setMessage([-1, 'Connect wallet to complete the action']);
     }
   };
 
@@ -40,7 +47,7 @@ const SectionMint = () => {
     <section className={styles.container}>
       <div className={styles.mintMainContainer}>
         <h2 className={styles.headerSecondary}>
-          Blank’s <span className='highlight'>Meta-builder</span> Hoodie
+          Blank’s <span className="highlight">Meta-builder</span> Hoodie
         </h2>
         <p className={styles.paragraph}>
           Become a part of our trip to the Metaverse by owning Blank’s
@@ -61,21 +68,21 @@ const SectionMint = () => {
           <div className={styles.mintBtnsContainer}>
             <select
               className={styles.selectAmount}
-              name='amount'
+              name="amount"
               onChange={(e) => {
                 setAmount(e.target.value);
               }}
             >
-              <option value='1'>1</option>
-              <option value='2'>2</option>
-              <option value='3'>3</option>
-              <option value='4'>4</option>
-              <option value='5'>5</option>
-              <option value='6'>6</option>
-              <option value='7'>7</option>
-              <option value='8'>8</option>
-              <option value='9'>9</option>
-              <option value='10'>10</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
             </select>
             <button
               className={`${styles.btnMint} btnMain`}

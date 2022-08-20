@@ -1,16 +1,51 @@
+import { ethers } from 'ethers';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './Header';
 import MainNavigation from './MainNavigation';
 import Message from './Message';
-import { AddressContext } from './AddressContext';
-import { MessageContext } from './MessageContext';
+import { LayoutContext } from './LayoutContext';
+import Connector from '../../modules/connector';
 import styles from './Layout.module.css';
 
 const Layout = (props) => {
-  const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState('');
   const [message, setMessage] = useState([0, '']); // 0 - defaut, 1 - success, -1 - error
+  const [supply, setSupply] = useState('?');
+  const [mintedList, setMintedList] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      // if address is connected
+      if (address) {
+        console.log(address)
+        // update minted list and supply
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send('eth_requestAccounts', []);
+        const signer = await provider.getSigner();
+        const contract = new ethers.Contract(
+          Connector.BlankHoodieAddress,
+          Connector.BlankHoodieABI,
+          signer
+        );
+        // get supply and minted list
+        const _address = await signer.getAddress();
+        const _supply = await contract.totalSupply();
+        const _mintedList = (await contract.tokensOfOwner(_address)).map(
+          (object) => parseInt(object['_hex']),
+          16
+        );
+        setSupply(_supply);
+        setMintedList(_mintedList);
+        console.log('updated both');
+      } else {
+        console.log('user disconnected');
+        setSupply('?');
+        setMintedList([]);
+      }
+    })();
+  }, [address]);
 
   // get url
   const router = useRouter();
@@ -36,7 +71,8 @@ const Layout = (props) => {
       break;
     case '/erc20-manager':
       title = 'ERC20';
-      subtitle = 'Manage your BLANK tokens, you can get more tokens for staking your NFT';
+      subtitle =
+        'Manage your BLANK tokens, you can get more tokens for staking your NFT';
       homePage = false;
       connectLayout = false;
       break;
@@ -60,17 +96,26 @@ const Layout = (props) => {
             rel="stylesheet"
           />
         </Head>
-        <MessageContext.Provider value={{ message, setMessage }}>
-          <AddressContext.Provider value={{ address, setAddress }}>
-            <div className={styles.container}>
-              <MainNavigation />
-              <main className={`${styles.main} ${styles.connectMain}`}>
-                {props.children}
-              </main>
-              <Message />
-            </div>
-          </AddressContext.Provider>
-        </MessageContext.Provider>
+        <LayoutContext.Provider
+          value={{
+            supply,
+            setSupply,
+            mintedList,
+            setMintedList,
+            address,
+            setAddress,
+            message,
+            setMessage,
+          }}
+        >
+          <div className={styles.container}>
+            <MainNavigation />
+            <main className={`${styles.main} ${styles.connectMain}`}>
+              {props.children}
+            </main>
+            <Message />
+          </div>
+        </LayoutContext.Provider>
       </>
     );
   }
@@ -84,16 +129,25 @@ const Layout = (props) => {
           rel="stylesheet"
         />
       </Head>
-      <MessageContext.Provider value={{ message, setMessage }}>
-        <AddressContext.Provider value={{ address, setAddress }}>
-          <div className={styles.container}>
-            <MainNavigation />
-            <Header title={title} subtitle={subtitle} home={homePage} />
-          </div>
-          <main className={styles.main}>{props.children}</main>
-          <Message />
-        </AddressContext.Provider>
-      </MessageContext.Provider>
+      <LayoutContext.Provider
+        value={{
+          supply,
+          setSupply,
+          mintedList,
+          setMintedList,
+          address,
+          setAddress,
+          message,
+          setMessage,
+        }}
+      >
+        <div className={styles.container}>
+          <MainNavigation />
+          <Header title={title} subtitle={subtitle} home={homePage} />
+        </div>
+        <main className={styles.main}>{props.children}</main>
+        <Message />
+      </LayoutContext.Provider>
     </>
   );
 };

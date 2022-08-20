@@ -1,27 +1,17 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import MintedCard from './MintedCard';
-import Connector from '../../modules/connector';
 import styles from './SectionMinted.module.css';
+import { LayoutContext } from '../layout/LayoutContext';
 
 const SectionMinted = () => {
-  const [walletList, setWalletList] = useState([]);
 
-  const updateList = async () => {
-    if (Connector.getSigner() != undefined) {
-      const newWalletList = await Connector.getTokensOfSigner();
-      if (JSON.stringify(newWalletList) != JSON.stringify(walletList)) {
-        setWalletList(newWalletList);
-      }
-    }
-    setTimeout(updateList, 10000);
-  };
-  updateList();
+  const { mintedList } = useContext(LayoutContext)
 
   return (
     <section className={styles.container}>
       <h1 className={styles.headerSecondary}>Minted NFTs</h1>
       <div className={styles.mintedListContainer}>
-        {walletList.map((_id) => (
+        {mintedList.map((_id) => (
           <MintedCard id={_id} key={_id} />
         ))}
       </div>

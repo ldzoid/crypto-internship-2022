@@ -1,13 +1,12 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useContext } from 'react';
-import { MessageContext } from './MessageContext';
+import { LayoutContext } from './LayoutContext';
 import styles from './Message.module.css';
 import Success from '../../public/images/Success.png';
 import Warning from '../../public/images/Warning.png';
 
 const Message = () => {
-  const { message, setMessage } = useContext(MessageContext);
+  const { message, setMessage } = useContext(LayoutContext);
   const messageState = message[0];
   const messageText = message[1];
 
