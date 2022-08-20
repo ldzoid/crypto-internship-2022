@@ -13,53 +13,48 @@ const Erc20Manger = (props) => {
   const [amountToSend, setAmountToSend] = useState();
 
   const handleClickSend = async () => {
-    // get amount
-    if (address) {
-      // check if amount is valid
-      if (Utils.isPositiveInteger(amountToSend)) {
-        // check if address is valid
-        if (Utils.isValidAddress(addressToSend)) {
-          // check if amount is less than or equal to balance
-          if (parseInt(amountToSend) <= tokenBalance) {
-            // initialize contract
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            await provider.send('eth_requestAccounts', []);
-            const signer = await provider.getSigner();
-            const blankContract = new ethers.Contract(
-              Connector.BlankAddress,
-              Connector.BlankABI,
-              signer
-            );
-            // send transaction
-            try {
-              await blankContract.transfer(addressToSend, amountToSend);
-              setMessage([
-                1,
-                `Successfully transferred ${amountToSend} BLANK tokens`,
-              ]);
-              // update new balance
-              const _tokenBalance = parseInt(
-                (await blankContract.balanceOf(await signer.getAddress()))[
-                  '_hex'
-                ],
-                16
-              );
-              setTokenBalance(_tokenBalance);
-            } catch (e) {
-              console.log(e);
-              setMessage([-1, 'Error occurred']);
-            }
-          } else {
-            setMessage([-1, "You don't own enough tokens"]);
-          }
-        } else {
-          setMessage([-1, 'Please enter a valid address']);
-        }
-      } else {
-        setMessage([-1, 'Please enter a valid number']);
-      }
-    } else {
+    // check if wallet is connected
+    if (!address) {
       setMessage([-1, 'Connect wallet to complete the action']);
+      return;
+    }
+    // check if amount is valid
+    if (!Utils.isPositiveInteger(amountToSend)) {
+      setMessage([-1, 'Please enter a valid number']);
+      return;
+    }
+    // check if address is valid
+    if (!Utils.isValidAddress(addressToSend)) {
+      setMessage([-1, 'Please enter a valid address']);
+      return;
+    }
+    // check if amount is less than or equal to balance
+    if (!(parseInt(amountToSend) <= tokenBalance)) {
+      setMessage([-1, "You don't own enough tokens"]);
+      return;
+    }
+    // initialize contract
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = await provider.getSigner();
+    const blankContract = new ethers.Contract(
+      Connector.BlankAddress,
+      Connector.BlankABI,
+      signer
+    );
+    // send transaction
+    try {
+      await blankContract.transfer(addressToSend, amountToSend);
+      setMessage([1, `Successfully transferred ${amountToSend} BLANK tokens`]);
+      // update new balance
+      const _tokenBalance = parseInt(
+        (await blankContract.balanceOf(await signer.getAddress()))['_hex'],
+        16
+      );
+      setTokenBalance(_tokenBalance);
+    } catch (e) {
+      console.log(e);
+      setMessage([-1, 'Error occurred']);
     }
   };
 

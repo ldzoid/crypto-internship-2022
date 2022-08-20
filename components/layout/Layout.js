@@ -16,42 +16,46 @@ const Layout = (props) => {
   const [mintedList, setMintedList] = useState([]);
   const [tokenBalance, setTokenBalance] = useState('?');
 
+  // when account changes, update all state variables
   useEffect(() => {
     (async () => {
-      // if address is connected
-      if (address) {
-        console.log(address);
-        // update minted list and supply
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        await provider.send('eth_requestAccounts', []);
-        const signer = await provider.getSigner();
-        const blankHoodieContract = new ethers.Contract(
-          Connector.BlankHoodieAddress,
-          Connector.BlankHoodieABI,
-          signer
-        );
-        const blankContract = new ethers.Contract(
-          Connector.BlankAddress,
-          Connector.BlankABI,
-          signer
-        );
-        // get supply, minted list, token balance
-        const _address = await signer.getAddress();
-        const _supply = await blankHoodieContract.totalSupply();
-        const _mintedList = (
-          await blankHoodieContract.tokensOfOwner(_address)
-        ).map((object) => parseInt(object['_hex']), 16);
-        const _tokenBalance = parseInt((await blankContract.balanceOf(_address))['_hex'], 16)
-        setSupply(_supply);
-        setMintedList(_mintedList);
-        setTokenBalance(_tokenBalance)
-        console.log('updated both');
-      } else {
+      // check is wallet is connected
+      if (!address) {
         console.log('user disconnected');
         setSupply('?');
         setMintedList([]);
-        setTokenBalance('?')
+        setTokenBalance('?');
+        return;
       }
+      console.log(address);
+      // update minted list and supply
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send('eth_requestAccounts', []);
+      const signer = await provider.getSigner();
+      const blankHoodieContract = new ethers.Contract(
+        Connector.BlankHoodieAddress,
+        Connector.BlankHoodieABI,
+        signer
+      );
+      const blankContract = new ethers.Contract(
+        Connector.BlankAddress,
+        Connector.BlankABI,
+        signer
+      );
+      // get supply, minted list, token balance
+      const _address = await signer.getAddress();
+      const _supply = await blankHoodieContract.totalSupply();
+      const _mintedList = (
+        await blankHoodieContract.tokensOfOwner(_address)
+      ).map((object) => parseInt(object['_hex']), 16);
+      const _tokenBalance = parseInt(
+        (await blankContract.balanceOf(_address))['_hex'],
+        16
+      );
+      setSupply(_supply);
+      setMintedList(_mintedList);
+      setTokenBalance(_tokenBalance);
+      console.log('updated both');
     })();
   }, [address]);
 
@@ -115,7 +119,7 @@ const Layout = (props) => {
             message,
             setMessage,
             tokenBalance,
-            setTokenBalance
+            setTokenBalance,
           }}
         >
           <div className={styles.container}>
@@ -150,7 +154,7 @@ const Layout = (props) => {
           message,
           setMessage,
           tokenBalance,
-          setTokenBalance
+          setTokenBalance,
         }}
       >
         <div className={styles.container}>

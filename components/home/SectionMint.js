@@ -8,38 +8,58 @@ import IconBox from '../../public/images/Icon Box.png';
 import IconStars from '../../public/images/Icon Stars.png';
 import IconBlank from '../../public/images/Icon Blank.png';
 import { LayoutContext } from '../layout/LayoutContext';
+
 const SectionMint = () => {
   const [amount, setAmount] = useState('1');
 
-  const { supply, setSupply, address, setMessage } = useContext(LayoutContext)
+  const { supply, setSupply, address, setMessage } = useContext(LayoutContext);
 
-  // mints nft
   const handleClickMint = async (_amount) => {
-    if (address) {
-      // initialize contract
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send('eth_requestAccounts', []);
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(
-        Connector.BlankHoodieAddress,
-        Connector.BlankHoodieABI,
-        signer
-      );
-      // mint
-      try {
-        const txObject = {
-          value: ethers.utils.parseEther(`${0.1 * _amount}`),
-        };
-        await contract.mint(_amount, txObject);
-        setMessage([1, 'Minted succesfully']);
-        // update supply
-        const _supply = await contract.totalSupply();
-        setSupply(_supply)
-      } catch {
-        setMessage([-1, 'Error occurred, please try again']);
-      }
-    } else {
+    // check is wallet is connected
+    if (!address) {
       setMessage([-1, 'Connect wallet to complete the action']);
+      return;
+    }
+    // initialize blankHoodieContract
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = await provider.getSigner();
+    const blankHoodieContract = new ethers.Contract(
+      Connector.BlankHoodieAddress,
+      Connector.BlankHoodieABI,
+      signer
+    );
+    // check if max supply is reached, not enough balance
+    if (
+      parseInt((await blankHoodieContract.totalSupply())['_hex'], 16) +
+        parseInt(_amount) >
+      500
+    ) {
+      setMessage([-1, 'Max supply is exceeded']);
+      return;
+    }
+    // check if user has enough balance
+    if (
+      ethers.utils.formatEther(
+        await provider.getBalance(await signer.getAddress())
+      ) <
+      0.1 * parseInt(_amount)
+    ) {
+      setMessage([-1, "You don't have enough Ether"]);
+      return;
+    }
+    // send transaction
+    try {
+      const txObject = {
+        value: ethers.utils.parseEther(`${0.1 * _amount}`),
+      };
+      await blankHoodieContract.mint(_amount, txObject);
+      setMessage([1, 'Minted succesfully']);
+      // update supply
+      const _supply = await blankHoodieContract.totalSupply();
+      setSupply(_supply);
+    } catch {
+      setMessage([-1, 'Error occurred, please try again']);
     }
   };
 
