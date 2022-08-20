@@ -22,8 +22,9 @@ const ConnectButton = () => {
         ethereum.on('chainChanged', (chainId) => {
           window.location.reload();
         });
-      } catch {
+      } catch (e) {
         setMessage([-1, 'Error occurred']);
+        console.error(e)
       }
     } else {
       console.log('Please install ethereum');

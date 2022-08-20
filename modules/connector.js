@@ -1,5 +1,4 @@
 const Connector = (() => {
-
   // BlankHoodie.sol information
   const BlankHoodieAddress = '0xf63f410b7831AA6b34651260C8d5B69F812581b3';
   const BlankHoodieABI = [
@@ -182,7 +181,17 @@ const Connector = (() => {
     },
   ];
 
-  return { BlankHoodieAddress, BlankHoodieABI, BlankAddress, BlankABI };
+  // Blank.sol object for EIP 747
+  const blankObject = {
+    type: 'ERC20',
+    options: {
+      address: BlankAddress,
+      symbol: 'BLANK',
+      decimals: 18,
+    },
+  };
+
+  return { BlankHoodieAddress, BlankHoodieABI, BlankAddress, BlankABI, blankObject };
 })();
 
 export default Connector;

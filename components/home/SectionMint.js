@@ -65,8 +65,9 @@ const SectionMint = () => {
       // update supply
       const _supply = await blankHoodieContract.totalSupply();
       setSupply(_supply);
-    } catch {
+    } catch (e) {
       setMessage([-1, 'Error occurred']);
+      console.error(e)
     }
   };
 

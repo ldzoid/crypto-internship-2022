@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { LayoutContext } from '../../components/layout/LayoutContext';
 import Connector from '../../modules/connector';
 import Utils from '../../modules/utils';
@@ -22,10 +22,17 @@ const Erc20Manger = () => {
     await provider.send('eth_requestAccounts', []);
     const signer = await provider.getSigner();
     // check if chain is correct
-    const { chainId } = await provider.getNetwork()
+    const { chainId } = await provider.getNetwork();
     if (chainId != 5) {
-      setMessage([-1, 'Please switch network to Goerli testnet'])
-      return
+      setMessage([-1, 'Please switch network to Goerli testnet']);
+      return;
+    }
+    // suggest token import
+    try {
+      await provider.send('wallet_watchAsset', Connector.blankObject);
+    } catch (e) {
+      setMessage([-1, 'Error occured']);
+      console.error(e);
     }
     // check if amount is valid
     if (!Utils.isPositiveInteger(amountToSend)) {
@@ -59,8 +66,8 @@ const Erc20Manger = () => {
       );
       setTokenBalance(_tokenBalance);
     } catch (e) {
-      console.log(e);
       setMessage([-1, 'Error occurred']);
+      console.log(e);
     }
   };
 
