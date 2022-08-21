@@ -1,4 +1,5 @@
 .blurContainer {
+  z-index: 3;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -15,7 +16,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  z-index: 2;
   background-color: yellow;
   top: 400px;
   left: 50%;

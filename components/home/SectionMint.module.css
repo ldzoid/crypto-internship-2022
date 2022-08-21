@@ -31,6 +31,8 @@
 .mintContainer {
   width: 448px;
   height: 148px;
+  position: relative;
+  z-index: 2;
   backdrop-filter: blur(200px);
   display: flex;
   flex-direction: column;
@@ -75,15 +77,52 @@
 }
 
 .selectAmount {
+  position: relative;
   height: 100%;
-  width: 65px;
+  width: 70px;
   border: none;
   color: #fff;
   background-color: #292929;
   font-weight: 700;
   font-size: 14px;
   line-height: 18px;
-  padding: 0px 10px;
+}
+
+.selectAmount:hover {
+  cursor: pointer;
+}
+
+.selectOptionDefault {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.selectOption {
+  color: #fff;
+  background-color: #292929;
+  width: 100%;
+  height: 0;
+}
+
+.expanded {
+  position: relative;
+  height: 20px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  height: 50%;
+  padding: 0 0 0 15px;
+  display: flex;
+  align-items: center;
+}
+
+.expanded:hover {
+  cursor: pointer;
+  background-color: #212121;
 }
 
 .btnMint {
@@ -185,6 +224,14 @@
     font-weight: 400;
     font-size: 14px;
     text-align: center;
+  }
+
+  .selectOptionDefault {
+    padding: 0 6px;
+  }
+
+  .expanded {
+    padding: 0 0 0 6px;
   }
 
   .mintAdditionalContainer {

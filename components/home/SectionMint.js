@@ -7,10 +7,12 @@ import Hoodie from '../../public/images/Hoodie.png';
 import IconBox from '../../public/images/Icon Box.png';
 import IconStars from '../../public/images/Icon Stars.png';
 import IconBlank from '../../public/images/Icon Blank.png';
+import DownArrow from '../../public/images/Down Arrow.png'
 import { LayoutContext } from '../layout/LayoutContext';
 
 const SectionMint = () => {
   const [amount, setAmount] = useState('1');
+  const [expanded, setExpanded] = useState(false);
 
   const { supply, setSupply, address, setMessage } = useContext(LayoutContext);
 
@@ -25,10 +27,10 @@ const SectionMint = () => {
     await provider.send('eth_requestAccounts', []);
     const signer = await provider.getSigner();
     // check if chain is correct
-    const { chainId } = await provider.getNetwork()
+    const { chainId } = await provider.getNetwork();
     if (chainId != 5) {
-      setMessage([-1, 'Please switch network to Goerli testnet'])
-      return
+      setMessage([-1, 'Please switch network to Goerli testnet']);
+      return;
     }
     // initialize blankHoodieContract
     const blankHoodieContract = new ethers.Contract(
@@ -67,8 +69,12 @@ const SectionMint = () => {
       setSupply(_supply);
     } catch (e) {
       setMessage([-1, 'Error occurred']);
-      console.error(e)
+      console.error(e);
     }
+  };
+
+  const handleClickOption = (e) => {
+    setAmount(e.target.dataset.value)
   };
 
   return (
@@ -94,24 +100,107 @@ const SectionMint = () => {
             </div>
           </div>
           <div className={styles.mintBtnsContainer}>
-            <select
+            <div
               className={styles.selectAmount}
-              name="amount"
-              onChange={(e) => {
-                setAmount(e.target.value);
+              onClick={(e) => {
+                setExpanded(!expanded);
               }}
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
+              <div className={styles.selectOptionDefault}>
+                <p>{amount}</p>
+                <Image src={DownArrow} width={16} height={16}></Image>
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='1'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '1' : ''}
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='2'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '2' : ''}
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='3'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '3' : ''}
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='4'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '4' : ''}
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='5'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '5' : ''}
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='6'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '6' : ''}
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='7'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '7' : ''}
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='8'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '8' : ''}
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='9'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '9' : ''}
+              </div>
+              <div
+                onClick={(e) => handleClickOption(e)}
+                data-value='10'
+                className={`${styles.selectOption} ${
+                  expanded ? styles.expanded : ''
+                }`}
+              >
+                {expanded ? '10' : ''}
+              </div>
+            </div>
             <button
               className={`${styles.btnMint} btnMain`}
               onClick={() => handleClickMint(amount)}
