@@ -63,6 +63,7 @@ const SectionMint = () => {
         value: ethers.utils.parseEther(`${0.1 * _amount}`),
       };
       const tx = await blankHoodieContract.mint(_amount, txObject);
+      setMessage([2, 'Please wait transaction confirmation'])
       await tx.wait()
       setMessage([1, 'Minted succesfully']);
       // update supply

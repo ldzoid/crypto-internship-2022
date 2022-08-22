@@ -54,6 +54,7 @@ const Erc20Manger = () => {
         addressToSend,
         ethers.utils.parseEther(`${amountToSend}`)
       );
+      setMessage([2, 'Please wait transaction confirmation'])
       await tx.wait()
       setMessage([1, `Successfully transferred ${amountToSend} BLANK tokens`]);
       // update new balance
