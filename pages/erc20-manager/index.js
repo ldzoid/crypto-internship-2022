@@ -57,13 +57,12 @@ const Erc20Manger = () => {
     );
     // send transaction
     try {
-      await blankContract.transfer(addressToSend, amountToSend);
+      await blankContract.transfer(addressToSend, ethers.utils.parseEther(`${amountToSend}`));
       setMessage([1, `Successfully transferred ${amountToSend} BLANK tokens`]);
       // update new balance
-      const _tokenBalance = parseInt(
-        (await blankContract.balanceOf(await signer.getAddress()))['_hex'],
-        16
-      );
+      const _tokenBalance = Math.round(ethers.utils.formatEther(
+        await blankContract.balanceOf(await signer.getAddress())
+      ));
       setTokenBalance(_tokenBalance);
     } catch (e) {
       setMessage([-1, 'Error occurred']);

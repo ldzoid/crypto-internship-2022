@@ -33,10 +33,10 @@ const Layout = (props) => {
       await provider.send('eth_requestAccounts', []);
       const signer = await provider.getSigner();
       // check if correct network
-      const { chainId } = await provider.getNetwork()
+      const { chainId } = await provider.getNetwork();
       if (chainId != 5) {
-        setMessage([-1, 'Please switch network to Goerli testnet'])
-        return
+        setMessage([-1, 'Please switch network to Goerli testnet']);
+        return;
       }
       // initialize contracts
       const blankHoodieContract = new ethers.Contract(
@@ -55,10 +55,9 @@ const Layout = (props) => {
       const _mintedList = (
         await blankHoodieContract.tokensOfOwner(_address)
       ).map((object) => parseInt(object['_hex']), 16);
-      const _tokenBalance = parseInt(
-        (await blankContract.balanceOf(_address))['_hex'],
-        16
-      );
+      const _tokenBalance = Math.round(ethers.utils.formatEther(
+        await blankContract.balanceOf(await signer.getAddress())
+      ));
       setSupply(_supply);
       setMintedList(_mintedList);
       setTokenBalance(_tokenBalance);

@@ -28,7 +28,7 @@ const Connector = (() => {
   ];
 
   // Blank.sol information
-  const BlankAddress = '0x6a77C97E7574aAd0F8733Ed3207D43716877C873';
+  const BlankAddress = '0xe34Ae383eB86eDcA4d4E381C5440b544b13EBFBf';
   const BlankABI = [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     {
