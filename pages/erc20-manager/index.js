@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { LayoutContext } from '../../components/layout/LayoutContext';
 import Connector from '../../modules/connector';
 import Utils from '../../modules/utils';
@@ -27,13 +27,6 @@ const Erc20Manger = () => {
       setMessage([-1, 'Please switch network to Goerli testnet']);
       return;
     }
-    // suggest token import
-    try {
-      await provider.send('wallet_watchAsset', Connector.blankObject);
-    } catch (e) {
-      setMessage([-1, 'Error occured']);
-      console.error(e);
-    }
     // check if amount is valid
     if (!Utils.isPositiveInteger(amountToSend)) {
       setMessage([-1, 'Please enter a valid number']);
@@ -55,18 +48,45 @@ const Erc20Manger = () => {
       Connector.BlankABI,
       signer
     );
-    // send transaction
+    // send transaction TODO
     try {
-      await blankContract.transfer(addressToSend, ethers.utils.parseEther(`${amountToSend}`));
+      await blankContract.transfer(
+        addressToSend,
+        ethers.utils.parseEther(`${amountToSend}`)
+      );
       setMessage([1, `Successfully transferred ${amountToSend} BLANK tokens`]);
       // update new balance
-      const _tokenBalance = Math.round(ethers.utils.formatEther(
-        await blankContract.balanceOf(await signer.getAddress())
-      ));
+      const _tokenBalance = Math.round(
+        ethers.utils.formatEther(
+          await blankContract.balanceOf(await signer.getAddress())
+        )
+      );
       setTokenBalance(_tokenBalance);
     } catch (e) {
       setMessage([-1, 'Error occurred']);
       console.log(e);
+    }
+  };
+
+  const handleClickImport = async () => {
+    // check if wallet is connected
+    if (!address) {
+      setMessage([-1, 'Connect wallet to complete the action']);
+      return;
+    }
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    // check if chain is correct
+    const { chainId } = await provider.getNetwork();
+    if (chainId != 5) {
+      setMessage([-1, 'Please switch network to Goerli testnet']);
+      return;
+    }
+    try {
+      await provider.send('wallet_watchAsset', Connector.blankObject);
+    } catch (e) {
+      setMessage([-1, 'Error occured']);
+      console.error(e);
     }
   };
 
@@ -103,6 +123,9 @@ const Erc20Manger = () => {
       </div>
       <button className={`btnMain ${styles.btnSend}`} onClick={handleClickSend}>
         Send
+      </button>
+      <button className={styles.btnImportToken} onClick={handleClickImport}>
+        Import token to MetaMask
       </button>
     </div>
   );

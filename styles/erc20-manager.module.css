@@ -69,6 +69,16 @@
   height: 48px;
 }
 
+.btnImportToken {
+  background-color: transparent;
+  color: #fff;
+  text-decoration: underline;
+}
+
+.btnImportToken:hover {
+  color: #ccc;
+}
+
 @media all and (max-width: 450px) {
   .container {
     width: 90%;
