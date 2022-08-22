@@ -6,12 +6,12 @@ import Header from './Header';
 import MainNavigation from './MainNavigation';
 import Message from './Message';
 import { LayoutContext } from './LayoutContext';
-import Connector from '../../modules/connector';
+import Contracts from '../../modules/contracts';
 import styles from './Layout.module.css';
 
 const Layout = (props) => {
   const [address, setAddress] = useState('');
-  const [message, setMessage] = useState([0, '']); // 0 - defaut, 1 - success, -1 - error
+  const [message, setMessage] = useState([0, '']); // 0 - defaut, 1 - success, -1 - error, 2 - loader
   const [supply, setSupply] = useState('?');
   const [mintedList, setMintedList] = useState([]);
   const [tokenBalance, setTokenBalance] = useState('?');
@@ -40,13 +40,13 @@ const Layout = (props) => {
       }
       // initialize contracts
       const blankHoodieContract = new ethers.Contract(
-        Connector.BlankHoodieAddress,
-        Connector.BlankHoodieABI,
+        Contracts.BlankHoodieAddress,
+        Contracts.BlankHoodieABI,
         signer
       );
       const blankContract = new ethers.Contract(
-        Connector.BlankAddress,
-        Connector.BlankABI,
+        Contracts.BlankAddress,
+        Contracts.BlankABI,
         signer
       );
       // get supply, minted list, token balance
@@ -90,7 +90,7 @@ const Layout = (props) => {
     case '/erc20-manager':
       title = 'ERC20';
       subtitle =
-        'Manage your BLANK tokens, you can get more tokens for staking your NFT';
+        'Manage your BLANK tokens, you can get more tokens by staking your NFT';
       homePage = false;
       connectLayout = false;
       break;

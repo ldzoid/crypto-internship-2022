@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { useContext, useState } from 'react';
 import { LayoutContext } from '../../components/layout/LayoutContext';
-import Connector from '../../modules/connector';
+import Contracts from '../../modules/contracts';
 import Utils from '../../modules/utils';
 import styles from '../../styles/erc20-manager.module.css';
 
@@ -44,8 +44,8 @@ const Erc20Manger = () => {
     }
     // initialize contract
     const blankContract = new ethers.Contract(
-      Connector.BlankAddress,
-      Connector.BlankABI,
+      Contracts.BlankAddress,
+      Contracts.BlankABI,
       signer
     );
     // send transaction
@@ -85,7 +85,7 @@ const Erc20Manger = () => {
       return;
     }
     try {
-      await provider.send('wallet_watchAsset', Connector.blankObject);
+      await provider.send('wallet_watchAsset', Contracts.blankObject);
     } catch (e) {
       setMessage([-1, 'Error occured']);
       console.error(e);

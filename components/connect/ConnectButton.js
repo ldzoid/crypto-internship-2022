@@ -24,7 +24,7 @@ const ConnectButton = () => {
         });
       } catch (e) {
         setMessage([-1, 'Error occurred']);
-        console.error(e)
+        console.error(e);
       }
     } else {
       console.log('Please install ethereum');

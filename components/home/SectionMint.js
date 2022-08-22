@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useContext, useState } from 'react';
-import Connector from '../../modules/connector';
+import Contracts from '../../modules/contracts';
 import styles from './SectionMint.module.css';
 import Hoodie from '../../public/images/Hoodie.png';
 import IconBox from '../../public/images/Icon Box.png';
@@ -34,8 +34,8 @@ const SectionMint = () => {
     }
     // initialize blankHoodieContract
     const blankHoodieContract = new ethers.Contract(
-      Connector.BlankHoodieAddress,
-      Connector.BlankHoodieABI,
+      Contracts.BlankHoodieAddress,
+      Contracts.BlankHoodieABI,
       signer
     );
     // check if max supply is reached, not enough balance

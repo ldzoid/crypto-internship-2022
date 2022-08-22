@@ -4,8 +4,7 @@ import styles from './SectionMinted.module.css';
 import { LayoutContext } from '../layout/LayoutContext';
 
 const SectionMinted = () => {
-
-  const { mintedList } = useContext(LayoutContext)
+  const { mintedList } = useContext(LayoutContext);
 
   return (
     <section className={styles.container}>

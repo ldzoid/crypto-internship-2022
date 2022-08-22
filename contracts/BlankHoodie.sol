@@ -1,30 +1,29 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import 'erc721a/contracts/extensions/ERC721AQueryable.sol';
-import '@openzeppelin/contracts/access/Ownable.sol';
+import "erc721a/contracts/extensions/ERC721AQueryable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract BlankHoodie is ERC721AQueryable, Ownable {
-
     error InsufficientFunds();
     error ContractIsPaused();
     error MaxSupplyExceeded();
     error OnlyEOA();
 
-    string  public baseURI = 'ipfs://QmVqodXFfpUU13GJDetcE2UtPLWMBsZubX6ZnhU3XDWhmJ';
+    string public baseURI =
+        "ipfs://QmVqodXFfpUU13GJDetcE2UtPLWMBsZubX6ZnhU3XDWhmJ";
 
-    uint256 public          cost      = 0.1 ether;
+    uint256 public cost = 0.1 ether;
     uint256 public constant maxSupply = 500;
 
     bool public paused = true;
 
-    constructor() ERC721A('Blank Hoodie', 'HOODIE') {}
+    constructor() ERC721A("Blank Hoodie", "HOODIE") {}
 
     function mint(uint256 _mintAmount) external payable {
-
         if (paused) revert ContractIsPaused();
         if (msg.sender != tx.origin) revert OnlyEOA();
-        if (totalSupply() + _mintAmount > maxSupply) revert MaxSupplyExceeded(); 
+        if (totalSupply() + _mintAmount > maxSupply) revert MaxSupplyExceeded();
         if (msg.value < cost * _mintAmount) revert InsufficientFunds();
 
         _mint(msg.sender, _mintAmount);
@@ -45,13 +44,14 @@ contract BlankHoodie is ERC721AQueryable, Ownable {
     {
         require(
             _exists(_tokenId),
-            'ERC721Metadata: URI query for nonexistent token'
+            "ERC721Metadata: URI query for nonexistent token"
         );
 
         string memory currentBaseURI = _baseURI();
-        return bytes(currentBaseURI).length > 0
-            ? string(abi.encodePacked(currentBaseURI))
-            : '';
+        return
+            bytes(currentBaseURI).length > 0
+                ? string(abi.encodePacked(currentBaseURI))
+                : "";
     }
 
     function setBaseURI(string memory _newBaseURI) external onlyOwner {
@@ -66,9 +66,9 @@ contract BlankHoodie is ERC721AQueryable, Ownable {
         cost = _price;
     }
 
-    function withdraw() onlyOwner external {
-        (bool os, ) = payable(owner()).call{value: address(this).balance }('');
-        require(os, 'Withdraw failed!');
+    function withdraw() external onlyOwner {
+        (bool os, ) = payable(owner()).call{value: address(this).balance}("");
+        require(os, "Withdraw failed!");
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
