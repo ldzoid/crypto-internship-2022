@@ -48,12 +48,13 @@ const Erc20Manger = () => {
       Connector.BlankABI,
       signer
     );
-    // send transaction TODO
+    // send transaction
     try {
-      await blankContract.transfer(
+      const tx = await blankContract.transfer(
         addressToSend,
         ethers.utils.parseEther(`${amountToSend}`)
       );
+      await tx.wait()
       setMessage([1, `Successfully transferred ${amountToSend} BLANK tokens`]);
       // update new balance
       const _tokenBalance = Math.round(

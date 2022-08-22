@@ -62,7 +62,8 @@ const SectionMint = () => {
       const txObject = {
         value: ethers.utils.parseEther(`${0.1 * _amount}`),
       };
-      await blankHoodieContract.mint(_amount, txObject);
+      const tx = await blankHoodieContract.mint(_amount, txObject);
+      await tx.wait()
       setMessage([1, 'Minted succesfully']);
       // update supply
       const _supply = await blankHoodieContract.totalSupply();
