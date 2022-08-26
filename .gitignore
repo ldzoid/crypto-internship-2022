@@ -1,10 +1,10 @@
 node_modules/
-.env
 todo.txt
 # hardhat data
-cache/
-artifacts/
-coverage.json
-coverage/
+blockchain/.env
+blockchain/cache/
+blockchain/artifacts/
+blockchain/coverage.json
+blockchain/coverage/
 # nextjs data
 .next
