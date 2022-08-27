@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import MintedCard from './MintedCard';
 import styles from './SectionMinted.module.css';
-import { LayoutContext } from '../layout/LayoutContext';
+import { AppContext } from '../context/AppContext';
 
 const SectionMinted = () => {
-  const { mintedList } = useContext(LayoutContext);
+  const { mintedList } = useContext(AppContext);
 
   return (
     <section className={styles.container}>

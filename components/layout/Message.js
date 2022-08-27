@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useContext } from 'react';
-import { LayoutContext } from './LayoutContext';
+import { AppContext } from '../context/AppContext';
 import Success from '../../public/images/Success.png';
 import Warning from '../../public/images/Warning.png';
 import Loader from '../../public/images/Loader.png'
@@ -9,7 +9,7 @@ import styles from './Message.module.css';
 const Message = () => {
   // message states - 0: hidden, 1: success, -1: error, 2: loading
 
-  const { message, setMessage } = useContext(LayoutContext);
+  const { message, setMessage } = useContext(AppContext);
   const messageState = message[0];
   const messageText = message[1];
 

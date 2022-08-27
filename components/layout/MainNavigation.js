@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useContext, useState } from 'react';
-import { LayoutContext } from './LayoutContext';
+import { AppContext } from '../context/AppContext';
 import styles from './MainNavigation.module.css';
 import CompanyLogo from '../../public/images/Company Logo.png'
 import Burger from '../../public/images/Burger.png'
@@ -10,7 +10,7 @@ const MainNavigation = () => {
 
   const [expanded, setExpanded] = useState(false)
 
-  const { address } = useContext(LayoutContext)
+  const { address } = useContext(AppContext)
 
   const handleClick = () => {
     setExpanded(false)

@@ -1,12 +1,13 @@
-import SectionMint from '../components/home/SectionMint'
-import SectionMinted from '../components/home/SectionMinted'
+import SectionMint from '../components/home/SectionMint';
+import SectionMinted from '../components/home/SectionMinted';
+import Layout from '../components/layout/Layout';
 
 const Home = () => {
   return (
-    <>
-      <SectionMint/>
-      <SectionMinted/>
-    </>
+    <Layout title={'Blank\nCrypto\nInternship'} subtitle={''}>
+      <SectionMint />
+      <SectionMinted />
+    </Layout>
   );
 };
 

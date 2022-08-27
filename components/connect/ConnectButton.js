@@ -1,12 +1,12 @@
 import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useContext } from 'react';
-import { LayoutContext } from '../layout/LayoutContext';
+import { AppContext } from '../context/AppContext';
 import styles from './ConnectButton.module.css';
 import Metamask from '../../public/images/Metamask.png';
 
 const ConnectButton = () => {
-  const { setAddress, setMessage } = useContext(LayoutContext);
+  const { setAddress, setMessage } = useContext(AppContext);
 
   const connectToMetamask = async () => {
     if (window.ethereum !== undefined) {

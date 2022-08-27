@@ -8,13 +8,13 @@ import IconBox from '../../public/images/Icon Box.png';
 import IconStars from '../../public/images/Icon Stars.png';
 import IconBlank from '../../public/images/Icon Blank.png';
 import DownArrow from '../../public/images/Down Arrow.png'
-import { LayoutContext } from '../layout/LayoutContext';
+import { AppContext } from '../context/AppContext';
 
 const SectionMint = () => {
   const [amount, setAmount] = useState('1');
   const [expanded, setExpanded] = useState(false);
 
-  const { supply, setSupply, address, setMessage } = useContext(LayoutContext);
+  const { supply, setSupply, address, setMessage } = useContext(AppContext);
 
   const handleClickMint = async (_amount) => {
     // check is wallet is connected

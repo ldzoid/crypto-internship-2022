@@ -1,10 +1,9 @@
 import Head from 'next/head';
-import Header from './Header';
 import MainNavigation from './MainNavigation';
 import Message from './Message';
 import styles from './Layout.module.css';
 
-const Layout = (props) => {
+const ConnectLayout = (props) => {
   return (
     <>
       <Head>
@@ -17,12 +16,13 @@ const Layout = (props) => {
       </Head>
       <div className={styles.container}>
         <MainNavigation />
-        <Header title={props.title} subtitle={props.subtitle} />
-      </div>
-      <main className={styles.main}>{props.children}</main>
-      <Message />
+        <main className={`${styles.main} ${styles.connectMain}`}>
+          {props.children}
+        </main>
+        <Message />
+      </div>{' '}
     </>
   );
 };
 
-export default Layout;
+export default ConnectLayout;
