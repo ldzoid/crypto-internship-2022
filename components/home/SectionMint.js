@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import Image from 'next/image';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Contracts from '../../modules/contracts';
 import styles from './SectionMint.module.css';
 import Hoodie from '../../public/images/Hoodie.png';
@@ -11,11 +11,38 @@ import DownArrow from '../../public/images/Down Arrow.png';
 import { AppContext } from '../context/AppContext';
 
 const SectionMint = () => {
+  const { account, provider, signer, setMessage } = useContext(AppContext);
+
+  const [supply, setSupply] = useState('?');
   const [amount, setAmount] = useState('1');
   const [expanded, setExpanded] = useState(false);
 
-  const { account, provider, signer, setMessage, supply, setSupply } =
-    useContext(AppContext);
+  // update supply when account changes
+  useEffect(() => {
+    (async () => {
+      // check if user disconnected
+      if (!account) {
+        setSupply('?');
+        return;
+      }
+      // check if user on correct network
+      const { chainId } = await provider.getNetwork();
+      if (chainId != 5) {
+        setSupply('?');
+        return;
+      }
+      // init contract
+      const blankHoodieContract = new ethers.Contract(
+        Contracts.BlankHoodieAddress,
+        Contracts.BlankHoodieABI,
+        signer
+      );
+      // get supply
+      const supply = await blankHoodieContract.totalSupply();
+      // update supply
+      setSupply(supply);
+    })();
+  }, [account]);
 
   const handleClickMint = async (_amount) => {
     // check if wallet is connected

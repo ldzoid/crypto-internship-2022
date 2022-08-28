@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../components/context/AppContext';
 import Layout from '../../components/layout/Layout';
 import Contracts from '../../modules/contracts';
@@ -7,17 +7,41 @@ import Utils from '../../modules/utils';
 import styles from '../../styles/erc20-manager.module.css';
 
 const Erc20Manger = () => {
-  const {
-    account,
-    provider,
-    signer,
-    setMessage,
-    tokenBalance,
-    setTokenBalance,
-  } = useContext(AppContext);
+  const { account, provider, signer, setMessage } = useContext(AppContext);
 
+  const [tokenBalance, setTokenBalance] = useState('?');
   const [addressToSend, setAddressToSend] = useState();
   const [amountToSend, setAmountToSend] = useState();
+
+  useEffect(() => {
+    (async () => {
+      // check if user disconnected
+      if (!account) {
+        setTokenBalance('?');
+        return;
+      }
+      // check if user on correct network
+      const { chainId } = await provider.getNetwork();
+      if (chainId != 5) {
+        setTokenBalance('?');
+        return;
+      }
+      // init contract
+      const blankContract = new ethers.Contract(
+        Contracts.BlankAddress,
+        Contracts.BlankABI,
+        signer
+      );
+      // get balance
+      const _tokenBalance = Math.round(
+        ethers.utils.formatEther(
+          await blankContract.balanceOf(account)
+        )
+      );
+      // update balance
+      setTokenBalance(_tokenBalance);
+    })();
+  }, [account]);
 
   const handleClickSend = async () => {
     // check if wallet is connected
