@@ -7,6 +7,7 @@ const MyApp = ({ Component, pageProps }) => {
   const [account, setAccount] = useState('');
   const [provider, setProvider] = useState();
   const [signer, setSigner] = useState();
+  const [chainId, setChainId] = useState();
   const [message, setMessage] = useState([0, '']); // 0 - defaut, 1 - success, -1 - error, 2 - loader
 
   // set provider to window.ethereum if MetaMask is installed & handle MetaMask events
@@ -50,7 +51,9 @@ const MyApp = ({ Component, pageProps }) => {
       setSigner(_signer);
       // check if correct network
       const { chainId } = await provider.getNetwork();
+      setChainId(chainId);
       if (chainId != 5) {
+        console.log(chainId);
         setMessage([-1, 'Please switch network to Goerli testnet']);
         return;
       }
@@ -66,6 +69,8 @@ const MyApp = ({ Component, pageProps }) => {
         setProvider,
         signer,
         setSigner,
+        chainId,
+        setChainId,
         message,
         setMessage,
       }}

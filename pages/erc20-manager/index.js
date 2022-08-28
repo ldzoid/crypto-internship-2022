@@ -7,22 +7,18 @@ import Utils from '../../modules/utils';
 import styles from '../../styles/erc20-manager.module.css';
 
 const Erc20Manger = () => {
-  const { account, provider, signer, setMessage } = useContext(AppContext);
+  const { account, provider, signer, chainId, setMessage } =
+    useContext(AppContext);
 
   const [tokenBalance, setTokenBalance] = useState('?');
   const [addressToSend, setAddressToSend] = useState();
   const [amountToSend, setAmountToSend] = useState();
 
+  // update token balance when account changes
   useEffect(() => {
     (async () => {
-      // check if user disconnected
-      if (!account) {
-        setTokenBalance('?');
-        return;
-      }
-      // check if user on correct network
-      const { chainId } = await provider.getNetwork();
-      if (chainId != 5) {
+      // check if user disconnected or on wrong network
+      if (!account || chainId != 5) {
         setTokenBalance('?');
         return;
       }
@@ -34,9 +30,7 @@ const Erc20Manger = () => {
       );
       // get balance
       const _tokenBalance = Math.round(
-        ethers.utils.formatEther(
-          await blankContract.balanceOf(account)
-        )
+        ethers.utils.formatEther(await blankContract.balanceOf(account))
       );
       // update balance
       setTokenBalance(_tokenBalance);
@@ -50,7 +44,6 @@ const Erc20Manger = () => {
       return;
     }
     // check if chain is correct
-    const { chainId } = await provider.getNetwork();
     if (chainId != 5) {
       setMessage([-1, 'Please switch network to Goerli testnet']);
       return;
@@ -105,7 +98,6 @@ const Erc20Manger = () => {
       return;
     }
     // check if chain is correct
-    const { chainId } = await provider.getNetwork();
     if (chainId != 5) {
       setMessage([-1, 'Please switch network to Goerli testnet']);
       return;

@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { ethers } from 'ethers';
 import { useState, useContext, useEffect } from 'react';
 import Contracts from '../../modules/contracts';
 import MintedCard from './MintedCard';
@@ -6,21 +6,15 @@ import styles from './SectionMinted.module.css';
 import { AppContext } from '../context/AppContext';
 
 const SectionMinted = () => {
-  const { account, provider, signer } = useContext(AppContext);
+  const { account, signer, chainId } = useContext(AppContext);
 
   const [mintedList, setMintedList] = useState([]);
 
   // update minted list when account changes
   useEffect(() => {
     (async () => {
-      // check if user disconnected
-      if (!account) {
-        setMintedList([]);
-        return;
-      }
-      // check if user on correct network
-      const { chainId } = await provider.getNetwork();
-      if (chainId != 5) {
+      // check if user disconnected or on wrong network
+      if (!account || chainId != 5) {
         setMintedList([]);
         return;
       }

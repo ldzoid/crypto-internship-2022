@@ -11,7 +11,8 @@ import DownArrow from '../../public/images/Down Arrow.png';
 import { AppContext } from '../context/AppContext';
 
 const SectionMint = () => {
-  const { account, provider, signer, setMessage } = useContext(AppContext);
+  const { account, provider, signer, chainId, setMessage } =
+    useContext(AppContext);
 
   const [supply, setSupply] = useState('?');
   const [amount, setAmount] = useState('1');
@@ -20,14 +21,8 @@ const SectionMint = () => {
   // update supply when account changes
   useEffect(() => {
     (async () => {
-      // check if user disconnected
-      if (!account) {
-        setSupply('?');
-        return;
-      }
-      // check if user on correct network
-      const { chainId } = await provider.getNetwork();
-      if (chainId != 5) {
+      // check if user disconnected or on wrong network
+      if (!account || chainId != 5) {
         setSupply('?');
         return;
       }
@@ -51,7 +46,6 @@ const SectionMint = () => {
       return;
     }
     // check if chain is correct
-    const { chainId } = await provider.getNetwork();
     if (chainId != 5) {
       setMessage([-1, 'Please switch network to Goerli testnet']);
       return;
