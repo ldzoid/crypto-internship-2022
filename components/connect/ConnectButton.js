@@ -17,11 +17,6 @@ const ConnectButton = () => {
         const signer = await provider.getSigner();
         setAccount(await signer.getAddress());
         setMessage([1, 'Connected successfully']);
-        // init events for changing account in future
-        ethereum.on('accountsChanged', (accounts) => setAccount(accounts[0]));
-        ethereum.on('chainChanged', (chainId) => {
-          window.location.reload();
-        });
       } catch (e) {
         setMessage([-1, 'Error occurred']);
         console.error(e);
