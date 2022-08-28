@@ -7,25 +7,22 @@ import Hoodie from '../../public/images/Hoodie.png';
 import IconBox from '../../public/images/Icon Box.png';
 import IconStars from '../../public/images/Icon Stars.png';
 import IconBlank from '../../public/images/Icon Blank.png';
-import DownArrow from '../../public/images/Down Arrow.png'
+import DownArrow from '../../public/images/Down Arrow.png';
 import { AppContext } from '../context/AppContext';
 
 const SectionMint = () => {
   const [amount, setAmount] = useState('1');
   const [expanded, setExpanded] = useState(false);
 
-  const { supply, setSupply, address, setMessage } = useContext(AppContext);
+  const { account, provider, signer, setMessage, supply, setSupply } =
+    useContext(AppContext);
 
   const handleClickMint = async (_amount) => {
-    // check is wallet is connected
-    if (!address) {
+    // check if wallet is connected
+    if (!account) {
       setMessage([-1, 'Connect wallet to complete the action']);
       return;
     }
-    // get provider and signer
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send('eth_requestAccounts', []);
-    const signer = await provider.getSigner();
     // check if chain is correct
     const { chainId } = await provider.getNetwork();
     if (chainId != 5) {
@@ -63,8 +60,8 @@ const SectionMint = () => {
         value: ethers.utils.parseEther(`${0.1 * _amount}`),
       };
       const tx = await blankHoodieContract.mint(_amount, txObject);
-      setMessage([2, 'Please wait transaction confirmation'])
-      await tx.wait()
+      setMessage([2, 'Please wait transaction confirmation']);
+      await tx.wait();
       setMessage([1, 'Minted succesfully']);
       // update supply
       const _supply = await blankHoodieContract.totalSupply();
@@ -76,7 +73,7 @@ const SectionMint = () => {
   };
 
   const handleClickOption = (e) => {
-    setAmount(e.target.dataset.value)
+    setAmount(e.target.dataset.value);
   };
 
   return (
@@ -114,7 +111,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='1'
+                data-value="1"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}
@@ -123,7 +120,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='2'
+                data-value="2"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}
@@ -132,7 +129,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='3'
+                data-value="3"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}
@@ -141,7 +138,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='4'
+                data-value="4"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}
@@ -150,7 +147,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='5'
+                data-value="5"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}
@@ -159,7 +156,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='6'
+                data-value="6"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}
@@ -168,7 +165,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='7'
+                data-value="7"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}
@@ -177,7 +174,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='8'
+                data-value="8"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}
@@ -186,7 +183,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='9'
+                data-value="9"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}
@@ -195,7 +192,7 @@ const SectionMint = () => {
               </div>
               <div
                 onClick={(e) => handleClickOption(e)}
-                data-value='10'
+                data-value="10"
                 className={`${styles.selectOption} ${
                   expanded ? styles.expanded : ''
                 }`}

@@ -7,21 +7,24 @@ import Utils from '../../modules/utils';
 import styles from '../../styles/erc20-manager.module.css';
 
 const Erc20Manger = () => {
-  const { address, setMessage, tokenBalance, setTokenBalance } =
-    useContext(AppContext);
+  const {
+    account,
+    provider,
+    signer,
+    setMessage,
+    tokenBalance,
+    setTokenBalance,
+  } = useContext(AppContext);
 
   const [addressToSend, setAddressToSend] = useState();
   const [amountToSend, setAmountToSend] = useState();
 
   const handleClickSend = async () => {
     // check if wallet is connected
-    if (!address) {
+    if (!account) {
       setMessage([-1, 'Connect wallet to complete the action']);
       return;
     }
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send('eth_requestAccounts', []);
-    const signer = await provider.getSigner();
     // check if chain is correct
     const { chainId } = await provider.getNetwork();
     if (chainId != 5) {
@@ -73,12 +76,10 @@ const Erc20Manger = () => {
 
   const handleClickImport = async () => {
     // check if wallet is connected
-    if (!address) {
+    if (!account) {
       setMessage([-1, 'Connect wallet to complete the action']);
       return;
     }
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send('eth_requestAccounts', []);
     // check if chain is correct
     const { chainId } = await provider.getNetwork();
     if (chainId != 5) {

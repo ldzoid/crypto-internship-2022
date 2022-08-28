@@ -6,19 +6,19 @@ import styles from './ConnectButton.module.css';
 import Metamask from '../../public/images/Metamask.png';
 
 const ConnectButton = () => {
-  const { setAddress, setMessage } = useContext(AppContext);
+  const { setAccount, provider, setSigner, setMessage } =
+    useContext(AppContext);
 
   const connectToMetamask = async () => {
-    if (window.ethereum !== undefined) {
+    if (provider) {
       // connect to metamask & update data
       try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
         await provider.send('eth_requestAccounts', []);
         const signer = await provider.getSigner();
-        setAddress(await signer.getAddress());
+        setAccount(await signer.getAddress());
         setMessage([1, 'Connected successfully']);
-        // init events for changing address in future
-        ethereum.on('accountsChanged', (accounts) => setAddress(accounts[0]));
+        // init events for changing account in future
+        ethereum.on('accountsChanged', (accounts) => setAccount(accounts[0]));
         ethereum.on('chainChanged', (chainId) => {
           window.location.reload();
         });
