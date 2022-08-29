@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { AppContext } from '../components/context/AppContext';
 import '../styles/globals.css';
@@ -69,22 +70,27 @@ const MyApp = ({ Component, pageProps }) => {
   }, [account]);
 
   return (
-    <AppContext.Provider
-      value={{
-        account,
-        setAccount,
-        provider,
-        setProvider,
-        signer,
-        setSigner,
-        chainId,
-        setChainId,
-        message,
-        setMessage,
-      }}
-    >
-      <Component {...pageProps} />
-    </AppContext.Provider>
+    <>
+      <Head>
+        <link rel="shortcut icon" href="/images/favicon.ico" />
+      </Head>
+      <AppContext.Provider
+        value={{
+          account,
+          setAccount,
+          provider,
+          setProvider,
+          signer,
+          setSigner,
+          chainId,
+          setChainId,
+          message,
+          setMessage,
+        }}
+      >
+        <Component {...pageProps} />
+      </AppContext.Provider>
+    </>
   );
 };
 

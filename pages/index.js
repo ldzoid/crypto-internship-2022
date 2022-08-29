@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>Blank Hoodie NFT</title>
+        <title>Blank NFT</title>
       </Head>
       <Layout title={'Blank\nCrypto\nInternship'} subtitle={''}>
         <SectionMint />

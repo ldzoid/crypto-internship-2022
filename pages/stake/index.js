@@ -24,7 +24,7 @@ const Stake = () => {
   return (
     <>
       <Head>
-        <title>Stake</title>
+        <title>Blank NFT | Stake</title>
       </Head>
       <Layout
         title={'Stake'}

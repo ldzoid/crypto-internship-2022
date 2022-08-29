@@ -134,7 +134,7 @@ const Erc20Manger = () => {
   return (
     <>
       <Head>
-        <title>ERC20 manager</title>
+        <title>Blank NFT | ERC20</title>
       </Head>
       <Layout
         title={'ERC20'}

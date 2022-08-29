@@ -7,7 +7,7 @@ const Connect = () => {
   return (
     <>
       <Head>
-        <title>Connect wallet</title>
+        <title>Blank NFT | Connect</title>
       </Head>
       <ConnectLayout>
         <div className={styles.container}>
