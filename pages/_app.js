@@ -52,8 +52,17 @@ const MyApp = ({ Component, pageProps }) => {
       const { chainId } = await provider.getNetwork();
       setChainId(chainId);
       if (chainId != 5) {
-        console.log(chainId);
         setMessage([-1, 'Please switch network to Goerli testnet']);
+        // suggest user to switch network
+        try {
+          await provider.send('wallet_switchEthereumChain', [
+            {
+              chainId: '0x5',
+            },
+          ]);
+        } catch (e) {
+          console.error(e);
+        }
         return;
       }
     })();

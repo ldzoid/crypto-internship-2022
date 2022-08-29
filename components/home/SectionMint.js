@@ -48,6 +48,16 @@ const SectionMint = () => {
     // check if chain is correct
     if (chainId != 5) {
       setMessage([-1, 'Please switch network to Goerli testnet']);
+      // suggest user to switch network
+      try {
+        await provider.send('wallet_switchEthereumChain', [
+          {
+            chainId: '0x5',
+          },
+        ]);
+      } catch (e) {
+        console.error(e);
+      }
       return;
     }
     // initialize blankHoodieContract
