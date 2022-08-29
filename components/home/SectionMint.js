@@ -2,13 +2,13 @@ import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import Contracts from '../../modules/contracts';
+import { AppContext } from '../context/AppContext';
 import styles from './SectionMint.module.css';
 import Hoodie from '../../public/images/Hoodie.png';
 import IconBox from '../../public/images/Icon Box.png';
 import IconStars from '../../public/images/Icon Stars.png';
 import IconBlank from '../../public/images/Icon Blank.png';
 import DownArrow from '../../public/images/Down Arrow.png';
-import { AppContext } from '../context/AppContext';
 
 const SectionMint = () => {
   const { account, provider, signer, chainId, setMessage } =

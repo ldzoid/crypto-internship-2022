@@ -1,13 +1,19 @@
+import Head from 'next/head';
 import SectionMint from '../components/home/SectionMint';
 import SectionMinted from '../components/home/SectionMinted';
 import Layout from '../components/layout/Layout';
 
 const Home = () => {
   return (
-    <Layout title={'Blank\nCrypto\nInternship'} subtitle={''}>
-      <SectionMint />
-      <SectionMinted />
-    </Layout>
+    <>
+      <Head>
+        <title>Blank Hoodie NFT</title>
+      </Head>
+      <Layout title={'Blank\nCrypto\nInternship'} subtitle={''}>
+        <SectionMint />
+        <SectionMinted />
+      </Layout>
+    </>
   );
 };
 

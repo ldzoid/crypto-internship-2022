@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { ethers } from 'ethers';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../components/context/AppContext';
@@ -111,53 +112,58 @@ const Erc20Manger = () => {
   };
 
   return (
-    <Layout
-      title={'ERC20'}
-      subtitle={
-        'Manage your BLANK tokens, you can get more tokens by staking your NFT'
-      }
-    >
-      <div className={styles.container}>
-        <div className={styles.erc20InfoContainer}>
-          <h3 className={styles.erc20InfoTitle}>Blank tokens</h3>
-          <h2 className={styles.erc20InfoBalance}>{tokenBalance}</h2>
+    <>
+      <Head>
+        <title>ERC20 manager</title>
+      </Head>
+      <Layout
+        title={'ERC20'}
+        subtitle={
+          'Manage your BLANK tokens, you can get more tokens by staking your NFT'
+        }
+      >
+        <div className={styles.container}>
+          <div className={styles.erc20InfoContainer}>
+            <h3 className={styles.erc20InfoTitle}>Blank tokens</h3>
+            <h2 className={styles.erc20InfoBalance}>{tokenBalance}</h2>
+          </div>
+          <div className={styles.lineBreak}></div>
+          <div className={styles.sendTokensInputContainer}>
+            <label className={styles.inputLabel}>Amount</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="amount"
+              placeholder="Tokens to send"
+              onChange={(e) => {
+                setAmountToSend(e.target.value);
+              }}
+            ></input>
+          </div>
+          <div className={styles.sendTokensInputContainer}>
+            <label className={styles.inputLabel}>Recipient</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="amount"
+              placeholder="Insert recipient address"
+              onChange={(e) => {
+                setAddressToSend(e.target.value);
+              }}
+            ></input>
+          </div>
+          <button
+            className={`btnMain ${styles.btnSend}`}
+            onClick={handleClickSend}
+          >
+            Send
+          </button>
+          <button className={styles.btnImportToken} onClick={handleClickImport}>
+            Import token to MetaMask
+          </button>
         </div>
-        <div className={styles.lineBreak}></div>
-        <div className={styles.sendTokensInputContainer}>
-          <label className={styles.inputLabel}>Amount</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="amount"
-            placeholder="Tokens to send"
-            onChange={(e) => {
-              setAmountToSend(e.target.value);
-            }}
-          ></input>
-        </div>
-        <div className={styles.sendTokensInputContainer}>
-          <label className={styles.inputLabel}>Recipient</label>
-          <input
-            className={styles.input}
-            type="text"
-            name="amount"
-            placeholder="Insert recipient address"
-            onChange={(e) => {
-              setAddressToSend(e.target.value);
-            }}
-          ></input>
-        </div>
-        <button
-          className={`btnMain ${styles.btnSend}`}
-          onClick={handleClickSend}
-        >
-          Send
-        </button>
-        <button className={styles.btnImportToken} onClick={handleClickImport}>
-          Import token to MetaMask
-        </button>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

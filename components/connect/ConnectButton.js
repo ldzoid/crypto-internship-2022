@@ -6,8 +6,7 @@ import styles from './ConnectButton.module.css';
 import Metamask from '../../public/images/Metamask.png';
 
 const ConnectButton = () => {
-  const { setAccount, provider, setSigner, setMessage } =
-    useContext(AppContext);
+  const { setAccount, provider, setMessage } = useContext(AppContext);
 
   const connectToMetamask = async () => {
     if (provider) {

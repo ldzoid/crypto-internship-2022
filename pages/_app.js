@@ -41,7 +41,6 @@ const MyApp = ({ Component, pageProps }) => {
     (async () => {
       // check if user disconnected
       if (!account) {
-        console.log('user disconnected');
         return;
       }
       console.log(account);
