@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import styles from './MintedCard.module.css';
-import Hoodie from '../../public/images/Hoodie.png'
+import Hoodie from '../../public/images/hoodie.png'
 
 const MintedCard = (props) => {
   return (

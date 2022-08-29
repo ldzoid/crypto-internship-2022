@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import styles from './MainNavigation.module.css';
-import CompanyLogo from '../../public/images/Company Logo.png';
-import Burger from '../../public/images/Burger.png';
+import CompanyLogo from '../../public/images/company-logo.png';
+import Burger from '../../public/images/burger.png';
 
 const MainNavigation = () => {
   const [expanded, setExpanded] = useState(false);

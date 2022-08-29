@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import styles from './ConnectButton.module.css';
-import Metamask from '../../public/images/Metamask.png';
+import Metamask from '../../public/images/metamask.png';
 
 const ConnectButton = () => {
   const { setAccount, provider, setMessage } = useContext(AppContext);

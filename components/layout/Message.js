@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
-import Success from '../../public/images/Success.png';
-import Warning from '../../public/images/Warning.png';
-import Loader from '../../public/images/Loader.png'
+import Success from '../../public/images/success.png';
+import Warning from '../../public/images/warning.png';
+import Loader from '../../public/images/loader.png'
 import styles from './Message.module.css';
 
 const Message = () => {
