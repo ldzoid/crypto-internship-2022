@@ -1,0 +1,101 @@
+.container {
+  width: 730px;
+  height: 470px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background: linear-gradient(
+      126.18deg,
+      rgba(185, 185, 185, 0.2) 0%,
+      rgba(0, 0, 0, 0) 71.12%
+    ),
+    linear-gradient(132.99deg, #000000 0%, #1e1e1e 100%);
+    margin-top: -40px;
+}
+
+.infoContainer {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.infoStakeContainer {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoStakeTitle {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 100%;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.infoStakeValue {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 100%;
+  text-align: center;
+}
+
+.dataContainer {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dataTitle {
+  font-weight: 500;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dataValue {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.btnClaim {
+  width: 90%;
+  height: 48px;
+}
+
+@media all and (max-width: 450px) {
+  .container {
+    width: 90%;
+    height: 400px;
+  }
+
+  .infoContainer {
+    flex-direction: column;
+    height: 120px;
+  }
+
+  .infoStakeContainer {
+    height: 48px;
+  }
+
+  .infoStakeTitle {
+    font-size: 16px;
+  }
+
+  .infoStakeValue {
+    font-size: 24px;
+  }
+
+  .dataTitle {
+    font-size: 15px;
+  }
+
+  .dataValue {
+    font-size: 15px;
+  }
+
+  .btnClaim {
+    height: 42px;
+  }
+}

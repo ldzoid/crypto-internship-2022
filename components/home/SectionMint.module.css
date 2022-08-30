@@ -1,0 +1,268 @@
+.container {
+  color: #fff;
+  width: 1136px;
+  height: 733px;
+  display: flex;
+  justify-content: space-between;
+  margin: 100px 0;
+  position: relative;
+}
+
+.mintMainContainer {
+  width: 420px;
+  height: 396px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.headerSecondary {
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 56px;
+}
+
+.paragraph {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.mintContainer {
+  width: 448px;
+  height: 148px;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(132.99deg, #1e1e1e 0%, #000000 100%);
+}
+
+.mintContainerParagraph {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  width: 95%;
+  text-align: start;
+}
+
+.mintInfoContainer {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mintPrice {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 32px;
+}
+
+.mintedAmount {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.mintBtnsContainer {
+  width: 95%;
+  height: 48px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.selectAmount {
+  position: relative;
+  height: 100%;
+  width: 70px;
+  border: none;
+  color: #fff;
+  background-color: #292929;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.selectAmount:hover {
+  cursor: pointer;
+}
+
+.selectOptionDefault {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.selectOption {
+  color: #fff;
+  background-color: #292929;
+  width: 100%;
+  height: 0;
+}
+
+.expanded {
+  position: relative;
+  height: 20px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  height: 50%;
+  padding: 0 0 0 15px;
+  display: flex;
+  align-items: center;
+}
+
+.expanded:hover {
+  cursor: pointer;
+  background-color: #212121;
+}
+
+.btnMint {
+  height: 100%;
+  width: 335px;
+}
+
+.mintAdditionalContainer {
+  width: 95%;
+  margin-top: 10px;
+  display: none;
+}
+
+.mintAdditionalInfo {
+  text-align: start;
+  font-size: 13px;
+}
+
+.mintAdditionalInfoLink {
+  text-align: start;
+  text-decoration: underline;
+}
+
+.imgHoodieContainer {
+  width: 636px;
+  height: 636px;
+  box-shadow: 0px 0px 10px 10px #0f0f0f;
+}
+
+.infoContainer {
+  width: 756px;
+  height: 272px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+}
+
+.infoCard {
+  width: 252px;
+  height: 272px;
+  background: linear-gradient(132.99deg, #000000 0%, #1e1e1e 100%);
+  padding: 24px;
+}
+
+.cardImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  width: 64px;
+  border-radius: 50%;
+}
+
+.cardImageBox {
+  background-color: #d1837f;
+  box-shadow: 0px 0px 20px 20px #392726;
+}
+
+.cardImageBlank {
+  background-color: #8ec4aa;
+  box-shadow: 0px 0px 20px 20px #374d42;
+}
+
+.cardImageStars {
+  background-color: #80abd8;
+  box-shadow: 0px 0px 20px 20px #3a4f64;
+}
+
+.cardHeading {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  margin: 20px 0 10px 0;
+}
+
+@media all and (max-width: 450px) {
+  .container {
+    flex-direction: column;
+    width: 95vw;
+    height: auto;
+    margin-bottom: 0;
+  }
+
+  .mintMainContainer {
+    width: 100%;
+    height: 350px;
+    order: 2;
+    margin: 20px 0;
+  }
+
+  .headerSecondary {
+    font-size: 22px;
+    line-height: 24px;
+    text-align: center;
+  }
+
+  .paragraph {
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .selectOptionDefault {
+    padding: 0 6px;
+  }
+
+  .expanded {
+    padding: 0 0 0 6px;
+  }
+
+  .mintAdditionalContainer {
+    display: block;
+  }
+
+  .mintContainer {
+    width: 100%;
+    height: 240px;
+  }
+
+  .imgHoodieContainer {
+    width: 100%;
+    height: auto;
+    order: 1;
+  }
+
+  .infoContainer {
+    width: 100%;
+    height: auto;
+    position: static;
+    flex-direction: column;
+    align-items: center;
+    order: 3;
+  }
+
+  .infoCard {
+    width: 95%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

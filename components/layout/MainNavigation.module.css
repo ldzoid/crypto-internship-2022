@@ -1,0 +1,71 @@
+.container {
+    height: 10vh;
+    width: 100vw;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.imgLogoContainer {
+    margin-left: 55px;
+    height: 16px;
+}
+
+.linksContainer {
+    margin-right: 55px;
+    width: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 250ms;
+}
+
+.btnLink {
+    background-color: transparent;
+    color: #fff;
+}
+
+.btnConnect {
+    height: 50px;
+    width: 200px;
+}
+
+.btnBurger {
+    width: 32px;
+    height: 16px;
+    display: none;
+    background-color: transparent;
+}
+
+@media all and (max-width: 450px) {
+    .linksContainer {
+        position: absolute;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: space-evenly;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1;
+    }
+
+    .hidden {
+        transform: translateY(-100%);
+    }
+
+    .expanded {
+        transform: translateY(45%);
+    }
+
+    .imgLogoContainer {
+        margin-left: 40px;
+    }
+
+    .btnBurger {
+        z-index: 2;
+        display: inline;
+        margin-right: 40px;
+    }
+}
+

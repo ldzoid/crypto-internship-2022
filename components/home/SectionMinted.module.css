@@ -1,0 +1,46 @@
+.container {
+  width: 1136px;
+  height: 394px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  color: #fff;
+  justify-content: space-between;
+  margin: 100px 0;
+}
+
+.headerSecondary {
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 56px;
+}
+
+.mintedListContainer {
+  width: 1136px;
+  height: 300px;
+  display: flex;
+  justify-content: space-between;
+  overflow: auto;
+}
+
+@media all and (max-width: 450px) {
+  .container {
+    margin: 50px 0;
+    width: 95vw;
+    height: auto;
+    text-align: center;
+  }
+
+  .mintedListContainer {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .headerSecondary {
+    font-size: 26px;
+    line-height: normal;
+    margin-bottom: 10px;
+  }
+}
