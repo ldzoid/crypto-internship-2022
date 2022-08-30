@@ -23,6 +23,17 @@
   overflow: auto;
 }
 
+.linkConnect {
+  text-align: center;
+  margin-bottom: 100px;
+  text-decoration: underline;
+}
+
+.linkConnect:hover {
+  cursor: pointer;
+  color: #ccc;
+}
+
 @media all and (max-width: 450px) {
   .container {
     margin: 50px 0;

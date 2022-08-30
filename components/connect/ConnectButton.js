@@ -21,7 +21,7 @@ const ConnectButton = () => {
         console.error(e);
       }
     } else {
-      console.log('Please install ethereum');
+      console.log('Please install MetaMask');
     }
   };
 
