@@ -4,9 +4,12 @@ pragma solidity ^0.8.9;
 import "./Blank.sol";
 import "./BlankHoodie.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Staking is ReentrancyGuard {
+contract Staking is ReentrancyGuard, Pausable, Ownable {
     error CallerNotNftOwner();
+    error TokenNotStaked();
 
     event Stake(address _from, uint256 _id);
     event Unstake(address _from, uint256 _id);
@@ -22,7 +25,7 @@ contract Staking is ReentrancyGuard {
         BlankHoodie(0xd9145CCE52D386f254917e481eB44e9943F39138); // NFT contract
     Blank erc20Contract = Blank(0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8); // ERC20 token contract
 
-    function stake(uint256[] memory _ids) external nonReentrant {
+    function stake(uint256[] memory _ids) external nonReentrant whenNotPaused {
         for (uint256 i; i < _ids.length; i++) {
             uint256 _id = _ids[i];
             // check if user is owner of nft
@@ -39,7 +42,11 @@ contract Staking is ReentrancyGuard {
         }
     }
 
-    function unstake(uint256[] memory _ids) external nonReentrant {
+    function unstake(uint256[] memory _ids)
+        external
+        nonReentrant
+        whenNotPaused
+    {
         uint256 totalReward;
         for (uint256 i; i < _ids.length; i++) {
             uint256 _id = _ids[i];
@@ -69,7 +76,7 @@ contract Staking is ReentrancyGuard {
         emit Claim(msg.sender, totalReward);
     }
 
-    function claim() external nonReentrant {
+    function claim() external nonReentrant whenNotPaused {
         uint256[] memory ids = ownerToIds[msg.sender];
         uint256 totalReward;
         // get reward and update timestamp for each nft
@@ -87,7 +94,16 @@ contract Staking is ReentrancyGuard {
 
     function getReward(uint256 _id) public view returns (uint256) {
         uint256 tokenTimestamp = idToTimestamp[_id];
+        if (tokenTimestamp == 0) return 0;
         uint256 reward = (block.timestamp - tokenTimestamp) * tokensPerSecond;
         return reward;
+    }
+
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    function unpause() external onlyOwner {
+        _unpause();
     }
 }
