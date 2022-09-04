@@ -99,6 +99,26 @@ contract Staking is ReentrancyGuard, Pausable, Ownable {
         return reward;
     }
 
+    function emergencyUnstake(uint256 _id) external onlyOwner {
+        if (idToTimestamp[_id] == 0) revert TokenNotStaked();
+        address _owner = idToOwner[_id];
+        // update state variables
+        delete idToOwner[_id];
+        for (uint j; j < ownerToIds[_owner].length; j++) {
+            if (_id == ownerToIds[_owner][j]) {
+                ownerToIds[_owner][j] = ownerToIds[_owner][
+                    ownerToIds[_owner].length - 1
+                ];
+                ownerToIds[_owner].pop();
+            }
+        }
+        delete idToTimestamp[_id];
+        // transfer nft
+        nftContract.transferFrom(address(this), msg.sender, _id);
+        // emit event
+        emit Unstake(msg.sender, _id);
+    }
+
     function pause() external onlyOwner {
         _pause();
     }
