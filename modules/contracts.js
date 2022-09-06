@@ -191,6 +191,239 @@ const Contracts = (() => {
     },
   };
 
+  // Staking.sol information
+  const StakingAddress = '0xC0D5B5113366a5ea568a2a7fADdC337a23eBA14A';
+  const StakingABI = [
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: '_nftContractAddress',
+          type: 'address',
+        },
+        {
+          internalType: 'address',
+          name: '_erc20ContractAddress',
+          type: 'address',
+        },
+      ],
+      stateMutability: 'nonpayable',
+      type: 'constructor',
+    },
+    { inputs: [], name: 'CallerNotNftOwner', type: 'error' },
+    { inputs: [], name: 'TokenNotStaked', type: 'error' },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: 'address',
+          name: '_from',
+          type: 'address',
+        },
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: '_value',
+          type: 'uint256',
+        },
+      ],
+      name: 'Claim',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: 'address',
+          name: 'previousOwner',
+          type: 'address',
+        },
+        {
+          indexed: true,
+          internalType: 'address',
+          name: 'newOwner',
+          type: 'address',
+        },
+      ],
+      name: 'OwnershipTransferred',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: 'address',
+          name: 'account',
+          type: 'address',
+        },
+      ],
+      name: 'Paused',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: 'address',
+          name: '_from',
+          type: 'address',
+        },
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: '_id',
+          type: 'uint256',
+        },
+      ],
+      name: 'Stake',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: 'address',
+          name: 'account',
+          type: 'address',
+        },
+      ],
+      name: 'Unpaused',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: 'address',
+          name: '_from',
+          type: 'address',
+        },
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: '_id',
+          type: 'uint256',
+        },
+      ],
+      name: 'Unstake',
+      type: 'event',
+    },
+    {
+      inputs: [],
+      name: 'claim',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256', name: '_id', type: 'uint256' }],
+      name: 'emergencyUnstake',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256', name: '_id', type: 'uint256' }],
+      name: 'getReward',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'address', name: '_owner', type: 'address' }],
+      name: 'getStakesOfOwner',
+      outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      name: 'idToOwner',
+      outputs: [{ internalType: 'address', name: '', type: 'address' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      name: 'idToTimestamp',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'owner',
+      outputs: [{ internalType: 'address', name: '', type: 'address' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        { internalType: 'address', name: '', type: 'address' },
+        { internalType: 'uint256', name: '', type: 'uint256' },
+      ],
+      name: 'ownerToIds',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'pause',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'paused',
+      outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'renounceOwnership',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256[]', name: '_ids', type: 'uint256[]' }],
+      name: 'stake',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
+      name: 'transferOwnership',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'unpause',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256[]', name: '_ids', type: 'uint256[]' }],
+      name: 'unstake',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+  ];
+
   return {
     BlankHoodieAddress,
     BlankHoodieABI,
