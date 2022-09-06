@@ -15,15 +15,19 @@ contract Staking is ReentrancyGuard, Pausable, Ownable {
     event Unstake(address _from, uint256 _id);
     event Claim(address _from, uint256 _value);
 
-    mapping(uint => address) public idToOwner;
+    mapping(uint256 => address) public idToOwner;
     mapping(address => uint256[]) public ownerToIds;
     mapping(uint256 => uint256) public idToTimestamp;
 
-    uint256 tokensPerSecond = 11574074074074; // 10 ether per 24h
+    uint256 tokensPerSecond = 115740740740740; // 10 ether per 24h
 
-    BlankHoodie nftContract =
-        BlankHoodie(0xd9145CCE52D386f254917e481eB44e9943F39138); // NFT contract
-    Blank erc20Contract = Blank(0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8); // ERC20 token contract
+    BlankHoodie nftContract; // NFT contract
+    Blank erc20Contract; // ERC20 token contract
+
+    constructor(address _nftContractAddress, address _erc20ContractAddress) {
+        nftContract = BlankHoodie(_nftContractAddress);
+        erc20Contract = Blank(_erc20ContractAddress);
+    }
 
     function stake(uint256[] memory _ids) external nonReentrant whenNotPaused {
         for (uint256 i; i < _ids.length; i++) {
@@ -56,7 +60,7 @@ contract Staking is ReentrancyGuard, Pausable, Ownable {
             totalReward += getReward(_id);
             // update state variables
             delete idToOwner[_id];
-            for (uint j; j < ownerToIds[msg.sender].length; j++) {
+            for (uint256 j; j < ownerToIds[msg.sender].length; j++) {
                 if (_id == ownerToIds[msg.sender][j]) {
                     ownerToIds[msg.sender][j] = ownerToIds[msg.sender][
                         ownerToIds[msg.sender].length - 1
@@ -94,9 +98,19 @@ contract Staking is ReentrancyGuard, Pausable, Ownable {
 
     function getReward(uint256 _id) public view returns (uint256) {
         uint256 tokenTimestamp = idToTimestamp[_id];
-        if (tokenTimestamp == 0) return 0;
+        if (tokenTimestamp == 0) {
+            return 0;
+        }
         uint256 reward = (block.timestamp - tokenTimestamp) * tokensPerSecond;
         return reward;
+    }
+
+    function getStakesOfOwner(address _owner)
+        external
+        view
+        returns (uint256[] memory)
+    {
+        return ownerToIds[_owner];
     }
 
     function emergencyUnstake(uint256 _id) external onlyOwner {
@@ -104,7 +118,7 @@ contract Staking is ReentrancyGuard, Pausable, Ownable {
         address _owner = idToOwner[_id];
         // update state variables
         delete idToOwner[_id];
-        for (uint j; j < ownerToIds[_owner].length; j++) {
+        for (uint256 j; j < ownerToIds[_owner].length; j++) {
             if (_id == ownerToIds[_owner][j]) {
                 ownerToIds[_owner][j] = ownerToIds[_owner][
                     ownerToIds[_owner].length - 1

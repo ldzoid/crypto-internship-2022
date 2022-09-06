@@ -8,11 +8,12 @@ describe('BlankHoodie contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory('BlankHoodie');
+      const BlankHoodie = await ethers.getContractFactory(
+        'contracts/BlankHoodie.sol:BlankHoodie'
+      );
       hhBlankHoodie = await BlankHoodie.deploy();
 
       await hhBlankHoodie.setPaused(false);
-      await hhBlankHoodie.deployed();
     });
 
     it('user should be able to mint with enough ether', async () => {
@@ -63,11 +64,12 @@ describe('BlankHoodie contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory('BlankHoodie');
+      const BlankHoodie = await ethers.getContractFactory(
+        'contracts/BlankHoodie.sol:BlankHoodie'
+      );
       hhBlankHoodie = await BlankHoodie.deploy();
 
       await hhBlankHoodie.setPaused(false);
-      await hhBlankHoodie.deployed();
     });
 
     it('owner should be able to mint anyone for free', async () => {
@@ -101,11 +103,12 @@ describe('BlankHoodie contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory('BlankHoodie');
+      const BlankHoodie = await ethers.getContractFactory(
+        'contracts/BlankHoodie.sol:BlankHoodie'
+      );
       hhBlankHoodie = await BlankHoodie.deploy();
 
       await hhBlankHoodie.setPaused(false);
-      await hhBlankHoodie.deployed();
     });
 
     it('should return valid URI for minted tokens', async () => {
@@ -131,11 +134,12 @@ describe('BlankHoodie contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory('BlankHoodie');
+      const BlankHoodie = await ethers.getContractFactory(
+        'contracts/BlankHoodie.sol:BlankHoodie'
+      );
       hhBlankHoodie = await BlankHoodie.deploy();
 
       await hhBlankHoodie.setPaused(false);
-      await hhBlankHoodie.deployed();
     });
 
     it('owner should be able to update base URI anytime', async () => {
@@ -160,11 +164,12 @@ describe('BlankHoodie contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory('BlankHoodie');
+      const BlankHoodie = await ethers.getContractFactory(
+        'contracts/BlankHoodie.sol:BlankHoodie'
+      );
       hhBlankHoodie = await BlankHoodie.deploy();
 
       await hhBlankHoodie.setPaused(false);
-      await hhBlankHoodie.deployed();
     });
 
     it('pause/unpause minting', async () => {
@@ -196,11 +201,12 @@ describe('BlankHoodie contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory('BlankHoodie');
+      const BlankHoodie = await ethers.getContractFactory(
+        'contracts/BlankHoodie.sol:BlankHoodie'
+      );
       hhBlankHoodie = await BlankHoodie.deploy();
 
       await hhBlankHoodie.setPaused(false);
-      await hhBlankHoodie.deployed();
     });
 
     it('should change cost accordingly if called by owner', async () => {
@@ -233,11 +239,12 @@ describe('BlankHoodie contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory('BlankHoodie');
+      const BlankHoodie = await ethers.getContractFactory(
+        'contracts/BlankHoodie.sol:BlankHoodie'
+      );
       hhBlankHoodie = await BlankHoodie.deploy();
 
       await hhBlankHoodie.setPaused(false);
-      await hhBlankHoodie.deployed();
     });
 
     it('should transfer contract balance to owner if called by owner', async () => {

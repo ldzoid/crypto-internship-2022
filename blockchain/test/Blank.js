@@ -7,10 +7,8 @@ describe('Blank contract', async () => {
 
   beforeEach(async () => {
     owner = await ethers.getSigner();
-    const Blank = await ethers.getContractFactory('Blank');
+    const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
     hhBlank = await Blank.deploy();
-
-    await hhBlank.deployed();
   });
 
   it('should set name properly', async () => {
