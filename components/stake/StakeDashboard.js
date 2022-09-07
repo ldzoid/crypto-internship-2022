@@ -9,6 +9,7 @@ const StakeDashboard = () => {
 
   const [totalStaked, setTotalStaked] = useState('?');
   const [userStaked, setUserStaked] = useState('?');
+  const [rewardPerDay, setRewardsPerDay] = useState('?');
 
   useEffect(() => {
     (async () => {
@@ -16,6 +17,7 @@ const StakeDashboard = () => {
       if (!account || chainId != 5) {
         setTotalStaked('?');
         setUserStaked('?');
+        setRewardsPerDay('?')
         return;
       }
       // init NFT contract
@@ -37,9 +39,10 @@ const StakeDashboard = () => {
       );
       // get user stake amount
       const userStakedAmount = (await stakingContract.getStakesOfOwner(account)).length
-      // update staked amount & user staked amount
+      // update staked amount, user staked amount, rewards per day
       setTotalStaked(stakedAmount);
       setUserStaked(userStakedAmount);
+      setRewardsPerDay(userStakedAmount * 10)
     })();
   }, [account]);
 
@@ -57,11 +60,11 @@ const StakeDashboard = () => {
       </div>
       <div className={styles.dataContainer}>
         <h3 className={styles.dataTitle}>Start date</h3>
-        <h3 className={styles.dataValue}>15th July 2022</h3>
+        <h3 className={styles.dataValue}>6th September 2022</h3>
       </div>
       <div className={styles.dataContainer}>
         <h3 className={styles.dataTitle}>Rewards per day</h3>
-        <h3 className={styles.dataValue}>10 BLANK</h3>
+        <h3 className={styles.dataValue}>{rewardPerDay} BLANK</h3>
       </div>
       <div className={styles.dataContainer}>
         <h3 className={styles.dataTitle}>Claimable rewards</h3>
