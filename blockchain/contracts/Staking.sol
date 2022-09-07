@@ -105,8 +105,17 @@ contract Staking is ReentrancyGuard, Pausable, Ownable {
         return reward;
     }
 
+    function getRewardsOfOwner(address _owner) external view returns (uint256) {
+        uint256 totalRewards;
+        uint256[] memory stakesOfOwner = getStakesOfOwner(_owner);
+        for (uint i; i < stakesOfOwner.length; i++) {
+            totalRewards += getReward(stakesOfOwner[i]);
+        }
+        return totalRewards;
+    }
+
     function getStakesOfOwner(address _owner)
-        external
+        public
         view
         returns (uint256[] memory)
     {

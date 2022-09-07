@@ -582,7 +582,7 @@ const Contracts = (() => {
   };
 
   // Staking.sol information
-  const StakingAddress = '0xC0D5B5113366a5ea568a2a7fADdC337a23eBA14A';
+  const StakingAddress = '0xc7CfFF25938Baf7077E8ebe737DEb2082C6f0607';
   const StakingABI = [
     {
       inputs: [
@@ -721,6 +721,13 @@ const Contracts = (() => {
     {
       inputs: [{ internalType: 'uint256', name: '_id', type: 'uint256' }],
       name: 'getReward',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'address', name: '_owner', type: 'address' }],
+      name: 'getRewardsOfOwner',
       outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
       stateMutability: 'view',
       type: 'function',

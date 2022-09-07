@@ -119,6 +119,7 @@ describe('Staking contract', () => {
 
     it('should reward user with tokens', async () => {
       await ethers.provider.send('evm_increaseTime', [86400]);
+      await ethers.provider.send('evm_mine')
       await hhStaking.connect(user).unstake([1]);
       const balance = await hhBlank.balanceOf(user.address);
       expect(balance).to.be.at.least(ethers.utils.parseEther('9.99'));
@@ -247,6 +248,59 @@ describe('Staking contract', () => {
       expect(await hhStaking.getReward(5)).to.equal(0);
     });
   });
+
+  describe('getRewardsOfOwner()', () => {
+    let user, user2;
+    let hhBlankHoodie, hhBlank, hhStaking;
+
+    beforeEach(async () => {
+      [owner, user, user2] = await ethers.getSigners();
+      const BlankHoodie = await ethers.getContractFactory(
+        'contracts/BlankHoodie.sol:BlankHoodie'
+      );
+      const Blank = await ethers.getContractFactory(
+        'contracts/Blank.sol:Blank'
+      );
+      const Staking = await ethers.getContractFactory(
+        'contracts/Staking.sol:Staking'
+      );
+      hhBlankHoodie = await BlankHoodie.deploy();
+      hhBlank = await Blank.deploy();
+      hhStaking = await Staking.deploy(hhBlankHoodie.address, hhBlank.address);
+
+      // unpause
+      await hhBlankHoodie.setPaused(false);
+      // mint 10 tokens each to owner and user
+      await hhBlankHoodie
+        .connect(user)
+        .mint(10, { value: ethers.utils.parseEther('1') });
+      await hhBlankHoodie.mint(10, { value: ethers.utils.parseEther('1') });
+      // approve staking contract
+      await hhBlankHoodie
+        .connect(user)
+        .setApprovalForAll(hhStaking.address, true);
+      // send enough tokens to staking contract for rewards
+      await hhBlank.transfer(
+        hhStaking.address,
+        ethers.utils.parseEther('1000')
+      );
+      // stake few NFTs
+      await hhStaking.connect(user).stake([1, 3, 7, 8]);
+    });
+
+    it('should return correct total reward for address', async () => {
+      // simulate time passing => 1 day
+      await ethers.provider.send('evm_increaseTime', [86400])
+      await ethers.provider.send('evm_mine')
+      // reward should be 1 day * 10 tokensPerDay * 4 NFTs = 40 tokens
+      expect(await hhStaking.getRewardsOfOwner(user.address)).to.be.at.least(ethers.utils.parseEther('39.9'))
+      expect(await hhStaking.getRewardsOfOwner(user.address)).to.be.at.most(ethers.utils.parseEther('40.01'))
+    })
+
+    it('should return 0 for address with 0 staked NFTs', async () => {
+      expect(await hhStaking.getRewardsOfOwner(user2.address)).to.equal(0)
+    })
+  })
 
   describe('emergencyUnstake() functionality', () => {
     let owner, user;
