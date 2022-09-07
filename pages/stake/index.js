@@ -2,7 +2,7 @@ import Head from 'next/head';
 import StakeDashboard from '../../components/stake/StakeDashboard';
 import SectionStakeList from '../../components/stake/SectionStakeList';
 import styles from '../../styles/stake.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { AppContext } from '../../components/context/AppContext';
 import { StakeContext } from '../../components/context/StakeContext';
 import Layout from '../../components/layout/Layout';
