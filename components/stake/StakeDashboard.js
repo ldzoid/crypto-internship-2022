@@ -1,23 +1,23 @@
 import { ethers } from 'ethers';
 import { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
+import { StakeContext } from '../context/StakeContext';
 import Contracts from '../../modules/contracts';
 import styles from './StakeDashboard.module.css';
 
 const StakeDashboard = () => {
-  const { account, signer, chainId } = useContext(AppContext);
+  const { account, signer, chainId, setMessage } = useContext(AppContext);
+  const { totalStaked, setTotalStaked, userStaked, setUserStaked, rewardPerDay, setRewardsPerDay, totalRewards, setTotalRewards} = useContext(StakeContext)
 
-  const [totalStaked, setTotalStaked] = useState('?');
-  const [userStaked, setUserStaked] = useState('?');
-  const [rewardPerDay, setRewardsPerDay] = useState('?');
-
+  // update staking information when account changes
   useEffect(() => {
     (async () => {
       // check if user disconnected or on wrong network
       if (!account || chainId != 5) {
         setTotalStaked('?');
         setUserStaked('?');
-        setRewardsPerDay('?')
+        setRewardsPerDay('?');
+        setTotalRewards('?');
         return;
       }
       // init NFT contract
@@ -38,13 +38,70 @@ const StakeDashboard = () => {
         16
       );
       // get user stake amount
-      const userStakedAmount = (await stakingContract.getStakesOfOwner(account)).length
+      const userStakedAmount = (await stakingContract.getStakesOfOwner(account))
+        .length;
+      // get user total rewards
+      const userTotalRewards = parseInt(
+        (await stakingContract.getRewardsOfOwner(account))['_hex'],
+        16
+      );
       // update staked amount, user staked amount, rewards per day
       setTotalStaked(stakedAmount);
       setUserStaked(userStakedAmount);
-      setRewardsPerDay(userStakedAmount * 10)
+      setRewardsPerDay(userStakedAmount * 10);
+      setTotalRewards(userTotalRewards);
     })();
   }, [account]);
+
+  const handleClickClaim = async () => {
+    // check if wallet is connected
+    if (!account) {
+      setMessage([-1, 'Connect wallet to complete the action']);
+      return;
+    }
+    // check if chain is correct
+    if (chainId != 5) {
+      setMessage([-1, 'Please switch network to Goerli testnet']);
+      // suggest user to switch network
+      try {
+        await provider.send('wallet_switchEthereumChain', [
+          {
+            chainId: '0x5',
+          },
+        ]);
+      } catch (e) {
+        console.error(e);
+      }
+      return;
+    }
+    // check if user has any claimable rewards
+    if (totalRewards == 0) {
+      setMessage([-1, 'You have no claimable tokens']);
+      return;
+    }
+    // initialize staking contract
+    const stakingContract = new ethers.Contract(
+      Contracts.StakingAddress,
+      Contracts.StakingABI,
+      signer
+    );
+    // send transaction
+    try {
+      const tx = await stakingContract.claim();
+      setMessage([2, 'Please wait transaction confirmation']);
+      await tx.wait();
+      setMessage('Claimed successfully');
+      // update total reward
+      const userTotalRewards = parseInt(
+        (await stakingContract.getRewardsOfOwner(account))['_hex'],
+        16
+      );
+      setTotalRewards(userTotalRewards);
+    } catch (e) {
+      setMessage([-1, 'Error occurred']);
+      console.error(e);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -68,9 +125,14 @@ const StakeDashboard = () => {
       </div>
       <div className={styles.dataContainer}>
         <h3 className={styles.dataTitle}>Claimable rewards</h3>
-        <h3 className={styles.dataValue}>X BLANK</h3>
+        <h3 className={styles.dataValue}>{totalRewards} BLANK</h3>
       </div>
-      <button className={`btnMain ${styles.btnClaim}`}>Claim</button>
+      <button
+        onClick={handleClickClaim}
+        className={`btnMain ${styles.btnClaim}`}
+      >
+        Claim
+      </button>
     </div>
   );
 };
