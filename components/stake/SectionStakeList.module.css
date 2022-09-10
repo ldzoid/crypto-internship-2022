@@ -17,7 +17,6 @@
 .stakedListContainer {
     width: 1136px;
     display: flex;
-    justify-content: space-between;
     overflow: auto;
 }
 

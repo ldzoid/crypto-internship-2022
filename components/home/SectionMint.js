@@ -1,7 +1,6 @@
 import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
-import Contracts from '../../modules/contracts';
 import { AppContext } from '../context/AppContext';
 import styles from './SectionMint.module.css';
 import Hoodie from '../../public/images/hoodie.png';
@@ -11,7 +10,7 @@ import IconBlank from '../../public/images/icon-blank.png';
 import DownArrow from '../../public/images/down-arrow.png';
 
 const SectionMint = () => {
-  const { account, provider, signer, chainId, setMessage } =
+  const { account, provider, signer, chainId, setMessage, nftContract } =
     useContext(AppContext);
 
   const [supply, setSupply] = useState('?');
@@ -26,14 +25,8 @@ const SectionMint = () => {
         setSupply('?');
         return;
       }
-      // init contract
-      const blankHoodieContract = new ethers.Contract(
-        Contracts.BlankHoodieAddress,
-        Contracts.BlankHoodieABI,
-        signer
-      );
       // get supply
-      const supply = await blankHoodieContract.totalSupply();
+      const supply = await nftContract.totalSupply();
       // update supply
       setSupply(supply);
     })();
@@ -60,15 +53,9 @@ const SectionMint = () => {
       }
       return;
     }
-    // initialize blankHoodieContract
-    const blankHoodieContract = new ethers.Contract(
-      Contracts.BlankHoodieAddress,
-      Contracts.BlankHoodieABI,
-      signer
-    );
     // check if max supply is reached, not enough balance
     if (
-      parseInt((await blankHoodieContract.totalSupply())['_hex'], 16) +
+      parseInt((await nftContract.totalSupply())['_hex'], 16) +
         parseInt(_amount) >
       500
     ) {
@@ -90,12 +77,12 @@ const SectionMint = () => {
       const txObject = {
         value: ethers.utils.parseEther(`${0.1 * _amount}`),
       };
-      const tx = await blankHoodieContract.mint(_amount, txObject);
+      const tx = await nftContract.mint(_amount, txObject);
       setMessage([2, 'Please wait transaction confirmation']);
       await tx.wait();
       setMessage([1, 'Minted succesfully']);
       // update supply
-      const _supply = await blankHoodieContract.totalSupply();
+      const _supply = await nftContract.totalSupply();
       setSupply(_supply);
     } catch (e) {
       setMessage([-1, 'Error occurred']);

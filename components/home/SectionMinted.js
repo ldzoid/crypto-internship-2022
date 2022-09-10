@@ -2,12 +2,11 @@ import { ethers } from 'ethers';
 import { useState, useContext, useEffect } from 'react';
 import Link from 'next/link';
 import { AppContext } from '../context/AppContext';
-import Contracts from '../../modules/contracts';
 import MintedCard from './MintedCard';
 import styles from './SectionMinted.module.css';
 
 const SectionMinted = () => {
-  const { account, signer, chainId } = useContext(AppContext);
+  const { account, signer, chainId, nftContract } = useContext(AppContext);
 
   const [mintedList, setMintedList] = useState([]);
 
@@ -19,15 +18,9 @@ const SectionMinted = () => {
         setMintedList([]);
         return;
       }
-      // init contract
-      const blankHoodieContract = new ethers.Contract(
-        Contracts.BlankHoodieAddress,
-        Contracts.BlankHoodieABI,
-        signer
-      );
       // get minted list
       const _mintedList = (
-        await blankHoodieContract.tokensOfOwner(account)
+        await nftContract.tokensOfOwner(account)
       ).map((object) => parseInt(object['_hex']), 16);
       // update minted list
       setMintedList(_mintedList);

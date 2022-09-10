@@ -6,8 +6,17 @@ import Contracts from '../../modules/contracts';
 import styles from './StakeDashboard.module.css';
 
 const StakeDashboard = () => {
-  const { account, signer, chainId, setMessage } = useContext(AppContext);
-  const { totalStaked, setTotalStaked, userStaked, setUserStaked, rewardPerDay, setRewardsPerDay, totalRewards, setTotalRewards} = useContext(StakeContext)
+  const { account, signer, chainId, setMessage, nftContract, stakeContract } = useContext(AppContext);
+  const {
+    totalStaked,
+    setTotalStaked,
+    userStaked,
+    setUserStaked,
+    rewardPerDay,
+    setRewardsPerDay,
+    totalRewards,
+    setTotalRewards,
+  } = useContext(StakeContext);
 
   // update staking information when account changes
   useEffect(() => {
@@ -20,29 +29,17 @@ const StakeDashboard = () => {
         setTotalRewards('?');
         return;
       }
-      // init NFT contract
-      const blankHoodieContract = new ethers.Contract(
-        Contracts.BlankHoodieAddress,
-        Contracts.BlankHoodieABI,
-        signer
-      );
-      // init staking contract
-      const stakingContract = new ethers.Contract(
-        Contracts.StakingAddress,
-        Contracts.StakingABI,
-        signer
-      );
       // get staked amount
       const stakedAmount = parseInt(
-        await blankHoodieContract.balanceOf(Contracts.StakingAddress),
+        await nftContract.balanceOf(Contracts.StakingAddress),
         16
       );
       // get user stake amount
-      const userStakedAmount = (await stakingContract.getStakesOfOwner(account))
+      const userStakedAmount = (await stakeContract.getStakesOfOwner(account))
         .length;
       // get user total rewards
       const userTotalRewards = parseInt(
-        (await stakingContract.getRewardsOfOwner(account))['_hex'],
+        (await stakeContract.getRewardsOfOwner(account))['_hex'],
         16
       );
       // update staked amount, user staked amount, rewards per day
@@ -79,21 +76,15 @@ const StakeDashboard = () => {
       setMessage([-1, 'You have no claimable tokens']);
       return;
     }
-    // initialize staking contract
-    const stakingContract = new ethers.Contract(
-      Contracts.StakingAddress,
-      Contracts.StakingABI,
-      signer
-    );
     // send transaction
     try {
-      const tx = await stakingContract.claim();
+      const tx = await stakeContract.claim();
       setMessage([2, 'Please wait transaction confirmation']);
       await tx.wait();
       setMessage('Claimed successfully');
       // update total reward
       const userTotalRewards = parseInt(
-        (await stakingContract.getRewardsOfOwner(account))['_hex'],
+        (await stakeContract.getRewardsOfOwner(account))['_hex'],
         16
       );
       setTotalRewards(userTotalRewards);
@@ -125,7 +116,9 @@ const StakeDashboard = () => {
       </div>
       <div className={styles.dataContainer}>
         <h3 className={styles.dataTitle}>Claimable rewards</h3>
-        <h3 className={styles.dataValue}>{totalRewards} BLANK</h3>
+        <h3 className={styles.dataValue}>
+          {Math.round(totalRewards / 10 ** 14) / 10000} BLANK
+        </h3>
       </div>
       <button
         onClick={handleClickClaim}
