@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
-import { useRouter } from 'next/router';
 import styles from './MainNavigation.module.css';
 import CompanyLogo from '../../public/images/company-logo.png';
 import Burger from '../../public/images/burger.png';

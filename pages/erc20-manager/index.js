@@ -1,5 +1,5 @@
-import Head from 'next/head';
 import { ethers } from 'ethers';
+import Head from 'next/head';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../components/context/AppContext';
 import Layout from '../../components/layout/Layout';
@@ -48,8 +48,8 @@ const Erc20Manger = () => {
             chainId: '0x5',
           },
         ]);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
       return;
     }
@@ -84,9 +84,9 @@ const Erc20Manger = () => {
         )
       );
       setTokenBalance(_tokenBalance);
-    } catch (e) {
+    } catch (err) {
       setMessage([-1, 'Error occurred']);
-      console.log(e);
+      console.error(err);
     }
   };
 
@@ -106,16 +106,16 @@ const Erc20Manger = () => {
             chainId: '0x5',
           },
         ]);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
       return;
     }
     try {
       await provider.send('wallet_watchAsset', Contracts.blankObject);
-    } catch (e) {
+    } catch (err) {
       setMessage([-1, 'Error occured']);
-      console.error(e);
+      console.error(err);
     }
   };
 

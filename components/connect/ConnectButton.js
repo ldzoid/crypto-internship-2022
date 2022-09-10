@@ -1,4 +1,3 @@
-import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
@@ -16,9 +15,9 @@ const ConnectButton = () => {
         const signer = await provider.getSigner();
         setAccount(await signer.getAddress());
         setMessage([1, 'Connected successfully']);
-      } catch (e) {
+      } catch (err) {
         setMessage([-1, 'Error occurred']);
-        console.error(e);
+        console.error(err);
       }
     } else {
       setMessage([-1, 'Please install MetaMask']);

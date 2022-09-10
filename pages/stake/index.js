@@ -1,4 +1,3 @@
-import { ethers } from 'ethers';
 import Head from 'next/head';
 import { useEffect, useContext, useState } from 'react';
 import StakeDashboard from '../../components/stake/StakeDashboard';
@@ -11,7 +10,7 @@ import Utils from '../../modules/utils';
 import styles from '../../styles/stake.module.css';
 
 const Stake = () => {
-  const { account, setAccount, signer, chainId, setMessage, nftContract, stakeContract } =
+  const { account, chainId, setMessage, nftContract, stakeContract } =
     useContext(AppContext);
 
   const [stakedList, setStakedList] = useState([]);
@@ -34,14 +33,12 @@ const Stake = () => {
       // get staked list and sort it
       const _stakedList = Utils.sortedArray(
         (await stakeContract.getStakesOfOwner(account)).map((item) =>
-          parseInt(item['_hex'], 16)
+          Number(item)
         )
       );
       // get unstaked list and sort it
       const _unstakedList = Utils.sortedArray(
-        (await nftContract.tokensOfOwner(account)).map((item) =>
-          parseInt(item['_hex'], 16)
-        )
+        (await nftContract.tokensOfOwner(account)).map((item) => Number(item))
       );
       // set staked and unstaked lists
       setStakedList(_stakedList);
@@ -65,17 +62,14 @@ const Stake = () => {
             chainId: '0x5',
           },
         ]);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
       return;
     }
     // check if staking contract is approved for user NFTs
     if (
-      !(await nftContract.isApprovedForAll(
-        account,
-        Contracts.StakingAddress
-      ))
+      !(await nftContract.isApprovedForAll(account, Contracts.StakingAddress))
     ) {
       try {
         const tx = await nftContract.setApprovalForAll(
@@ -85,9 +79,9 @@ const Stake = () => {
         setMessage([2, 'Please wait contract approval confirmation']);
         await tx.wait();
         setMessage([1, 'Contract approved succesfully']);
-      } catch (e) {
+      } catch (err) {
         setMessage([-1, 'Error occurred']);
-        console.log(e);
+        console.error(err);
         return;
       }
     }
@@ -98,9 +92,9 @@ const Stake = () => {
       await tx.wait();
       setMessage([1, 'NFT staked succesfully']);
       updateAll();
-    } catch (e) {
+    } catch (err) {
       setMessage([-1, 'Error occurred']);
-      console.log(e);
+      console.error(err);
       return;
     }
   };
@@ -121,8 +115,8 @@ const Stake = () => {
             chainId: '0x5',
           },
         ]);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
       return;
     }
@@ -133,9 +127,9 @@ const Stake = () => {
       await tx.wait();
       setMessage([1, 'NFT unstaked succesfully']);
       updateAll();
-    } catch (e) {
+    } catch (err) {
       setMessage([-1, 'Error occurred']);
-      console.log(e);
+      console.error(err);
       return;
     }
   };
@@ -144,14 +138,12 @@ const Stake = () => {
     // get staked list and sort it
     const _stakedList = Utils.sortedArray(
       (await stakeContract.getStakesOfOwner(account)).map((item) =>
-        parseInt(item['_hex'], 16)
+        Number(item)
       )
     );
     // get unstaked list and sort it
     const _unstakedList = Utils.sortedArray(
-      (await nftContract.tokensOfOwner(account)).map((item) =>
-        parseInt(item['_hex'], 16)
-      )
+      (await nftContract.tokensOfOwner(account)).map((item) => Number(item))
     );
     // set staked and unstaked lists
     setStakedList(_stakedList);
@@ -165,9 +157,8 @@ const Stake = () => {
     const userStakedAmount = (await stakeContract.getStakesOfOwner(account))
       .length;
     // get user total rewards
-    const userTotalRewards = parseInt(
-      (await stakeContract.getRewardsOfOwner(account))['_hex'],
-      16
+    const userTotalRewards = Number(
+      await stakeContract.getRewardsOfOwner(account)
     );
     // update staked amount, user staked amount, rewards per day
     setTotalStaked(stakedAmount);

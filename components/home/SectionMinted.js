@@ -1,6 +1,5 @@
-import { ethers } from 'ethers';
-import { useState, useContext, useEffect } from 'react';
 import Link from 'next/link';
+import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
 import MintedCard from './MintedCard';
 import styles from './SectionMinted.module.css';
@@ -21,7 +20,7 @@ const SectionMinted = () => {
       // get minted list
       const _mintedList = (
         await nftContract.tokensOfOwner(account)
-      ).map((object) => parseInt(object['_hex']), 16);
+      ).map((bigNum) => Number(bigNum));
       // update minted list
       setMintedList(_mintedList);
     })();

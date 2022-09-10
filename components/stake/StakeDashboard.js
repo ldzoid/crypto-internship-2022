@@ -1,12 +1,12 @@
-import { ethers } from 'ethers';
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import { StakeContext } from '../context/StakeContext';
 import Contracts from '../../modules/contracts';
 import styles from './StakeDashboard.module.css';
 
 const StakeDashboard = () => {
-  const { account, signer, chainId, setMessage, nftContract, stakeContract } = useContext(AppContext);
+  const { account, chainId, setMessage, nftContract, stakeContract } =
+    useContext(AppContext);
   const {
     totalStaked,
     setTotalStaked,
@@ -30,17 +30,15 @@ const StakeDashboard = () => {
         return;
       }
       // get staked amount
-      const stakedAmount = parseInt(
-        await nftContract.balanceOf(Contracts.StakingAddress),
-        16
+      const stakedAmount = Number(
+        await nftContract.balanceOf(Contracts.StakingAddress)
       );
       // get user stake amount
       const userStakedAmount = (await stakeContract.getStakesOfOwner(account))
         .length;
       // get user total rewards
-      const userTotalRewards = parseInt(
-        (await stakeContract.getRewardsOfOwner(account))['_hex'],
-        16
+      const userTotalRewards = Number(
+        await stakeContract.getRewardsOfOwner(account)
       );
       // update staked amount, user staked amount, rewards per day
       setTotalStaked(stakedAmount);
@@ -66,8 +64,8 @@ const StakeDashboard = () => {
             chainId: '0x5',
           },
         ]);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
       return;
     }
@@ -81,16 +79,15 @@ const StakeDashboard = () => {
       const tx = await stakeContract.claim();
       setMessage([2, 'Please wait transaction confirmation']);
       await tx.wait();
-      setMessage('Claimed successfully');
+      setMessage([1, 'Claimed successfully']);
       // update total reward
-      const userTotalRewards = parseInt(
-        (await stakeContract.getRewardsOfOwner(account))['_hex'],
-        16
+      const userTotalRewards = Number(
+        await stakeContract.getRewardsOfOwner(account)
       );
       setTotalRewards(userTotalRewards);
-    } catch (e) {
+    } catch (err) {
       setMessage([-1, 'Error occurred']);
-      console.error(e);
+      console.error(err);
     }
   };
 

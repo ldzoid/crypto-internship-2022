@@ -66,8 +66,8 @@ const MyApp = ({ Component, pageProps }) => {
               chainId: '0x5',
             },
           ]);
-        } catch (e) {
-          console.error(e);
+        } catch (err) {
+          console.error(err);
         }
         return;
       }

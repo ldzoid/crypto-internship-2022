@@ -48,14 +48,14 @@ const SectionMint = () => {
             chainId: '0x5',
           },
         ]);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
       return;
     }
     // check if max supply is reached, not enough balance
     if (
-      parseInt((await nftContract.totalSupply())['_hex'], 16) +
+      Number(await nftContract.totalSupply()) +
         parseInt(_amount) >
       500
     ) {
@@ -84,9 +84,9 @@ const SectionMint = () => {
       // update supply
       const _supply = await nftContract.totalSupply();
       setSupply(_supply);
-    } catch (e) {
+    } catch (err) {
       setMessage([-1, 'Error occurred']);
-      console.error(e);
+      console.error(err);
     }
   };
 
