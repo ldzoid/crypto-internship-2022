@@ -114,7 +114,7 @@ const StakeDashboard = () => {
       <div className={styles.dataContainer}>
         <h3 className={styles.dataTitle}>Claimable rewards</h3>
         <h3 className={styles.dataValue}>
-          {Math.round(totalRewards / 10 ** 14) / 10000} BLANK
+          {totalRewards == '?' ? '?' : Math.round(totalRewards / 10 ** 14) / 10000} BLANK
         </h3>
       </div>
       <button
