@@ -7,5 +7,6 @@ blockchain/artifacts/
 blockchain/coverage.json
 blockchain/coverage/
 blockchain/contracts/flattened/
+blockchain/gas-report.txt
 # nextjs data
 .next
