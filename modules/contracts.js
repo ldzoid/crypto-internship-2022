@@ -202,9 +202,7 @@ const Contracts = (() => {
       type: 'function',
     },
     {
-      inputs: [
-        { internalType: 'uint256[]', name: 'tokenIds', type: 'uint256[]' },
-      ],
+      inputs: [{ internalType: 'uint256[]', name: 'tokenIds', type: 'uint256[]' }],
       name: 'explicitOwnershipsOf',
       outputs: [
         {
@@ -247,9 +245,7 @@ const Contracts = (() => {
       type: 'function',
     },
     {
-      inputs: [
-        { internalType: 'uint256', name: '_mintAmount', type: 'uint256' },
-      ],
+      inputs: [{ internalType: 'uint256', name: '_mintAmount', type: 'uint256' }],
       name: 'mint',
       outputs: [],
       stateMutability: 'payable',

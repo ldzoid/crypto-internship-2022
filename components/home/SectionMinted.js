@@ -18,9 +18,9 @@ const SectionMinted = () => {
         return;
       }
       // get minted list
-      const _mintedList = (
-        await nftContract.tokensOfOwner(account)
-      ).map((bigNum) => Number(bigNum));
+      const _mintedList = (await nftContract.tokensOfOwner(account)).map((bigNum) =>
+        Number(bigNum)
+      );
       // update minted list
       setMintedList(_mintedList);
     })();
@@ -36,7 +36,9 @@ const SectionMinted = () => {
           ))}
         </div>
       ) : (
-        <Link href='/connect'><h2 className={styles.linkConnect}>Connect wallet to see your NFTs</h2></Link>
+        <Link href="/connect">
+          <h2 className={styles.linkConnect}>Connect wallet to see your NFTs</h2>
+        </Link>
       )}
     </section>
   );

@@ -8,8 +8,7 @@ import Utils from '../../modules/utils';
 import styles from '../../styles/erc20-manager.module.css';
 
 const Erc20Manger = () => {
-  const { account, provider, signer, chainId, setMessage, erc20Contract } =
-    useContext(AppContext);
+  const { account, provider, signer, chainId, setMessage, erc20Contract } = useContext(AppContext);
 
   const [tokenBalance, setTokenBalance] = useState('?');
   const [addressToSend, setAddressToSend] = useState();
@@ -79,9 +78,7 @@ const Erc20Manger = () => {
       setMessage([1, `Successfully transferred ${amountToSend} BLANK tokens`]);
       // update new balance
       const _tokenBalance = Math.round(
-        ethers.utils.formatEther(
-          await erc20Contract.balanceOf(await signer.getAddress())
-        )
+        ethers.utils.formatEther(await erc20Contract.balanceOf(await signer.getAddress()))
       );
       setTokenBalance(_tokenBalance);
     } catch (err) {
@@ -126,9 +123,7 @@ const Erc20Manger = () => {
       </Head>
       <Layout
         title={'ERC20'}
-        subtitle={
-          'Manage your BLANK tokens, you can get more tokens by staking your NFT'
-        }
+        subtitle={'Manage your BLANK tokens, you can get more tokens by staking your NFT'}
       >
         <div className={styles.container}>
           <div className={styles.erc20InfoContainer}>
@@ -160,10 +155,7 @@ const Erc20Manger = () => {
               }}
             ></input>
           </div>
-          <button
-            className={`btnMain ${styles.btnSend}`}
-            onClick={handleClickSend}
-          >
+          <button className={`btnMain ${styles.btnSend}`} onClick={handleClickSend}>
             Send
           </button>
           <button className={styles.btnImportToken} onClick={handleClickImport}>

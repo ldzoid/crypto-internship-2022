@@ -14,8 +14,7 @@ const Connect = () => {
           <div className={styles.textContainer}>
             <h1 className={styles.headerMain}>Connect wallet</h1>
             <p className={styles.paragraph}>
-              Connect your wallet to use full features of the site placeholder
-              text lorem ipsum sit
+              Connect your wallet to use full features of the site placeholder text lorem ipsum sit
             </p>
           </div>
           <ConnectButton />

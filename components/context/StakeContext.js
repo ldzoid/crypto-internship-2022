@@ -1,3 +1,3 @@
 import { createContext } from 'react';
 
-export const StakeContext = createContext(null)
+export const StakeContext = createContext(null);

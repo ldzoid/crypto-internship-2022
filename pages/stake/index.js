@@ -10,8 +10,7 @@ import Utils from '../../modules/utils';
 import styles from '../../styles/stake.module.css';
 
 const Stake = () => {
-  const { account, chainId, setMessage, nftContract, stakeContract } =
-    useContext(AppContext);
+  const { account, chainId, setMessage, nftContract, stakeContract } = useContext(AppContext);
 
   const [stakedList, setStakedList] = useState([]);
   const [unstakedList, setUnstakedList] = useState([]);
@@ -32,9 +31,7 @@ const Stake = () => {
       }
       // get staked list and sort it
       const _stakedList = Utils.sortedArray(
-        (await stakeContract.getStakesOfOwner(account)).map((item) =>
-          Number(item)
-        )
+        (await stakeContract.getStakesOfOwner(account)).map((item) => Number(item))
       );
       // get unstaked list and sort it
       const _unstakedList = Utils.sortedArray(
@@ -68,14 +65,9 @@ const Stake = () => {
       return;
     }
     // check if staking contract is approved for user NFTs
-    if (
-      !(await nftContract.isApprovedForAll(account, Contracts.StakingAddress))
-    ) {
+    if (!(await nftContract.isApprovedForAll(account, Contracts.StakingAddress))) {
       try {
-        const tx = await nftContract.setApprovalForAll(
-          Contracts.StakingAddress,
-          true
-        );
+        const tx = await nftContract.setApprovalForAll(Contracts.StakingAddress, true);
         setMessage([2, 'Please wait contract approval confirmation']);
         await tx.wait();
         setMessage([1, 'Contract approved succesfully']);
@@ -137,9 +129,7 @@ const Stake = () => {
   const updateAll = async () => {
     // get staked list and sort it
     const _stakedList = Utils.sortedArray(
-      (await stakeContract.getStakesOfOwner(account)).map((item) =>
-        Number(item)
-      )
+      (await stakeContract.getStakesOfOwner(account)).map((item) => Number(item))
     );
     // get unstaked list and sort it
     const _unstakedList = Utils.sortedArray(
@@ -149,17 +139,11 @@ const Stake = () => {
     setStakedList(_stakedList);
     setUnstakedList(_unstakedList);
     // get staked amount
-    const stakedAmount = parseInt(
-      await nftContract.balanceOf(Contracts.StakingAddress),
-      16
-    );
+    const stakedAmount = parseInt(await nftContract.balanceOf(Contracts.StakingAddress), 16);
     // get user stake amount
-    const userStakedAmount = (await stakeContract.getStakesOfOwner(account))
-      .length;
+    const userStakedAmount = (await stakeContract.getStakesOfOwner(account)).length;
     // get user total rewards
-    const userTotalRewards = Number(
-      await stakeContract.getRewardsOfOwner(account)
-    );
+    const userTotalRewards = Number(await stakeContract.getRewardsOfOwner(account));
     // update staked amount, user staked amount, rewards per day
     setTotalStaked(stakedAmount);
     setUserStaked(userStakedAmount);

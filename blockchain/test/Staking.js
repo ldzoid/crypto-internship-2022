@@ -8,15 +8,9 @@ describe('Staking contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory(
-        'contracts/BlankHoodie.sol:BlankHoodie'
-      );
-      const Blank = await ethers.getContractFactory(
-        'contracts/Blank.sol:Blank'
-      );
-      const Staking = await ethers.getContractFactory(
-        'contracts/Staking.sol:Staking'
-      );
+      const BlankHoodie = await ethers.getContractFactory('contracts/BlankHoodie.sol:BlankHoodie');
+      const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
+      const Staking = await ethers.getContractFactory('contracts/Staking.sol:Staking');
       hhBlankHoodie = await BlankHoodie.deploy();
       hhBlank = await Blank.deploy();
       hhStaking = await Staking.deploy(hhBlankHoodie.address, hhBlank.address);
@@ -24,19 +18,12 @@ describe('Staking contract', () => {
       // unpause
       await hhBlankHoodie.setPaused(false);
       // mint 10 tokens each to owner and user
-      await hhBlankHoodie
-        .connect(user)
-        .mint(10, { value: ethers.utils.parseEther('1') });
+      await hhBlankHoodie.connect(user).mint(10, { value: ethers.utils.parseEther('1') });
       await hhBlankHoodie.mint(10, { value: ethers.utils.parseEther('1') });
       // approve staking contract
-      await hhBlankHoodie
-        .connect(user)
-        .setApprovalForAll(hhStaking.address, true);
+      await hhBlankHoodie.connect(user).setApprovalForAll(hhStaking.address, true);
       // send enough tokens to staking contract for rewards
-      await hhBlank.transfer(
-        hhStaking.address,
-        ethers.utils.parseEther('1000')
-      );
+      await hhBlank.transfer(hhStaking.address, ethers.utils.parseEther('1000'));
     });
 
     it('should transfer nft ownership to staking contract', async () => {
@@ -50,9 +37,7 @@ describe('Staking contract', () => {
       timestampNow = block.timestamp;
       await hhStaking.connect(user).stake([0, 1, 5]);
       expect(await hhStaking.idToOwner(1)).to.equal(user.address);
-      expect(await hhStaking.getStakesOfOwner(user.address)).deep.to.equal([
-        0, 1, 5,
-      ]);
+      expect(await hhStaking.getStakesOfOwner(user.address)).deep.to.equal([0, 1, 5]);
       expect(await hhStaking.idToTimestamp(5)).to.be.at.least(timestampNow);
       expect(await hhStaking.idToTimestamp(5)).to.be.at.most(timestampNow + 3);
     });
@@ -68,15 +53,9 @@ describe('Staking contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory(
-        'contracts/BlankHoodie.sol:BlankHoodie'
-      );
-      const Blank = await ethers.getContractFactory(
-        'contracts/Blank.sol:Blank'
-      );
-      const Staking = await ethers.getContractFactory(
-        'contracts/Staking.sol:Staking'
-      );
+      const BlankHoodie = await ethers.getContractFactory('contracts/BlankHoodie.sol:BlankHoodie');
+      const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
+      const Staking = await ethers.getContractFactory('contracts/Staking.sol:Staking');
       hhBlankHoodie = await BlankHoodie.deploy();
       hhBlank = await Blank.deploy();
       hhStaking = await Staking.deploy(hhBlankHoodie.address, hhBlank.address);
@@ -84,19 +63,12 @@ describe('Staking contract', () => {
       // unpause
       await hhBlankHoodie.setPaused(false);
       // mint 10 tokens each to owner and user
-      await hhBlankHoodie
-        .connect(user)
-        .mint(10, { value: ethers.utils.parseEther('1') });
+      await hhBlankHoodie.connect(user).mint(10, { value: ethers.utils.parseEther('1') });
       await hhBlankHoodie.mint(10, { value: ethers.utils.parseEther('1') });
       // approve staking contract
-      await hhBlankHoodie
-        .connect(user)
-        .setApprovalForAll(hhStaking.address, true);
+      await hhBlankHoodie.connect(user).setApprovalForAll(hhStaking.address, true);
       // send enough tokens to staking contract for rewards
-      await hhBlank.transfer(
-        hhStaking.address,
-        ethers.utils.parseEther('1000')
-      );
+      await hhBlank.transfer(hhStaking.address, ethers.utils.parseEther('1000'));
       // stake few NFTs
       await hhStaking.connect(user).stake([1, 3, 7, 8]);
     });
@@ -108,18 +80,14 @@ describe('Staking contract', () => {
 
     it('should update state variables properly', async () => {
       await hhStaking.connect(user).unstake([7, 8]);
-      expect(await hhStaking.idToOwner(7)).to.equal(
-        '0x0000000000000000000000000000000000000000'
-      );
-      expect(await hhStaking.getStakesOfOwner(user.address)).deep.to.equal([
-        1, 3,
-      ]);
+      expect(await hhStaking.idToOwner(7)).to.equal('0x0000000000000000000000000000000000000000');
+      expect(await hhStaking.getStakesOfOwner(user.address)).deep.to.equal([1, 3]);
       expect(await hhStaking.idToTimestamp(8)).to.equal(0);
     });
 
     it('should reward user with tokens', async () => {
       await ethers.provider.send('evm_increaseTime', [86400]);
-      await ethers.provider.send('evm_mine')
+      await ethers.provider.send('evm_mine');
       await hhStaking.connect(user).unstake([1]);
       const balance = await hhBlank.balanceOf(user.address);
       expect(balance).to.be.at.least(ethers.utils.parseEther('9.99'));
@@ -138,15 +106,9 @@ describe('Staking contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory(
-        'contracts/BlankHoodie.sol:BlankHoodie'
-      );
-      const Blank = await ethers.getContractFactory(
-        'contracts/Blank.sol:Blank'
-      );
-      const Staking = await ethers.getContractFactory(
-        'contracts/Staking.sol:Staking'
-      );
+      const BlankHoodie = await ethers.getContractFactory('contracts/BlankHoodie.sol:BlankHoodie');
+      const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
+      const Staking = await ethers.getContractFactory('contracts/Staking.sol:Staking');
       hhBlankHoodie = await BlankHoodie.deploy();
       hhBlank = await Blank.deploy();
       hhStaking = await Staking.deploy(hhBlankHoodie.address, hhBlank.address);
@@ -154,19 +116,12 @@ describe('Staking contract', () => {
       // unpause
       await hhBlankHoodie.setPaused(false);
       // mint 10 tokens each to owner and user
-      await hhBlankHoodie
-        .connect(user)
-        .mint(10, { value: ethers.utils.parseEther('1') });
+      await hhBlankHoodie.connect(user).mint(10, { value: ethers.utils.parseEther('1') });
       await hhBlankHoodie.mint(10, { value: ethers.utils.parseEther('1') });
       // approve staking contract
-      await hhBlankHoodie
-        .connect(user)
-        .setApprovalForAll(hhStaking.address, true);
+      await hhBlankHoodie.connect(user).setApprovalForAll(hhStaking.address, true);
       // send enough tokens to staking contract for rewards
-      await hhBlank.transfer(
-        hhStaking.address,
-        ethers.utils.parseEther('1000')
-      );
+      await hhBlank.transfer(hhStaking.address, ethers.utils.parseEther('1000'));
       // stake few NFTs
       await hhStaking.connect(user).stake([1, 3, 7, 8]);
       // simulate time passing (2 days)
@@ -185,12 +140,8 @@ describe('Staking contract', () => {
 
     it('should transfer right amount of tokens', async () => {
       await hhStaking.connect(user).claim(); // 2 days * 4 stakes = 80 tokens
-      expect(await hhBlank.balanceOf(user.address)).to.be.at.least(
-        ethers.utils.parseEther('79.9')
-      );
-      expect(await hhBlank.balanceOf(user.address)).to.be.at.most(
-        ethers.utils.parseEther('80.1')
-      );
+      expect(await hhBlank.balanceOf(user.address)).to.be.at.least(ethers.utils.parseEther('79.9'));
+      expect(await hhBlank.balanceOf(user.address)).to.be.at.most(ethers.utils.parseEther('80.1'));
     });
   });
 
@@ -200,15 +151,9 @@ describe('Staking contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory(
-        'contracts/BlankHoodie.sol:BlankHoodie'
-      );
-      const Blank = await ethers.getContractFactory(
-        'contracts/Blank.sol:Blank'
-      );
-      const Staking = await ethers.getContractFactory(
-        'contracts/Staking.sol:Staking'
-      );
+      const BlankHoodie = await ethers.getContractFactory('contracts/BlankHoodie.sol:BlankHoodie');
+      const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
+      const Staking = await ethers.getContractFactory('contracts/Staking.sol:Staking');
       hhBlankHoodie = await BlankHoodie.deploy();
       hhBlank = await Blank.deploy();
       hhStaking = await Staking.deploy(hhBlankHoodie.address, hhBlank.address);
@@ -216,19 +161,12 @@ describe('Staking contract', () => {
       // unpause
       await hhBlankHoodie.setPaused(false);
       // mint 10 tokens each to owner and user
-      await hhBlankHoodie
-        .connect(user)
-        .mint(10, { value: ethers.utils.parseEther('1') });
+      await hhBlankHoodie.connect(user).mint(10, { value: ethers.utils.parseEther('1') });
       await hhBlankHoodie.mint(10, { value: ethers.utils.parseEther('1') });
       // approve staking contract
-      await hhBlankHoodie
-        .connect(user)
-        .setApprovalForAll(hhStaking.address, true);
+      await hhBlankHoodie.connect(user).setApprovalForAll(hhStaking.address, true);
       // send enough tokens to staking contract for rewards
-      await hhBlank.transfer(
-        hhStaking.address,
-        ethers.utils.parseEther('1000')
-      );
+      await hhBlank.transfer(hhStaking.address, ethers.utils.parseEther('1000'));
       // stake few NFTs
       await hhStaking.connect(user).stake([1, 3, 7, 8]);
     });
@@ -236,12 +174,8 @@ describe('Staking contract', () => {
     it('should return correct reward for staked NFTs', async () => {
       await ethers.provider.send('evm_increaseTime', [86400]); // 1 day => 10 tokens
       await ethers.provider.send('evm_mine');
-      expect(await hhStaking.getReward(1)).to.be.at.least(
-        ethers.utils.parseEther('9.99')
-      );
-      expect(await hhStaking.getReward(3)).to.be.at.most(
-        ethers.utils.parseEther('10.01')
-      );
+      expect(await hhStaking.getReward(1)).to.be.at.least(ethers.utils.parseEther('9.99'));
+      expect(await hhStaking.getReward(3)).to.be.at.most(ethers.utils.parseEther('10.01'));
     });
 
     it('should return 0 for unstaked NFTs', async () => {
@@ -255,15 +189,9 @@ describe('Staking contract', () => {
 
     beforeEach(async () => {
       [owner, user, user2] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory(
-        'contracts/BlankHoodie.sol:BlankHoodie'
-      );
-      const Blank = await ethers.getContractFactory(
-        'contracts/Blank.sol:Blank'
-      );
-      const Staking = await ethers.getContractFactory(
-        'contracts/Staking.sol:Staking'
-      );
+      const BlankHoodie = await ethers.getContractFactory('contracts/BlankHoodie.sol:BlankHoodie');
+      const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
+      const Staking = await ethers.getContractFactory('contracts/Staking.sol:Staking');
       hhBlankHoodie = await BlankHoodie.deploy();
       hhBlank = await Blank.deploy();
       hhStaking = await Staking.deploy(hhBlankHoodie.address, hhBlank.address);
@@ -271,36 +199,33 @@ describe('Staking contract', () => {
       // unpause
       await hhBlankHoodie.setPaused(false);
       // mint 10 tokens each to owner and user
-      await hhBlankHoodie
-        .connect(user)
-        .mint(10, { value: ethers.utils.parseEther('1') });
+      await hhBlankHoodie.connect(user).mint(10, { value: ethers.utils.parseEther('1') });
       await hhBlankHoodie.mint(10, { value: ethers.utils.parseEther('1') });
       // approve staking contract
-      await hhBlankHoodie
-        .connect(user)
-        .setApprovalForAll(hhStaking.address, true);
+      await hhBlankHoodie.connect(user).setApprovalForAll(hhStaking.address, true);
       // send enough tokens to staking contract for rewards
-      await hhBlank.transfer(
-        hhStaking.address,
-        ethers.utils.parseEther('1000')
-      );
+      await hhBlank.transfer(hhStaking.address, ethers.utils.parseEther('1000'));
       // stake few NFTs
       await hhStaking.connect(user).stake([1, 3, 7, 8]);
     });
 
     it('should return correct total reward for address', async () => {
       // simulate time passing => 1 day
-      await ethers.provider.send('evm_increaseTime', [86400])
-      await ethers.provider.send('evm_mine')
+      await ethers.provider.send('evm_increaseTime', [86400]);
+      await ethers.provider.send('evm_mine');
       // reward should be 1 day * 10 tokensPerDay * 4 NFTs = 40 tokens
-      expect(await hhStaking.getRewardsOfOwner(user.address)).to.be.at.least(ethers.utils.parseEther('39.9'))
-      expect(await hhStaking.getRewardsOfOwner(user.address)).to.be.at.most(ethers.utils.parseEther('40.01'))
-    })
+      expect(await hhStaking.getRewardsOfOwner(user.address)).to.be.at.least(
+        ethers.utils.parseEther('39.9')
+      );
+      expect(await hhStaking.getRewardsOfOwner(user.address)).to.be.at.most(
+        ethers.utils.parseEther('40.01')
+      );
+    });
 
     it('should return 0 for address with 0 staked NFTs', async () => {
-      expect(await hhStaking.getRewardsOfOwner(user2.address)).to.equal(0)
-    })
-  })
+      expect(await hhStaking.getRewardsOfOwner(user2.address)).to.equal(0);
+    });
+  });
 
   describe('emergencyUnstake() functionality', () => {
     let owner, user;
@@ -308,15 +233,9 @@ describe('Staking contract', () => {
 
     beforeEach(async () => {
       [owner, user] = await ethers.getSigners();
-      const BlankHoodie = await ethers.getContractFactory(
-        'contracts/BlankHoodie.sol:BlankHoodie'
-      );
-      const Blank = await ethers.getContractFactory(
-        'contracts/Blank.sol:Blank'
-      );
-      const Staking = await ethers.getContractFactory(
-        'contracts/Staking.sol:Staking'
-      );
+      const BlankHoodie = await ethers.getContractFactory('contracts/BlankHoodie.sol:BlankHoodie');
+      const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
+      const Staking = await ethers.getContractFactory('contracts/Staking.sol:Staking');
       hhBlankHoodie = await BlankHoodie.deploy();
       hhBlank = await Blank.deploy();
       hhStaking = await Staking.deploy(hhBlankHoodie.address, hhBlank.address);
@@ -324,19 +243,12 @@ describe('Staking contract', () => {
       // unpause
       await hhBlankHoodie.setPaused(false);
       // mint 10 tokens each to owner and user
-      await hhBlankHoodie
-        .connect(user)
-        .mint(10, { value: ethers.utils.parseEther('1') });
+      await hhBlankHoodie.connect(user).mint(10, { value: ethers.utils.parseEther('1') });
       await hhBlankHoodie.mint(10, { value: ethers.utils.parseEther('1') });
       // approve staking contract
-      await hhBlankHoodie
-        .connect(user)
-        .setApprovalForAll(hhStaking.address, true);
+      await hhBlankHoodie.connect(user).setApprovalForAll(hhStaking.address, true);
       // send enough tokens to staking contract for rewards
-      await hhBlank.transfer(
-        hhStaking.address,
-        ethers.utils.parseEther('1000')
-      );
+      await hhBlank.transfer(hhStaking.address, ethers.utils.parseEther('1000'));
       // stake few NFTs
       await hhStaking.connect(user).stake([1, 3, 7, 8]);
       // emergency unstake couple of tokens
@@ -349,13 +261,9 @@ describe('Staking contract', () => {
     });
 
     it('should update state variables properly', async () => {
-      expect(await hhStaking.idToOwner(8)).to.equal(
-        '0x0000000000000000000000000000000000000000'
-      );
+      expect(await hhStaking.idToOwner(8)).to.equal('0x0000000000000000000000000000000000000000');
       expect(await hhStaking.idToTimestamp(3)).to.equal(0);
-      expect(await hhStaking.getStakesOfOwner(user.address)).deep.to.equal([
-        1, 7,
-      ]);
+      expect(await hhStaking.getStakesOfOwner(user.address)).deep.to.equal([1, 7]);
     });
 
     it('should revert if caller not the owner', async () => {
@@ -365,21 +273,12 @@ describe('Staking contract', () => {
 
   describe('pause() functionality', () => {
     it('should set contract paused', async () => {
-      const BlankHoodie = await ethers.getContractFactory(
-        'contracts/BlankHoodie.sol:BlankHoodie'
-      );
-      const Blank = await ethers.getContractFactory(
-        'contracts/Blank.sol:Blank'
-      );
-      const Staking = await ethers.getContractFactory(
-        'contracts/Staking.sol:Staking'
-      );
+      const BlankHoodie = await ethers.getContractFactory('contracts/BlankHoodie.sol:BlankHoodie');
+      const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
+      const Staking = await ethers.getContractFactory('contracts/Staking.sol:Staking');
       const hhBlankHoodie = await BlankHoodie.deploy();
       const hhBlank = await Blank.deploy();
-      const hhStaking = await Staking.deploy(
-        hhBlankHoodie.address,
-        hhBlank.address
-      );
+      const hhStaking = await Staking.deploy(hhBlankHoodie.address, hhBlank.address);
       // pause contract
       await hhStaking.pause();
       expect(await hhStaking.paused()).to.equal(true);
@@ -388,21 +287,12 @@ describe('Staking contract', () => {
 
   describe('unpause() functionality', () => {
     it('should set contract unpaused', async () => {
-      const BlankHoodie = await ethers.getContractFactory(
-        'contracts/BlankHoodie.sol:BlankHoodie'
-      );
-      const Blank = await ethers.getContractFactory(
-        'contracts/Blank.sol:Blank'
-      );
-      const Staking = await ethers.getContractFactory(
-        'contracts/Staking.sol:Staking'
-      );
+      const BlankHoodie = await ethers.getContractFactory('contracts/BlankHoodie.sol:BlankHoodie');
+      const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
+      const Staking = await ethers.getContractFactory('contracts/Staking.sol:Staking');
       const hhBlankHoodie = await BlankHoodie.deploy();
       const hhBlank = await Blank.deploy();
-      const hhStaking = await Staking.deploy(
-        hhBlankHoodie.address,
-        hhBlank.address
-      );
+      const hhStaking = await Staking.deploy(hhBlankHoodie.address, hhBlank.address);
       // pause contract
       await hhStaking.pause();
       // unpause contract

@@ -4,7 +4,7 @@ import { AppContext } from '../context/AppContext';
 import styles from './Message.module.css';
 import Success from '../../public/images/success.png';
 import Warning from '../../public/images/warning.png';
-import Loader from '../../public/images/loader.png'
+import Loader from '../../public/images/loader.png';
 
 const Message = () => {
   // message states - 0: hidden, 1: success, -1: error, 2: loading
@@ -19,11 +19,7 @@ const Message = () => {
     return (
       <div className={styles.blurContainer}>
         <div className={styles.container}>
-          <Image
-            src={messageState == -1 ? Warning : Success }
-            width={48}
-            height={48}
-          ></Image>
+          <Image src={messageState == -1 ? Warning : Success} width={48} height={48}></Image>
           <h1 className={styles.message}>{messageText}</h1>
           <button
             className={`${styles.btn} btnMain`}
@@ -35,7 +31,11 @@ const Message = () => {
                   }
             }
           >
-            {messageState == 2 ? <Image className={styles.imgLoader} src={Loader} width={32} height={32}></Image> : 'Okay'}
+            {messageState == 2 ? (
+              <Image className={styles.imgLoader} src={Loader} width={32} height={32}></Image>
+            ) : (
+              'Okay'
+            )}
           </button>
         </div>
       </div>

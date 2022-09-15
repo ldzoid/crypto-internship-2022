@@ -16,9 +16,7 @@ const ConnectLayout = (props) => {
       </Head>
       <div className={styles.container}>
         <MainNavigation />
-        <main className={`${styles.main} ${styles.connectMain}`}>
-          {props.children}
-        </main>
+        <main className={`${styles.main} ${styles.connectMain}`}>{props.children}</main>
         <Message />
       </div>{' '}
     </>

@@ -24,7 +24,7 @@ const MainNavigation = () => {
     } else {
       setAccount('');
     }
-    setMessage([1, 'Disconnected successfully'])
+    setMessage([1, 'Disconnected successfully']);
   };
 
   const handleClickLink = () => {
@@ -36,11 +36,7 @@ const MainNavigation = () => {
       <div className={styles.imgLogoContainer}>
         <Image src={CompanyLogo} width={85} height={16}></Image>
       </div>
-      <div
-        className={`${styles.linksContainer} ${
-          expanded ? styles.expanded : styles.hidden
-        }`}
-      >
+      <div className={`${styles.linksContainer} ${expanded ? styles.expanded : styles.hidden}`}>
         <Link href="/">
           <button className={styles.btnLink} onClick={handleClickLink}>
             Home

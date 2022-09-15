@@ -27,12 +27,7 @@ const ConnectButton = () => {
   return (
     <>
       <button className={styles.button} onClick={connectToMetamask}>
-        <Image
-          src={Metamask}
-          width={100}
-          height={100}
-          className={styles.image}
-        />
+        <Image src={Metamask} width={100} height={100} className={styles.image} />
       </button>
     </>
   );

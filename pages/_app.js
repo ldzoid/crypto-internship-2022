@@ -33,9 +33,7 @@ const MyApp = ({ Component, pageProps }) => {
     // unsubscribe events when component unmounts
     return () => {
       // init metamask events
-      ethereum.removeListener('accountsChanged', (accounts) =>
-        setAccount(accounts[0])
-      );
+      ethereum.removeListener('accountsChanged', (accounts) => setAccount(accounts[0]));
       ethereum.removeListener('chainChanged', () => {
         window.location.reload();
       });

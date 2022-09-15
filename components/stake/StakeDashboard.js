@@ -5,8 +5,7 @@ import Contracts from '../../modules/contracts';
 import styles from './StakeDashboard.module.css';
 
 const StakeDashboard = () => {
-  const { account, chainId, setMessage, nftContract, stakeContract } =
-    useContext(AppContext);
+  const { account, chainId, setMessage, nftContract, stakeContract } = useContext(AppContext);
   const {
     totalStaked,
     setTotalStaked,
@@ -30,16 +29,11 @@ const StakeDashboard = () => {
         return;
       }
       // get staked amount
-      const stakedAmount = Number(
-        await nftContract.balanceOf(Contracts.StakingAddress)
-      );
+      const stakedAmount = Number(await nftContract.balanceOf(Contracts.StakingAddress));
       // get user stake amount
-      const userStakedAmount = (await stakeContract.getStakesOfOwner(account))
-        .length;
+      const userStakedAmount = (await stakeContract.getStakesOfOwner(account)).length;
       // get user total rewards
-      const userTotalRewards = Number(
-        await stakeContract.getRewardsOfOwner(account)
-      );
+      const userTotalRewards = Number(await stakeContract.getRewardsOfOwner(account));
       // update staked amount, user staked amount, rewards per day
       setTotalStaked(stakedAmount);
       setUserStaked(userStakedAmount);
@@ -81,9 +75,7 @@ const StakeDashboard = () => {
       await tx.wait();
       setMessage([1, 'Claimed successfully']);
       // update total reward
-      const userTotalRewards = Number(
-        await stakeContract.getRewardsOfOwner(account)
-      );
+      const userTotalRewards = Number(await stakeContract.getRewardsOfOwner(account));
       setTotalRewards(userTotalRewards);
     } catch (err) {
       setMessage([-1, 'Error occurred']);
@@ -117,10 +109,7 @@ const StakeDashboard = () => {
           {totalRewards == '?' ? '?' : Math.round(totalRewards / 10 ** 14) / 10000} BLANK
         </h3>
       </div>
-      <button
-        onClick={handleClickClaim}
-        className={`btnMain ${styles.btnClaim}`}
-      >
+      <button onClick={handleClickClaim} className={`btnMain ${styles.btnClaim}`}>
         Claim
       </button>
     </div>
