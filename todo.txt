@@ -14,5 +14,5 @@ supply should be updated regardless of connection - (infura), vercel env variabl
 walletconnect, coinbase??
 global update of data every few seconds
 progress bar on mobile
-responsiveness for all devices
+responsiveness for all devices 
 colored minted NFTs background
