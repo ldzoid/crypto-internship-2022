@@ -7,10 +7,8 @@ describe('Blank contract', async () => {
 
   beforeEach(async () => {
     owner = await ethers.getSigner();
-    const Blank = await ethers.getContractFactory('Blank');
+    const Blank = await ethers.getContractFactory('contracts/Blank.sol:Blank');
     hhBlank = await Blank.deploy();
-
-    await hhBlank.deployed();
   });
 
   it('should set name properly', async () => {
@@ -22,14 +20,12 @@ describe('Blank contract', async () => {
   });
 
   it('should set maximum cap properly', async () => {
-    expect(parseInt(ethers.utils.formatEther(await hhBlank.cap()))).to.equal(
-      1000000
-    );
+    expect(parseInt(ethers.utils.formatEther(await hhBlank.cap()))).to.equal(1000000);
   });
 
   it('should mint initial tokens to deployer address', async () => {
-    expect(
-      parseInt(ethers.utils.formatEther(await hhBlank.balanceOf(owner.address)))
-    ).to.equal(1000000);
+    expect(parseInt(ethers.utils.formatEther(await hhBlank.balanceOf(owner.address)))).to.equal(
+      1000000
+    );
   });
 });

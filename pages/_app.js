@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { AppContext } from '../components/context/AppContext';
+import Contracts from '../modules/contracts';
 import '../styles/globals.css';
 
 const MyApp = ({ Component, pageProps }) => {
@@ -10,6 +11,10 @@ const MyApp = ({ Component, pageProps }) => {
   const [signer, setSigner] = useState();
   const [chainId, setChainId] = useState();
   const [message, setMessage] = useState([0, '']); // 0 - defaut, 1 - success, -1 - error, 2 - loader
+
+  const [nftContract, setNftContract] = useState();
+  const [erc20Contract, setErc20Contract] = useState();
+  const [stakeContract, setStakeContract] = useState();
 
   // set provider to window.ethereum if MetaMask is installed & handle MetaMask events
   useEffect(() => {
@@ -28,9 +33,7 @@ const MyApp = ({ Component, pageProps }) => {
     // unsubscribe events when component unmounts
     return () => {
       // init metamask events
-      ethereum.removeListener('accountsChanged', (accounts) =>
-        setAccount(accounts[0])
-      );
+      ethereum.removeListener('accountsChanged', (accounts) => setAccount(accounts[0]));
       ethereum.removeListener('chainChanged', () => {
         window.location.reload();
       });
@@ -61,13 +64,39 @@ const MyApp = ({ Component, pageProps }) => {
               chainId: '0x5',
             },
           ]);
-        } catch (e) {
-          console.error(e);
+        } catch (err) {
+          console.error(err);
         }
         return;
       }
     })();
   }, [account]);
+
+  // update contracts when signer changes
+  useEffect(() => {
+    (async () => {
+      // initialize contracts
+      const _nftContract = new ethers.Contract(
+        Contracts.BlankHoodieAddress,
+        Contracts.BlankHoodieABI,
+        signer
+      );
+      const _erc20Contract = new ethers.Contract(
+        Contracts.BlankAddress,
+        Contracts.BlankABI,
+        signer
+      );
+      const _stakeContract = new ethers.Contract(
+        Contracts.StakingAddress,
+        Contracts.StakingABI,
+        signer
+      );
+      // update contracts
+      setNftContract(_nftContract);
+      setErc20Contract(_erc20Contract);
+      setStakeContract(_stakeContract);
+    })();
+  }, [signer]);
 
   return (
     <>
@@ -86,6 +115,9 @@ const MyApp = ({ Component, pageProps }) => {
           setChainId,
           message,
           setMessage,
+          nftContract,
+          erc20Contract,
+          stakeContract,
         }}
       >
         <Component {...pageProps} />

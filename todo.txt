@@ -1,0 +1,18 @@
+connect to see your nfts on hover cursor
+struct
+interfaces
+styleguide
+
+when mints update stake list
+batch staking $ unstaking
+on refresh stay connected - preserve state (eth_accounts method)
+put useeffect part of _app in web3Context somewhere to clear _app component (more on github)
+update claimable rewards every few seconds
+config file for web3 data
+supply should be updated regardless of connection - (infura), vercel env variables
+
+walletconnect, coinbase??
+global update of data every few seconds
+progress bar on mobile
+responsiveness for all devices
+colored minted NFTs background

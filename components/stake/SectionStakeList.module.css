@@ -15,10 +15,22 @@
 }
 
 .stakedListContainer {
-    width: 1136px;
-    display: flex;
-    justify-content: space-between;
-    overflow: auto;
+  width: 1136px;
+  display: flex;
+  overflow: auto;
+}
+
+.stakedListInfoParagraph {
+  text-align: center;
+  margin-bottom: 100px;
+  width: 100%;
+}
+
+.linkConnect {
+  text-align: center;
+  margin-bottom: 100px;
+  text-decoration: underline;
+  width: 100%;
 }
 
 @media all and (max-width: 450px) {

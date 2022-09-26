@@ -1,12 +1,11 @@
-import { ethers } from 'ethers';
+import Link from 'next/link';
 import { useState, useContext, useEffect } from 'react';
-import Contracts from '../../modules/contracts';
+import { AppContext } from '../context/AppContext';
 import MintedCard from './MintedCard';
 import styles from './SectionMinted.module.css';
-import { AppContext } from '../context/AppContext';
 
 const SectionMinted = () => {
-  const { account, signer, chainId } = useContext(AppContext);
+  const { account, signer, chainId, nftContract } = useContext(AppContext);
 
   const [mintedList, setMintedList] = useState([]);
 
@@ -18,16 +17,10 @@ const SectionMinted = () => {
         setMintedList([]);
         return;
       }
-      // init contract
-      const blankHoodieContract = new ethers.Contract(
-        Contracts.BlankHoodieAddress,
-        Contracts.BlankHoodieABI,
-        signer
-      );
       // get minted list
-      const _mintedList = (
-        await blankHoodieContract.tokensOfOwner(account)
-      ).map((object) => parseInt(object['_hex']), 16);
+      const _mintedList = (await nftContract.tokensOfOwner(account)).map((bigNum) =>
+        Number(bigNum)
+      );
       // update minted list
       setMintedList(_mintedList);
     })();
@@ -36,11 +29,17 @@ const SectionMinted = () => {
   return (
     <section className={styles.container}>
       <h1 className={styles.headerSecondary}>Minted NFTs</h1>
-      <div className={styles.mintedListContainer}>
-        {mintedList.map((_id) => (
-          <MintedCard id={_id} key={_id} />
-        ))}
-      </div>
+      {account ? (
+        <div className={styles.mintedListContainer}>
+          {mintedList.map((_id) => (
+            <MintedCard id={_id} key={_id} />
+          ))}
+        </div>
+      ) : (
+        <Link href="/connect">
+          <h2 className={styles.linkConnect}>Connect wallet to see your NFTs</h2>
+        </Link>
+      )}
     </section>
   );
 };

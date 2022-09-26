@@ -1,7 +1,6 @@
 import { ethers } from 'ethers';
 
 const Utils = (() => {
-
   const isValidAddress = (_address) => {
     try {
       ethers.utils.getAddress(_address);
@@ -22,7 +21,16 @@ const Utils = (() => {
     return false;
   };
 
-  return { isValidAddress, isPositiveInteger };
+  const sortedArray = (arr) => {
+    arr.sort((a, b) => {
+      if (a === Infinity) return 1;
+      else if (isNaN(a)) return -1;
+      else return a - b;
+    });
+    return arr;
+  };
+
+  return { isValidAddress, isPositiveInteger, sortedArray };
 })();
 
 export default Utils;

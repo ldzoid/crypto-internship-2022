@@ -1,5 +1,5 @@
-import Head from 'next/head';
 import { ethers } from 'ethers';
+import Head from 'next/head';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../components/context/AppContext';
 import Layout from '../../components/layout/Layout';
@@ -8,8 +8,7 @@ import Utils from '../../modules/utils';
 import styles from '../../styles/erc20-manager.module.css';
 
 const Erc20Manger = () => {
-  const { account, provider, signer, chainId, setMessage } =
-    useContext(AppContext);
+  const { account, provider, signer, chainId, setMessage, erc20Contract } = useContext(AppContext);
 
   const [tokenBalance, setTokenBalance] = useState('?');
   const [addressToSend, setAddressToSend] = useState();
@@ -23,15 +22,9 @@ const Erc20Manger = () => {
         setTokenBalance('?');
         return;
       }
-      // init contract
-      const blankContract = new ethers.Contract(
-        Contracts.BlankAddress,
-        Contracts.BlankABI,
-        signer
-      );
       // get balance
       const _tokenBalance = Math.round(
-        ethers.utils.formatEther(await blankContract.balanceOf(account))
+        ethers.utils.formatEther(await erc20Contract.balanceOf(account))
       );
       // update balance
       setTokenBalance(_tokenBalance);
@@ -54,8 +47,8 @@ const Erc20Manger = () => {
             chainId: '0x5',
           },
         ]);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
       return;
     }
@@ -74,15 +67,9 @@ const Erc20Manger = () => {
       setMessage([-1, "You don't own enough tokens"]);
       return;
     }
-    // initialize contract
-    const blankContract = new ethers.Contract(
-      Contracts.BlankAddress,
-      Contracts.BlankABI,
-      signer
-    );
     // send transaction
     try {
-      const tx = await blankContract.transfer(
+      const tx = await erc20Contract.transfer(
         addressToSend,
         ethers.utils.parseEther(`${amountToSend}`)
       );
@@ -91,14 +78,12 @@ const Erc20Manger = () => {
       setMessage([1, `Successfully transferred ${amountToSend} BLANK tokens`]);
       // update new balance
       const _tokenBalance = Math.round(
-        ethers.utils.formatEther(
-          await blankContract.balanceOf(await signer.getAddress())
-        )
+        ethers.utils.formatEther(await erc20Contract.balanceOf(await signer.getAddress()))
       );
       setTokenBalance(_tokenBalance);
-    } catch (e) {
+    } catch (err) {
       setMessage([-1, 'Error occurred']);
-      console.log(e);
+      console.error(err);
     }
   };
 
@@ -118,16 +103,16 @@ const Erc20Manger = () => {
             chainId: '0x5',
           },
         ]);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
       return;
     }
     try {
       await provider.send('wallet_watchAsset', Contracts.blankObject);
-    } catch (e) {
+    } catch (err) {
       setMessage([-1, 'Error occured']);
-      console.error(e);
+      console.error(err);
     }
   };
 
@@ -138,9 +123,7 @@ const Erc20Manger = () => {
       </Head>
       <Layout
         title={'ERC20'}
-        subtitle={
-          'Manage your BLANK tokens, you can get more tokens by staking your NFT'
-        }
+        subtitle={'Manage your BLANK tokens, you can get more tokens by staking your NFT'}
       >
         <div className={styles.container}>
           <div className={styles.erc20InfoContainer}>
@@ -172,10 +155,7 @@ const Erc20Manger = () => {
               }}
             ></input>
           </div>
-          <button
-            className={`btnMain ${styles.btnSend}`}
-            onClick={handleClickSend}
-          >
+          <button className={`btnMain ${styles.btnSend}`} onClick={handleClickSend}>
             Send
           </button>
           <button className={styles.btnImportToken} onClick={handleClickImport}>
